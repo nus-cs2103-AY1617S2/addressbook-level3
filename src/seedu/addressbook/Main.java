@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 public class Main extends Application implements Stoppable{
 
     /** Version info of the program. */
-    public static final String VERSION = "AddessBook Level 3 - Version 1.0";
+    public static final String VERSION = "AddessBook Level 3 - Version 1.1";
     private static final String ADDRESS_BOOK_ICON_PATH = "file:resources/images/address_book_icon.png";
 
     private Gui gui;
