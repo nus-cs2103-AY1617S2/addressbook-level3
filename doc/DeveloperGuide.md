@@ -45,8 +45,14 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* *` | user | edit an existing person | update their contact details if they change
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user with many persons from different social circles | tag a person | organize their address book by custom groupings
+`* *` | user | import a person | copy persons from other AddressBook users or a personal backup
+`* *` | user | add a description of the person | remember things about that person
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
+`*` | user of social media | add social media usernames | keep in touch with the person online
+`*` | user | merge persons | easily reduce redundant entries
 
 
 ## Appendix B : Use Cases
