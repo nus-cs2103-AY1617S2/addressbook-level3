@@ -111,7 +111,11 @@ Use case ends.
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
-4. Should favor DOS style commands over Unix-style commands.
+4. Should favour DOS style commands over Unix-style commands.
+5. Should adhere to the style guide found [here](https://oss-generic.github.io/process/codingStandards/CodingStandard-Java.html)
+6. Should use GIT as a RCS
+7. Should have documentation about what each class does
+8. Should not delete any data in case of unsuccessful commands
 
 ## Appendix D : Glossary
 
