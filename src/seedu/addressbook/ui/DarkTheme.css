@@ -9,7 +9,7 @@
 }
 
 .text-area {
-    -fx-text-fill: 	#002b36;
+    -fx-text-fill: #002b36;
     -fx-control-inner-background: #eee8d5;
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 10pt;
