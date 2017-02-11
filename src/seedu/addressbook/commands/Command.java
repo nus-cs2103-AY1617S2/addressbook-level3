@@ -65,4 +65,10 @@ public abstract class Command {
     public void setTargetIndex(int targetIndex) {
         this.targetIndex = targetIndex;
     }
+
+    /**
+     * Check if command is a mutating comman
+     * @return
+     */
+    public abstract boolean isMutating();
 }
