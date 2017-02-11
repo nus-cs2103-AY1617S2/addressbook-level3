@@ -1,10 +1,13 @@
 package seedu.addressbook.ui;
 
 
+import javafx.animation.Animation;
+import javafx.animation.Transition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.util.Duration;
 import seedu.addressbook.commands.ExitCommand;
 import seedu.addressbook.logic.Logic;
 import seedu.addressbook.commands.CommandResult;
@@ -104,7 +107,21 @@ public class MainWindow {
      * Displays the given messages on the output display area, after formatting appropriately.
      */
     private void display(String... messages) {
-        outputConsole.setText(outputConsole.getText() + new Formatter().format(messages));
+        final String displayMessage = outputConsole.getText() + new Formatter().format(messages);
+        final Duration animationDuration = Duration.millis(2000);
+        final Animation typingAnimation = new Transition() {
+            {
+                setCycleDuration(animationDuration);
+            }
+
+            protected void interpolate(double frac) {
+                final int length = displayMessage.length();
+                final int n = Math.round(length * (float) frac);
+                outputConsole.setText(displayMessage.substring(0, n));
+            }
+
+        };
+        typingAnimation.play();
     }
 
 }
