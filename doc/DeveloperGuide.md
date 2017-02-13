@@ -62,7 +62,7 @@ Priority | As a ... | I want to ... | So that I can...
 1. User requests to add a new person
 2. AddressBook shows an input window asking for details, where name and contact number is compulsory, and address, email address, and tags are optional.
 3. User type in the details and requests to save the person
-4. AddressBook check if the compulsory details are present and are valid. If so, add the contact to the list. <br>
+4. AddressBook adds the contact to the list. <br>
 Use case ends.
 
 **Extensions**
@@ -106,6 +106,30 @@ Use case ends.
 
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
+
+#### Use case: Rename tag
+
+**MSS**
+
+1. User requests to list tags
+2. AddressBook shows a list of tags
+3. User requests to rename a tag
+4. AddressBook opens up an input window for user to input the new name
+5. User input the new name
+6. AddressBook updates the tag's name.
+Use case ends.
+
+**Extensions**
+
+2a. The list is emtpy
+
+> Use case ends
+
+3a. The given tag name is invalid
+
+> 3a1. AddressBook show an error message <br>
+  Use case resumes at step 4
+
 
 ## Appendix C : Non Functional Requirements
 
