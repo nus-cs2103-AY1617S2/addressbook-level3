@@ -110,6 +110,10 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should have the option of storing a local backup storage copy and enabling automatic backup. 
+6. Should run without making the user wait too long. 
+7. Should allow user to change the color scheme of the GUI.
+8. Should greet the user with compliments when the program is launched. 
 
 ## Appendix D : Glossary
 
