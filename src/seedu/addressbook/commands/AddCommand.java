@@ -48,7 +48,7 @@ public class AddCommand extends Command {
                 new UniqueTagList(tagSet)
         );
     }
-
+    
     public AddCommand(Person toAdd) {
         this.toAdd = toAdd;
     }
@@ -65,6 +65,11 @@ public class AddCommand extends Command {
         } catch (UniquePersonList.DuplicatePersonException dpe) {
             return new CommandResult(MESSAGE_DUPLICATE_PERSON);
         }
+    }
+    
+    @Override
+    public boolean isMutating(){
+    	return true;
     }
 
 }
