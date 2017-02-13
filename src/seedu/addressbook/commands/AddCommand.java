@@ -2,6 +2,7 @@ package seedu.addressbook.commands;
 
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.*;
+import seedu.addressbook.data.person.UniquePersonList.DuplicatePersonException;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
 
@@ -63,7 +64,7 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws DuplicatePersonException {
         try {
             addressBook.addPerson(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
