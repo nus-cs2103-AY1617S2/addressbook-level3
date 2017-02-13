@@ -26,6 +26,9 @@ public class AddCommand extends Command {
 
     private final Person toAdd;
 
+    public boolean isMutating() {
+    	return true;
+    }
     /**
      * Convenience constructor using raw values.
      *
