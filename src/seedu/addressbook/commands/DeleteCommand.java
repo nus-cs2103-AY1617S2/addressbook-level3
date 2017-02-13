@@ -26,7 +26,7 @@ public class DeleteCommand extends Command {
 
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws Exception {
         try {
             final ReadOnlyPerson target = getTargetPerson();
             addressBook.removePerson(target);
@@ -37,6 +37,11 @@ public class DeleteCommand extends Command {
         } catch (PersonNotFoundException pnfe) {
             return new CommandResult(Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK);
         }
+    }
+    
+    @Override
+    public boolean isMutating() {
+    	return true;
     }
 
 }
