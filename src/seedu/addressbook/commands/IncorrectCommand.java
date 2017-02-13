@@ -13,7 +13,7 @@ public class IncorrectCommand extends Command{
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws Exception{
         return new CommandResult(feedbackToUser);
     }
 
