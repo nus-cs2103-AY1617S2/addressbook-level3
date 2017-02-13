@@ -113,6 +113,8 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should function in point and click manner instead of dos style.
+6. Should include a tutorial for new users.
 
 ## Appendix D : Glossary
 
