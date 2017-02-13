@@ -40,6 +40,13 @@ public abstract class Command {
      * Executes the command and returns the result.
      */
     public abstract CommandResult execute();
+    
+    /**
+     * An abstract method used to limit file saving to only for command types that mutate data.
+     * 
+     * @return if the child command has mutated data in the addressbook.
+     */
+    public abstract boolean isMutating();
 
     /**
      * Supplies the data the command will operate on.
