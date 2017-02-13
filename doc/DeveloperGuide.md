@@ -45,8 +45,11 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | list out all my persons | see my whole address book at one shot
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | careless user | undo a action | undo a delete or add that I accidently did and regret
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
+`*` | user who is forgetful of his friend's name | find a person by phone no. | find someone even without knowing his or her name
 
 
 ## Appendix B : Use Cases
