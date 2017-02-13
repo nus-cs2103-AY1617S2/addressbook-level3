@@ -25,6 +25,11 @@ public abstract class Command {
 
     protected Command() {
     }
+    
+    /**
+     * @return true for command types that mutate the data 
+     */
+    public abstract boolean isMutating();
 
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
