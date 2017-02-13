@@ -46,6 +46,8 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user | add tags to people | categorize contacts according to relationships
+`* *` | user | find a person by phone number | look up for who the phone number belongs to
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
 
@@ -53,6 +55,37 @@ Priority | As a ... | I want to ... | So that I can...
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
+#### Use case: Add person
+
+**MSS**
+
+1. User requests to add a new person
+2. AddressBook shows an input window asking for details, where name and contact number is compulsory, and address, email address, and tags are optional.
+3. User type in the details and requests to save the person
+4. AddressBook adds the contact to the list. <br>
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. Some of the compulsory details are not given
+
+> 3a1. AddressBook shows an error message <br> 
+  Use case resumes at step 2
+
+3b. The given name is invalid
+
+> 3b1. AddressBook show an error message <br>
+  Use case resumes at step 2
+
+3c. The given phone number is invalid
+
+> 3c1. AddressBook show an error message <br>
+  Use case resumes at step 2
+ 
 #### Use case: Delete person
 
 **MSS**
@@ -74,12 +107,40 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+#### Use case: Rename tag
+
+**MSS**
+
+1. User requests to list tags
+2. AddressBook shows a list of tags
+3. User requests to rename a tag
+4. AddressBook opens up an input window for user to input the new name
+5. User input the new name
+6. AddressBook updates the tag's name.
+Use case ends.
+
+**Extensions**
+
+2a. The list is emtpy
+
+> Use case ends
+
+3a. The given tag name is invalid
+
+> 3a1. AddressBook show an error message <br>
+  Use case resumes at step 4
+
+
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should be able to respond to each command within 3 seconds.
+6. Should be easy to be understood for technology unsavvy people
+7. Should include a comprehensive FAQ database for new users to look up when they face problems
+8. Should include a tutorial animation for first-time user to run through the frequently used functions of AddressBook
 
 ## Appendix D : Glossary
 
