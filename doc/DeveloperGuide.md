@@ -83,7 +83,26 @@ Use case ends.
 1. User requests to list tags 
 2. AddressBook shows a list of tags
 3. User requests to edit a specific tag in the list
-4. AddressBook renames the tag and cascades for all persons with the tag
+4. AddressBook requests for confirmation from the user
+5. User confirms the tag rename request
+6. AddressBook renames the tag and cascades for all persons with the tag
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. New tag name format is invalid or empty 
+
+> 3a1. AddressBook shows an error message <br>
+  Addressbook displays examples of valid tag names <br>
+  Use case resumes at step 2
+
+5a. User rejects confirmation
+
+> 5a1. Use case resumes ate step 3
+  
 Use case ends.
 
 ## Appendix C : Non Functional Requirements
