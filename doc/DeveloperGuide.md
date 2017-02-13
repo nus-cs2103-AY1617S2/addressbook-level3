@@ -47,6 +47,8 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
+`*` | user should be able to divide people into different groups | view the whole group | find the group by name
+`*` | user should be able to edit or update the contact information of a specified person in the addressbook
 
 
 ## Appendix B : Use Cases
@@ -74,12 +76,42 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+#### Use case: Rename Tag
+
+**MSS**
+
+1. User chooses to rename the tag friends to buddies
+2. AddressBook requests for confirmation
+3. User confirms transfer.
+4. AddressBook successfully find the tag and rename all the entries with the same tag
+Use case ends.
+
+**Extensions**
+1a. The given new tag format is invalid
+
+> 1a1. AddressBook requests for correct tag name
+  1a2. User enter new tag name
+  Steps 1a1-1a2 are repeated until the data entered are correct.
+  Use case resumes from step 2
+
+4a. The given tag cannot be found
+
+> 4a1. AddressBook shows an error message <br>
+  Use case ends.
+
+4b. The AddressBook is empty
+
+> Use case ends
+
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should be self-documented by placing the design description in a Javadoc-readable method header
+6. Should be English as the main UI language
+7. Should return to a functioning state when system restarts
 
 ## Appendix D : Glossary
 
