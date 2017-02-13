@@ -45,8 +45,11 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | edit a person's particulars | update particulars of persons when they change
+`* *` | user | find a person by phone number | locate details of person whom phone number belongs to in case of missed calls
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
+`*` | user with business and personal contacts | sort persons by tag | locate business contacts and personal contacts easily
 
 
 ## Appendix B : Use Cases
@@ -74,12 +77,43 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+#### Use case: Rename tag
+
+**MSS**
+
+1. User requests to list tags
+2. AddressBook shows a list of tags
+3. User requests to rename a specific tag in the list
+4. User enters the desired new name for the tag
+5. AddressBook renames the tag to its new name <br>
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. The specified tag is invalid
+
+> 3a1. AddressBook shows an error message <br>
+  Use case resumes at step 2
+  
+4a. The desired tag name is invalid
+
+> 3a1. AddressBook shows an error message <br>
+  Use case resumes at step 4
+  
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should have the option of storing a local backup storage copy and enabling automatic backup. 
+6. Should run without making the user wait too long. 
+7. Should allow user to change the color scheme of the GUI.
+8. Should greet the user with compliments when the program is launched. 
 
 ## Appendix D : Glossary
 
