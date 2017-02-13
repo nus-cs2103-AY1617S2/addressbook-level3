@@ -47,6 +47,8 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
+`* *` | user | edit personal information | correct or update my personal information
+`*` | user | add information in different languages such as Chinese | add information that is not translatable to english
 
 
 ## Appendix B : Use Cases
