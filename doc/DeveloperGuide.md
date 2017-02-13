@@ -115,8 +115,11 @@ Use case ends.
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
-3. Should come with automated unit tests and open source code.
-4. Should favor DOS style commands over Unix-style commands.
+3. Should be able to hold up to 500 tags. 
+4. Should come with automated unit tests and open source code.
+5. Should favor DOS style commands over Unix-style commands.
+6. Should conform with the Java coding standard. 
+6. Should back up data once a week. 
 
 ## Appendix D : Glossary
 
