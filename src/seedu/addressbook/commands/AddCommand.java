@@ -48,7 +48,12 @@ public class AddCommand extends Command {
                 new UniqueTagList(tagSet)
         );
     }
-
+    
+    @Override
+    public boolean isMutating() { 
+    	return true;
+    }
+    
     public AddCommand(Person toAdd) {
         this.toAdd = toAdd;
     }
