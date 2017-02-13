@@ -137,6 +137,10 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should be able to respond to each command within 3 seconds.
+6. Should be easy to be understood for technology unsavvy people
+7. Should include a comprehensive FAQ database for new users to look up when they face problems
+8. Should include a tutorial animation for first-time user to run through the frequently used functions of AddressBook
 
 ## Appendix D : Glossary
 
