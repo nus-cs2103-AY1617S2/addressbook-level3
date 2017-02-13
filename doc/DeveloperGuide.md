@@ -83,8 +83,10 @@ Use case ends.
 
 1. User requests to update a certain person's tag in address book
 2. AddressBook shows this person's name and tags
-3. User requests to update a specific tag 
-4. AddressBook update the tag accordingly, and shows the successful result
+3. User requests to update a specific tag
+4. AddressBook confirm with user the old and the new tag
+5. User requests to confirm or discard the change
+6. AddressBook update the tag accordingly if confirmed, and shows successful result
 Use case ends.
 
 **Extensions**
