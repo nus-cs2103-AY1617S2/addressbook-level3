@@ -45,14 +45,36 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | update a person's details | keep an updated address book when my contacts change their contact details
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
-
+`*` | user | export contacts into a readable file | update contacts into phone or email if needed
 
 ## Appendix B : Use Cases
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
+#### Use case: Rename Tag
+
+**MSS**
+
+1. User requests to rename tag, typing in an existing tag and the new tag.
+2. AddressBook asks user to confirm the change.
+3. User confirms change.
+4. AddressBook updates the corresponding tag.
+Use case ends.
+
+**Extensions**
+
+1a. Tag does not exist.
+
+> AddressBook shows an error and prints list of existing tags.
+
+1b. The given new tag already exists.
+
+> 1b1. AddressBook sends a notice that new tag is the same as an existing tag.<br>
+  Use case resumes at step 2
+  
 #### Use case: Delete person
 
 **MSS**
@@ -80,6 +102,8 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should respond to each command within 3 seconds.
+6. Should have a secure storage file.
 
 ## Appendix D : Glossary
 
