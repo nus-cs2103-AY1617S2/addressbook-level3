@@ -46,6 +46,11 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user | edit a person | change the detail of a person
+`* *` | user | add a tag to a person | categorise persons by using a tag
+`* *` | user | edit a person's tag | change the text of a tag that is already assigned to a person
+`* *` | user | delete a person's tag | remove the tag of a person that I no longer need
+`* *` | user | find persons by tag | locate persons that is/are assigned with the tag
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
 
@@ -74,12 +79,44 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+#### Use case: Rename Tag
+
+**MSS**
+
+1. User requests to list tags
+2. AddressBook shows a list of tags
+3. User requests to rename a specific tag in the list
+4. User input new tag name
+5. AddressBook rename tag with new tag new <br>
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. The given index is invalid
+
+> 3a1. AddressBook shows an error message <br>
+  Use case resumes at step 2
+  
+4a. User input is invalid
+
+> 4a1. AddressBook shows an error message <br>
+  Use case resumes at step 2
+
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should not have response time of more than 100 ms.
+6. AddressBook data should be portable.
+7. Should be usable for users familiar with CLI apps
+8. Should print message with explanation for any invalid user input
+9. Should be extensible for new features to be implemented easily
 
 ## Appendix D : Glossary
 
