@@ -55,6 +55,37 @@ Priority | As a ... | I want to ... | So that I can...
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
+#### Use case: Add person
+
+**MSS**
+
+1. User requests to add a new person
+2. AddressBook shows an input window asking for details, where name and contact number is compulsory, and address, email address, and tags are optional.
+3. User type in the details and requests to save the person
+4. AddressBook check if the compulsory details are present and are valid. If so, add the contact to the list. <br>
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. Some of the compulsory details are not given
+
+> 3a1. AddressBook shows an error message <br> 
+  Use case resumes at step 2
+
+3b. The given name is invalid
+
+> 3b1. AddressBook show an error message <br>
+  Use case resumes at step 2
+
+3c. The given phone number is invalid
+
+> 3c1. AddressBook show an error message <br>
+  Use case resumes at step 2
+ 
 #### Use case: Delete person
 
 **MSS**
