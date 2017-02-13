@@ -45,6 +45,10 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | undo / redo command | retify my mistakes easily
+`* * *` | user | edit person infomation | update details if there is any changes
+`* *` | user | view all tags | know which tag I can use for searching
+`* *` | user | sort person by tag | group similar people together (e.g school mates and family)
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
@@ -74,12 +78,54 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+#### Use case: Rename tag
+
+**MSS**
+
+1. User request to list all tags
+2. AddressBook shows a list of tags
+3. User request to rename a specific tag
+4. User input the new tag name
+5. AddressBook prompt user to confirm the changes.
+6. User reply to the confirmation.
+7. AddressBook rename the tag
+Use case ends.
+
+**Extensions**
+
+2a. The tag list is empty
+
+> Use case ends
+
+3a. The given tag is invalid
+
+> 3a1. AddressBook shows an error message
+  Use case resumes at step 2
+  
+4a. The new tag name is invalid
+
+> 4a1. AddressBook shows an error message
+  Use case resumes at step 4
+  
+6a. The user cancel the request during the confirmation
+
+> Use case ends
+
+6b. The user input invalid confirmation
+
+> 6b1. AddressBook shows an error message
+  Use case resumes at step 5
+  
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should allow user to exit the program anytime without data loses.
+6. Should run efficiently without user having to wait too long.
+7. Should have desirable total size of less than 10MB.
+8. Should allow users to contact the developer in case of emergency.
 
 ## Appendix D : Glossary
 
