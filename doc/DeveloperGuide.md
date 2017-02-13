@@ -112,6 +112,11 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should not have response time of more than 100 ms.
+6. AddressBook data should be portable.
+7. Should be usable for users familiar with CLI apps
+8. Should print message with explanation for any invalid user input
+9. Should be extensible for new features to be implemented easily
 
 ## Appendix D : Glossary
 
