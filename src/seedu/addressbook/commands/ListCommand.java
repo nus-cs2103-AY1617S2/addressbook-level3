@@ -16,10 +16,17 @@ public class ListCommand extends Command {
             + "Displays all persons in the address book as a list with index numbers.\n\t"
             + "Example: " + COMMAND_WORD;
 
+    public static final boolean IS_MUTATING_COMMAND = false;
 
     @Override
     public CommandResult execute() {
         List<ReadOnlyPerson> allPersons = addressBook.getAllPersons().immutableListView();
         return new CommandResult(getMessageForPersonListShownSummary(allPersons), allPersons);
     }
+
+    @Override
+    public boolean isMutating() {
+        return IS_MUTATING_COMMAND;
+    }
+
 }
