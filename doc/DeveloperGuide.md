@@ -84,6 +84,10 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should not crash more than 1 per ten thousand correctly executed actions. 
+6. Should allow user to upgrade easily if and when an upgrade is available.
+7. Should contain a login mechanism for security purposes.
+8. Should contain a hierachy of authorization levels for different actions.
 
 ## Appendix D : Glossary
 
