@@ -49,8 +49,7 @@ Priority | As a ... | I want to ... | So that I can...
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 `*` | user with many persons in the address book | delete in bulk | remove many entries at once
-`*` | user with many persons in the address book | favourite contacts | find persons that I contact frequently
-
+`*` | user with many persons in the address book | favorite contacts | find persons that I contact frequently
 
 
 ## Appendix B : Use Cases
