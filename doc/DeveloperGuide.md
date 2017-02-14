@@ -64,6 +64,16 @@ Priority | As a ... | I want to ... | So that I can...
 4. AddressBook deletes the person <br>
 Use case ends.
 
+#### Use case: Rename tag
+
+**MSS**
+
+1. User request to list persons with tag.
+2. AddressBook shows a list of persons having that tag.
+3. User requests to rename the tag.
+4. AddressBook renames the tag and show updated list.
+Use case ends.
+
 **Extensions**
 
 2a. The list is empty
