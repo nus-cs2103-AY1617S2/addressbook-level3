@@ -47,6 +47,10 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
+`* *` | user | list persons by specified tag | to see all persons I have under specific tag | to categorize contacts in address.
+`* *` | user | option to update person info | to accommodate for any updates or changes in the contacts personal info like a change in address or phone number as well as for correcting any typos or mistakes.
+`* *` | user | option to add notes or comment for each person | to be able to note down any need to know info on person like address directions.
+`* *` | user | option to accept more than one phone number and email | many people might have more than one phone for personal and/or work and the same thing for emails, many people have emails that are for personal use of formal use.
 
 
 ## Appendix B : Use Cases
@@ -73,6 +77,38 @@ Use case ends.
 
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
+  
+  
+
+#### Use case: Rename old tag
+
+1. User requests to list tags
+2. AddressBook shows a list of tags
+3. User requests to rename a specific tag
+4. AddressBook asks User to confirm rename request
+5. User confirms request
+6. AddressBook asks for a new tag name for tag
+7. User enters new name
+8. AddressBooks edits tag name into new entered name
+Use case ends
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. The given index is invalid
+
+> 3a1. AddressBook shows an error message <br>
+  Use case resumes at step 2
+  
+7a. Entered tag name already exists
+
+> 7a1. AddressBook shoes an error message that tag name exists <br> 
+  Use case resumes at step 6  
+ 
+  
 
 ## Appendix C : Non Functional Requirements
 
@@ -80,6 +116,9 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. should respond to each command in under 5 seconds
+6. should be able to hold up to 15 tags
+7. should be able to accept up to 3 tags for each person
 
 ## Appendix D : Glossary
 
