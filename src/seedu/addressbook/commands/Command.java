@@ -44,6 +44,8 @@ public abstract class Command {
     /**
      * Supplies the data the command will operate on.
      */
+    //boolean function return true when command changed
+    public abstract boolean isMuting();
     public void setData(AddressBook addressBook, List<? extends ReadOnlyPerson> relevantPersons) {
         this.addressBook = addressBook;
         this.relevantPersons = relevantPersons;

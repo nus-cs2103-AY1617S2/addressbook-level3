@@ -56,6 +56,9 @@ public class AddCommand extends Command {
     public ReadOnlyPerson getPerson() {
         return toAdd;
     }
+    public boolean isMuting(){
+		return (COMMAND_WORD == "add");
+    }
 
     @Override
     public CommandResult execute() {

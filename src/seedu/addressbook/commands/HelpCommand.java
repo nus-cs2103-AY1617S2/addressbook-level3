@@ -25,4 +25,7 @@ public class HelpCommand extends Command {
     public CommandResult execute() {
         return new CommandResult(MESSAGE_ALL_USAGES);
     }
+    public boolean isMuting(){
+    	return false;
+    }
 }
