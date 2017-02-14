@@ -110,6 +110,12 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should work on both 32‐bit and 64‐bit
+environments.
+6. Should respond to commands within two seconds.
+7. Should be usable and friendly for users good at typing on keyboards.
+8. The project is expected to adhere to a schedule that delivers a
+feature set every one month.
 
 ## Appendix D : Glossary
 
