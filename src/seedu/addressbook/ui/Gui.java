@@ -19,8 +19,6 @@ public class Gui {
     /** Offset required to convert between 1-indexing and 0-indexing.  */
     public static final int DISPLAYED_INDEX_OFFSET = 1;
 
-    public static final int INITIAL_WINDOW_WIDTH = 800;
-    public static final int INITIAL_WINDOW_HEIGHT = 600;
     private static final Rectangle2D primaryScreenBounds  = Screen.getPrimary().getVisualBounds();
 
     private final Logic logic;
