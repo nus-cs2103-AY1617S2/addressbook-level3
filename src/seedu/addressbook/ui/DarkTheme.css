@@ -1,17 +1,17 @@
 
 
 .text-field {
-    -fx-font-size: 12pt;
+    -fx-font-size: 10pt;
     -fx-font-family: "Consolas";
-    -fx-font-weight: bold;
-    -fx-text-fill: yellow;
-    -fx-control-inner-background: derive(#1d1d1d,20%);
+    -fx-text-fill: #2c3e50;
+    -fx-control-inner-background: derive(#ecf0f1,20%);
 }
 
 .text-area {
-    -fx-background-color: black;
-    -fx-control-inner-background: black;
-    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #2c3e50;
+    -fx-background-color: #ecf0f1;
+    -fx-control-inner-background: #ecf0f1;
+    -fx-font-family: "Consolas";
     -fx-font-size: 10pt;
     -fx-padding: 5 5 5 5;
 }
