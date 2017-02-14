@@ -47,6 +47,10 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
+`* *` | user | list persons by specified tag | to see all persons I have under specific tag | to categorize contacts in address.
+`* *` | user | option to update person info | to accommodate for any updates or changes in the contacts personal info like a change in address or phone number as well as for correcting any typos or mistakes.
+`* *` | user | option to add notes or comment for each person | to be able to note down any need to know info on person like address directions.
+`* *` | user | option to accept more than one phone number and email | many people might have more than one phone for personal and/or work and the same thing for emails, many people have emails that are for personal use of formal use.
 
 
 ## Appendix B : Use Cases
