@@ -45,6 +45,7 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* *` | user | edit a person's information | update new contact information of person without having to delete and recreating it again
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
@@ -74,12 +75,46 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+#### Use case: Rename tag
+
+**MSS**
+
+1. User requests to rename a specific tag, `Tag A`
+2. AddressBook prompts User for new tag name, `Tag B`
+3. User keys in the new tag name, `Tag B`
+4. AddressBook asks for confirmation to rename the tag from `Tag A` to `Tag B`
+5. User confirms
+6. AddressBook renames the tag and updates all contacts with `Tag A` to `Tag B` <br>
+
+**Extensions**
+
+1a. There are no tags
+
+> Use case ends
+
+3a. `Tag A` is the same as `Tag B`
+
+> 3a1. AddressBook prompts user again for a different tag <br>
+  Use case resumes at step 2
+
+3b. `Tag B` is empty
+
+> 3b1. AddressBook prompts user again for a non-empty tag <br>
+  Use case resumes at step 2
+
+4a. User does not confirm rename from `Tag A` to `Tag B`
+
+> Use case ends
+
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should be documented thoroughly.
+6. Should fail with error messages and codes if it crashes.
+7. Should execute commands fairly efficiently.
 
 ## Appendix D : Glossary
 
