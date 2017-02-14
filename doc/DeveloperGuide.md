@@ -45,6 +45,9 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | edit a person's details | update the addressbook if necessary
+`* *` | user | view all persons in the addressbook | have a general view of addressbook
+`* *` | user | add tags to a person | recognise and remember persons
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
@@ -74,12 +77,45 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+
+#### Use case: Rename tag
+
+**MSS**
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to rename tag of a specific person in the list, by providing person's index, tag index, and new tag name.
+4. AddressBook updates tag of the person <br>
+Use case ends.
+
+**Extensions**
+2a. The list is empty
+
+> Use case ends
+
+3a. Incorrect number of parameters supplied
+
+> 3a1. AddressBook shows an error message and the example with correct format <br>
+  Use case resumes at step 2
+
+3b. Any of the given indices is invalid
+
+> 3b1. AddressBook shows an error message <br>
+  Use case resumes at step 2
+
+
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should work on both 32‐bit and 64‐bit
+environments.
+6. Should respond to commands within two seconds.
+7. Should be usable and friendly for users good at typing on keyboards.
+8. The project is expected to adhere to a schedule that delivers a
+feature set every one month.
 
 ## Appendix D : Glossary
 
