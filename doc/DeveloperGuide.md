@@ -99,7 +99,7 @@ Use case ends.
 
 3b. `Tag B` is empty
 
-> 3b1. AddressBook prompts user again for a non-empty tag
+> 3b1. AddressBook prompts user again for a non-empty tag <br>
   Use case resumes at step 2
 
 4a. User does not confirm rename from `Tag A` to `Tag B`
