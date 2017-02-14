@@ -45,7 +45,11 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* *` | user | list my entire address book | see my entire address book easily
+`* *` | user | clear the address book permanently | have an empty address book
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user | edit a person | change their contact details
+`*` | user finding the same person many times | automatically find a person that I contact frequently | quickly find that person using a shortcut
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
 
