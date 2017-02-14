@@ -45,8 +45,11 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | edit a person's contact information | update a person's information if something changes
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user with many persons in the address book | put persons to different groups | effectively manage my address book
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
+`*` | user with bad memory and | search person by phone number | know the person just called/message me if I do not recall his/her name
 
 
 ## Appendix B : Use Cases
