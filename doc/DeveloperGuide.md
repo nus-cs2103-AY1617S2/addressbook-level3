@@ -56,6 +56,27 @@ Priority | As a ... | I want to ... | So that I can...
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
+#### Use case: Rename tag
+
+1. User requests to rename a tag
+2. A list of tags display to user
+3. User select a tag to be renamed 
+4. User enters the new name for the selected tag
+5. Address book rename the tag
+6. Address update all persons understand the renamed tag with the new tag name
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. The selected tag is not valid
+
+> Error Message shows to user
+  Use case resumes at step 2
+  
 #### Use case: Delete person
 
 **MSS**
