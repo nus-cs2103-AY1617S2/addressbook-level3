@@ -46,12 +46,22 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user | search person by address | if user wants to know who lives around the same area
+`* *` | user | undo previous command | user may input the wrong command and hence needs to undo
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
 
 ## Appendix B : Use Cases
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+
+#### Use case: Rename oldTag newTag
+
+1. User requests to list persons of old tag
+2. AddressBook shows a list of persons with old tag
+3. User requests to change old tag to new tag
+4. AddressBook changes to tag of all persons with old tag to new tag
+Use case ends
 
 #### Use case: Delete person
 
