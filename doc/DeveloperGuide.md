@@ -115,6 +115,12 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should have proper documentation of user guide and glossary of terms.
+6. Should respond to user commands relatively quickly (not more than 10 seconds).
+7. Should be intuitive and easy to use even for users without any technical background.
+8. Should have backup storage of contacts.
+9. Should have customizable user interface that allows user to change font size and color.
+10. Should be able to sync with phone to import, export and update existing contacts.  
 
 ## Appendix D : Glossary
 
