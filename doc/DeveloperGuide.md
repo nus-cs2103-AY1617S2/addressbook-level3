@@ -71,14 +71,44 @@ Use case ends.
 **Extensions**
 
 2a. The list is empty
-
 > Use case ends
 
 3a. The given index is invalid
-
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+
+#### Use case: Rename tag
+
+**MSS**
+
+1. User requests to list all tags in the Address Book. 
+2. Address Book shows a list of all tags.
+3. User requests to rename a specific tag and provides the new tag name.
+4. Address Book displays a list of persons with that particular tag.
+5. Address Book requests for confirmation.
+6. User confirms rename operation.
+7. Address Book renames tag.
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+> Use case ends. 
+    
+2b. User requests to find a list of persons with a particular tag.
+> 2b1. Address Book shows persons with the tag.
+  Use case resumes from step 3.
+    
+3a. The tag specified by the User does not exist. 
+> 3a1.Address Book shows an error message.
+  Use case ends.
+  
+6a. User chooses to cancel the operation.
+> 6a1. Address Book requests to confirm the cancellation.
+  6a2. User confirms the cancellation.
+  Use case ends.  
+     
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
