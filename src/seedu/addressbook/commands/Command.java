@@ -22,6 +22,11 @@ public abstract class Command {
     public Command(int targetIndex) {
         this.setTargetIndex(targetIndex);
     }
+    
+    /**
+     * Checks whether this command mutates the data
+     */
+    public abstract boolean isMutating();
 
     protected Command() {
     }
