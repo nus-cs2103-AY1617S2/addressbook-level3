@@ -11,6 +11,8 @@ public class HelpCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" +"Shows program usage instructions.\n\t"
             + "Example: " + COMMAND_WORD;
 
+    public static final boolean IS_MUTATING_COMMAND = false;
+
     public static final String MESSAGE_ALL_USAGES = AddCommand.MESSAGE_USAGE
             + "\n" + DeleteCommand.MESSAGE_USAGE
             + "\n" + ClearCommand.MESSAGE_USAGE
@@ -25,4 +27,10 @@ public class HelpCommand extends Command {
     public CommandResult execute() {
         return new CommandResult(MESSAGE_ALL_USAGES);
     }
+
+    @Override
+    public boolean isMutating() {
+        return IS_MUTATING_COMMAND;
+    }
+
 }

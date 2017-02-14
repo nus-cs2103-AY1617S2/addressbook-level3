@@ -11,9 +11,17 @@ public class ClearCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Address book has been cleared!";
 
+    public static final boolean IS_MUTATING_COMMAND = true;
+
     @Override
     public CommandResult execute() {
         addressBook.clear();
         return new CommandResult(MESSAGE_SUCCESS);
     }
+
+    @Override
+    public boolean isMutating() {
+        return IS_MUTATING_COMMAND;
+    }
+
 }

@@ -19,6 +19,8 @@ public class ViewCommand extends Command {
 
     public static final String MESSAGE_VIEW_PERSON_DETAILS = "Viewing person: %1$s";
 
+    public static final boolean IS_MUTATING_COMMAND = false;
+
 
     public ViewCommand(int targetVisibleIndex) {
         super(targetVisibleIndex);
@@ -36,6 +38,11 @@ public class ViewCommand extends Command {
         } catch (IndexOutOfBoundsException ie) {
             return new CommandResult(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
+    }
+
+    @Override
+    public boolean isMutating() {
+        return IS_MUTATING_COMMAND;
     }
 
 }
