@@ -99,6 +99,9 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. All new features should be documented in DeveloperGuide.md.
+6. All new classes must include detailed descriptions of the purpose of the class.
+
 
 ## Appendix D : Glossary
 
