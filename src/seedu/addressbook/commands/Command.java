@@ -50,7 +50,7 @@ public abstract class Command {
     }
 
     /**
-     * Extracts the the target person in the last shown list from the given arguments.
+     * Extracts the target person in the last shown list from the given arguments.
      *
      * @throws IndexOutOfBoundsException if the target index is out of bounds of the last viewed listing
      */
@@ -65,4 +65,8 @@ public abstract class Command {
     public void setTargetIndex(int targetIndex) {
         this.targetIndex = targetIndex;
     }
+    
+    /** Returns true if Command mutates the data. */
+    public abstract boolean isMutating();
+    
 }
