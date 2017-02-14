@@ -25,7 +25,12 @@ public abstract class Command {
 
     protected Command() {
     }
-
+    
+    /**
+     * Determines if the command mutates the data; Return true if so.
+     */
+    public abstract boolean isMutating();
+    
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
      *
@@ -39,7 +44,7 @@ public abstract class Command {
     /**
      * Executes the command and returns the result.
      */
-    public abstract CommandResult execute();
+    public abstract CommandResult execute() throws Exception;
 
     /**
      * Supplies the data the command will operate on.
