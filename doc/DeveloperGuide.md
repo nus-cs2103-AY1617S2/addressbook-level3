@@ -45,6 +45,11 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | view non-private details of a person from a list | see the non-private details of a person
+`* * *` | user | view all details of a person from a list | see all the details (including private details) of a person 
+`* *` | user | rename tags | easily change the tag of all the persons with the tag
+`* *` | user | clear book | delete all contacts in the address book
+`* *` | user | change save locations | move the data in the address book to another .txt file
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
@@ -74,12 +79,36 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+#### Use case: Rename tag from 'friends' to 'buddies'
+
+**MSS**
+
+1. User requests to rename the tag 'friends' to 'buddies'
+2. AddressBook asks the user to confirm the change from 'friends' to 'buddies'
+3. User confirms the change
+4. AddressBook renames the tag from 'friends' to 'buddies'
+Use case ends.
+
+**Extensions**
+
+1a. Tag 'friends' does not exist
+
+> 1a1. AddressBook shows an error message <br>
+  Use case ends
+
+3a. User denies the change
+
+> Use case ends
+
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should respond to commands in less than 3 seconds.
+6. Should autosave periodically to recover data in case of crashes.
+7. Should have simple and intuitive commands.
 
 ## Appendix D : Glossary
 
