@@ -45,8 +45,10 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | edit a person's information | update details of persons without having to delete and add a new person
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
+`*` | user with many persons in the address book | group people | organize people in the address book easily
 
 
 ## Appendix B : Use Cases
@@ -74,12 +76,32 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+#### Use case: Rename tag
+
+**MSS**
+
+1. User requests to rename existing tag
+2. AddressBook asks for confirmation to rename tag
+3. AddressBook renames tag
+4. AddressBook displays to user that renaming was sucessful <br>
+Use case ends.
+
+**Extensions**
+
+2a. The tag does not exist
+
+> AddressBook shows an error message <br>
+  Use case ends
+
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. All new features should be documented in DeveloperGuide.md.
+6. All new classes must include detailed descriptions of the purpose of the class.
+
 
 ## Appendix D : Glossary
 
