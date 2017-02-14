@@ -4,7 +4,7 @@
     -fx-font-size: 20pt;
     -fx-font-family: "Consolas";
     -fx-font-weight: bold;
-    -fx-text-fill: yellow;
+    -fx-text-fill: SkyBlue;
     -fx-control-inner-background: derive(#1d1d1d,20%);
 }
 
