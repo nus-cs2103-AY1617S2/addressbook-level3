@@ -109,6 +109,10 @@ Use case resumes from step 4
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should work on non-internet environment
+6. Should support unicode encoding
+7. Should be lightweight on system resources
+8. Should be compact in save file size
 
 ## Appendix D : Glossary
 
