@@ -17,8 +17,7 @@ public class AddCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Adds a person to the address book. "
             + "Contact details can be marked private by prepending 'p' to the prefix.\n\t"
-            + "Parameters: NAME [p]p/PHONE [p]e/EMAIL [p]a/ADDRESS  [t/TAG]...\n\t"
-            + "Example: " + COMMAND_WORD
+            + "Parameters: NAME [p]p/PHONE [p]e/EMAIL [p]a/ADDRESS  [t/TAG]...\n\t" + "Example: " + COMMAND_WORD
             + " John Doe p/98765432 e/johnd@gmail.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
@@ -29,24 +28,17 @@ public class AddCommand extends Command {
     /**
      * Convenience constructor using raw values.
      *
-     * @throws IllegalValueException if any of the raw values are invalid
+     * @throws IllegalValueException
+     *             if any of the raw values are invalid
      */
-    public AddCommand(String name,
-                      String phone, boolean isPhonePrivate,
-                      String email, boolean isEmailPrivate,
-                      String address, boolean isAddressPrivate,
-                      Set<String> tags) throws IllegalValueException {
+    public AddCommand(String name, String phone, boolean isPhonePrivate, String email, boolean isEmailPrivate,
+            String address, boolean isAddressPrivate, Set<String> tags) throws IllegalValueException {
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
             tagSet.add(new Tag(tagName));
         }
-        this.toAdd = new Person(
-                new Name(name),
-                new Phone(phone, isPhonePrivate),
-                new Email(email, isEmailPrivate),
-                new Address(address, isAddressPrivate),
-                new UniqueTagList(tagSet)
-        );
+        this.toAdd = new Person(new Name(name), new Phone(phone, isPhonePrivate), new Email(email, isEmailPrivate),
+                new Address(address, isAddressPrivate), new UniqueTagList(tagSet));
     }
 
     public AddCommand(Person toAdd) {
@@ -65,6 +57,11 @@ public class AddCommand extends Command {
         } catch (UniquePersonList.DuplicatePersonException dpe) {
             return new CommandResult(MESSAGE_DUPLICATE_PERSON);
         }
+    }
+
+    @Override
+    public boolean isMutating() {
+        return true;
     }
 
 }
