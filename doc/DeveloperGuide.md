@@ -77,6 +77,33 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+
+#### Use case: Rename tag
+
+**MSS**
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to rename tag of a specific person in the list, by providing person's index, tag index, and new tag name.
+4. AddressBook updates tag of the person <br>
+Use case ends.
+
+**Extensions**
+2a. The list is empty
+
+> Use case ends
+
+3a. Incorrect number of parameters supplied
+
+> 3a1. AddressBook shows an error message and the example with correct format <br>
+  Use case resumes at step 2
+
+3b. Any of the given indices is invalid
+
+> 3b1. AddressBook shows an error message <br>
+  Use case resumes at step 2
+
+
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
