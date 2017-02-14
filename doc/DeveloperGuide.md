@@ -47,6 +47,9 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
+`* * *` | lazy user | quickly be able to input my previous command (up arrow) | save time and effort typing
+`* *` | lazy user | see a list of contacts when opening the application | save some time
+`*` | user who likes variety | see different prompt messages when asked | avoid boredom
 
 
 ## Appendix B : Use Cases
