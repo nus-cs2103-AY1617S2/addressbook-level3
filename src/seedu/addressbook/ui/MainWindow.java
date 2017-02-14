@@ -57,6 +57,16 @@ public class MainWindow {
             throw new RuntimeException(e);
         }
     }
+    
+    @FXML
+    void onExit(ActionEvent event){
+        try{
+            exitApp();
+        } catch (Exception e) {
+            display(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
 
     private void exitApp() throws Exception {
         mainApp.stop();
