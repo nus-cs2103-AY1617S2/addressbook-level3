@@ -16,4 +16,7 @@ public class ClearCommand extends Command {
         addressBook.clear();
         return new CommandResult(MESSAGE_SUCCESS);
     }
+    public boolean isMuting(){
+    	return (COMMAND_WORD == "clear");
+    }
 }
