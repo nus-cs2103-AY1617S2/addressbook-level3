@@ -55,6 +55,14 @@ Priority | As a ... | I want to ... | So that I can...
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
+#### Use case: Rename oldTag newTag
+
+1. User requests to list persons of old tag
+2. AddressBook shows a list of persons with old tag
+3. User requests to change old tag to new tag
+4. AddressBook changes to tag of all persons with old tag to new tag
+Use case ends
+
 #### Use case: Delete person
 
 **MSS**
