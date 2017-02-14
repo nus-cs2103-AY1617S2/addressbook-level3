@@ -18,7 +18,7 @@ public class IncorrectCommand extends Command{
     }
 
     @Override
-    boolean isMutating() {
+    public boolean isMutating() {
         return false;
     }
 

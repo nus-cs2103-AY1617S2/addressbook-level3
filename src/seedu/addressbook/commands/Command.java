@@ -64,7 +64,7 @@ public abstract class Command {
      * 
      * @return whether the command is mutating the data
      */
-    abstract boolean isMutating();
+    public abstract boolean isMutating();
     
     public int getTargetIndex() {
         return targetIndex;
