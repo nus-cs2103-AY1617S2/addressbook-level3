@@ -45,8 +45,11 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* *` | user | see all added person |
+`* *` | user | update a person | change details of persons without deleting
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
+`*` | user with many persons in the address book | retrieve persons with certain tag | locate persons associated with the tag easily
 
 
 ## Appendix B : Use Cases
@@ -74,12 +77,39 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+#### Use case: Rename tag
+
+**MSS**
+
+1. User adds multiple persons with the tag `friends`
+2. User requests to list persons
+3. AddressBook shows a list of persons with multiple showing `friends` as tag
+4. User requests to rename tag `friends` to `buddies`
+5. AddressBook requests user for confirmation
+6. User confirms changes
+7. User requests to list persons
+8. AddressBook shows a list of persons with multiple showing `buddies` as tag <br>
+Use case ends.
+
+**Extensions**
+
+5a. User rejects changes
+
+> 5a1. User requests to list persons
+  5a2. AddressBook shows a list of persons with multiple showing `friends` as tag
+  Use case ends
+
+
+
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should work without internet connection
+6. Should take less than 2 seconds to process each command
+7. Should be small in file size (<5mb)
 
 ## Appendix D : Glossary
 
