@@ -38,8 +38,9 @@ public abstract class Command {
 
     /**
      * Executes the command and returns the result.
+     * @throws Exception 
      */
-    public abstract CommandResult execute();
+    public abstract CommandResult execute() throws Exception;
 
     /**
      * Supplies the data the command will operate on.
@@ -58,6 +59,13 @@ public abstract class Command {
         return relevantPersons.get(getTargetIndex() - DISPLAYED_INDEX_OFFSET);
     }
 
+    /**
+     * Check the command is mutating the data
+     * 
+     * @return whether the command is mutating the data
+     */
+    public abstract boolean isMutating();
+    
     public int getTargetIndex() {
         return targetIndex;
     }
