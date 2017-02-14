@@ -45,7 +45,9 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | edit a person | change an old detail to a new one
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user | search a detail | know whose detail this belongs to
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
 
@@ -73,6 +75,25 @@ Use case ends.
 
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
+  
+#### Use case: Renaming of an existing tag
+
+**Actor**
+admin
+
+**MSS**
+
+1. Admin requests to list persons
+2. AddressBook shows a list of persons
+3. Admin decides to rename tag "friends" to "buddies"
+4. Admin edits all persons with "friends" to "buddies"
+Use case ends.
+
+**Extensions**
+
+2a. Admin is happy with all the conventions
+
+4a. AddressBook shows an error message, "edit" is an invalid command
 
 ## Appendix C : Non Functional Requirements
 
@@ -80,6 +101,7 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should be able to show how a filled AddressBook looks like upon "list" command via screenshot image.
 
 ## Appendix D : Glossary
 
