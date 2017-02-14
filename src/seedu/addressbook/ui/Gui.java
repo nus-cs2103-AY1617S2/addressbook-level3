@@ -3,6 +3,8 @@ package seedu.addressbook.ui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.geometry.Rectangle2D;
+import javafx.stage.Screen;
 import seedu.addressbook.logic.Logic;
 import seedu.addressbook.Main;
 
@@ -19,6 +21,8 @@ public class Gui {
 
     public static final int INITIAL_WINDOW_WIDTH = 800;
     public static final int INITIAL_WINDOW_HEIGHT = 600;
+    private static final Rectangle2D primaryScreenBounds  = Screen.getPrimary().getVisualBounds();
+
     private final Logic logic;
 
     private MainWindow mainWindow;
@@ -43,12 +47,20 @@ public class Gui {
         loader.setLocation(Main.class.getResource("ui/mainwindow.fxml"));
 
         stage.setTitle(version);
-        stage.setScene(new Scene(loader.load(), INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT));
+        stage.setScene(new Scene(loader.load(), getScreenWidth(), getScreenHeight()));
         stage.show();
         MainWindow mainWindow = loader.getController();
         mainWindow.setLogic(logic);
         mainWindow.setMainApp(mainApp);
         return mainWindow;
+    }
+
+    private static final double getScreenWidth() {
+        return primaryScreenBounds.getWidth();
+    }
+
+    private static final double getScreenHeight() {
+        return primaryScreenBounds.getHeight();
     }
 
 }
