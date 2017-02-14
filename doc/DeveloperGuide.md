@@ -75,6 +75,25 @@ Use case ends.
 
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
+  
+#### Use case: Renaming of an existing tag
+
+**Actor**
+admin
+
+**MSS**
+
+1. Admin requests to list persons
+2. AddressBook shows a list of persons
+3. Admin decides to rename tag "friends" to "buddies"
+4. Admin edits all persons with "friends" to "buddies"
+Use case ends.
+
+**Extensions**
+
+2a. Admin is happy with all the conventions
+
+4a. AddressBook shows an error message, "edit" is an invalid command
 
 ## Appendix C : Non Functional Requirements
 
