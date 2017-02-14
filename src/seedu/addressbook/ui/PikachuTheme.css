@@ -9,7 +9,7 @@
 }
 
 .text-area {
-	-fx-background-image: url("Pikachu.png");
+	-fx-background-image: url("file:doc/images/Pikachu.png");
 	-fx-background-repeat: stretch;  
     -fx-background-color: white;
     -fx-background-position: center center;
