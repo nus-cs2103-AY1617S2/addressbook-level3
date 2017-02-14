@@ -46,6 +46,9 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user | update contact | update contact information
+`* *` | user | find a person by email | locate details of persons by given email
+`* *` | user | find a person by address | locate details of persons by given address
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
 
@@ -53,6 +56,27 @@ Priority | As a ... | I want to ... | So that I can...
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
+#### Use case: Rename tag
+
+1. User requests to rename a tag
+2. A list of tags display to user
+3. User select a tag to be renamed 
+4. User enters the new name for the selected tag
+5. Address book rename the tag
+6. Address update all persons understand the renamed tag with the new tag name
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. The selected tag is not valid
+
+> Error Message shows to user
+  Use case resumes at step 2
+  
 #### Use case: Delete person
 
 **MSS**
@@ -80,6 +104,9 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should backup the information in case system crash lose data
+7. Should response to the command within 1 second
+8. Should be user friendly, easy to use
 
 ## Appendix D : Glossary
 
