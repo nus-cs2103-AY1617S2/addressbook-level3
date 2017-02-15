@@ -43,9 +43,11 @@ Priority | As a ... | I want to ... | So that I can...
 -------- | :-------- | :--------- | :-----------
 `* * *` | new user | see usage instructions | refer to instructions when I forget how to use the App
 `* * *` | user | add a new person |
+`* * *` | user | edit a person | keep their contact details updated
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user | find persons by tag | obtain all the people relevant to the tag I provided
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
 
@@ -73,6 +75,25 @@ Use case ends.
 
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
+  
+**MSS**
+
+1. User requests to rename tag from <t1> to <t2>
+2. AddressBook renames the tag from <t1> to <t2>
+Use case ends.
+
+**Extensions**
+
+1a. The old tag <t1> does not exist.
+
+> 1a1. AddressBook shows an error message <br>
+  Use case ends
+
+1b. The new tag <t2> is already taken.
+
+> 1b1. AddressBook shows an confirmation message where the user must reply either a 'yes' or 'no'. <br>
+>   1b1a. If user reply a 'yes', use case resumes at step 2.
+>   1b1b. If user reply a 'no', use case ends.
 
 ## Appendix C : Non Functional Requirements
 
@@ -80,6 +101,8 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should be processed under 1 second for each command given.
+6. Should come with nice user interface using JavaFX.
 
 ## Appendix D : Glossary
 
