@@ -75,7 +75,7 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
   
-#### Use case: Delete person
+#### Use case: Rename tag
 
 **MSS**
 
