@@ -47,6 +47,9 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
+`*` | user with persons tagged to groups | retrieves persons with same tag | locate persons within groups by tag without listing names
+`*` | user with persons with multiple numbers | save multiple numbers to a persons | save their mobile and house number
+`*` | user with frequent searches | find the n-most searched for persons | see who I search for the most
 
 
 ## Appendix B : Use Cases
@@ -80,6 +83,57 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+
+## Appendix D : Glossary
+
+##### Mainstream OS
+
+> Windows, Linux, Unix, OS-X
+
+##### Private contact detail
+
+> A contact detail that is not meant to be shared with others
+
+
+#### Use case: Rename person
+
+**MSS**
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to rename a specific person in the list with a new name
+4. AddressBook confirms specific person to be rename with new name
+5. User confirms request
+6. AddressBook renames the person <br>
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. The given index is invalid
+
+> 3a1. AddressBook shows an error message <br>
+  Use case resumes at step 2
+
+5a. The user cancels the request
+
+> Use case ends
+
+5b. The user requests to edit the new name
+> 5b1. AddressBook prompts user for new name to rename with
+  Use case resumes at step 4
+
+## Appendix C : Non Functional Requirements
+
+1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
+2. Should be able to hold up to 1000 persons.
+3. Should come with automated unit tests and open source code.
+4. Should favor DOS style commands over Unix-style commands.
+5. Should be open-sourced and available on GIT.
+6. Should return results within 2 seconds of query.
 
 ## Appendix D : Glossary
 
