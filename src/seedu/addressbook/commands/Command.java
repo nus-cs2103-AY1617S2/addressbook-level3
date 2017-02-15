@@ -39,7 +39,7 @@ public abstract class Command {
     /**
      * Executes the command and returns the result.
      */
-    public abstract CommandResult execute();
+    public abstract CommandResult execute() throws Exception;
 
     /**
      * Supplies the data the command will operate on.
@@ -58,6 +58,11 @@ public abstract class Command {
         return relevantPersons.get(getTargetIndex() - DISPLAYED_INDEX_OFFSET);
     }
 
+    /**
+     * Return whether the command type mutates data
+     */
+    public abstract boolean isMutating();
+    
     public int getTargetIndex() {
         return targetIndex;
     }
