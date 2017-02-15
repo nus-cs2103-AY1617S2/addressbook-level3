@@ -82,13 +82,14 @@ Use case ends.
 1. User requests to list all tags
 2. AddressBook shows a list of tags
 3. User requests to rename an existing tag in the list
-4. AddressBook renames the tag <br>
+4. AddressBook renames the tag for all entries<br>
 
 **Extensions**
 
 2a. The list is empty
 
-> Use case ends
+> 2a1. AddressBook shows an error message <br>
+  Use case ends
 
 ## Appendix C : Non Functional Requirements
 
@@ -97,6 +98,7 @@ Use case ends.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
 5. Should be able to hold up to 1000 tags.
+6. Response time should be 0.5s.
 
 ## Appendix D : Glossary
 
