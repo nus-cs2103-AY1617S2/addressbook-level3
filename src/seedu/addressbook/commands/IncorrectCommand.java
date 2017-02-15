@@ -8,6 +8,8 @@ public class IncorrectCommand extends Command{
 
     public final String feedbackToUser;
 
+    private final boolean isMutating = false;
+    
     public IncorrectCommand(String feedbackToUser){
         this.feedbackToUser = feedbackToUser;
     }
@@ -15,6 +17,11 @@ public class IncorrectCommand extends Command{
     @Override
     public CommandResult execute() {
         return new CommandResult(feedbackToUser);
+    }
+
+    @Override
+    public boolean isMutating() {
+        return isMutating;
     }
 
 }
