@@ -43,8 +43,11 @@ Priority | As a ... | I want to ... | So that I can...
 -------- | :-------- | :--------- | :-----------
 `* * *` | new user | see usage instructions | refer to instructions when I forget how to use the App
 `* * *` | user | add a new person |
+`* * *` | user | add many person at the same time |
 `* * *` | user | delete a person | remove entries that I no longer need
+`* * *` | user | delete many person at the same time | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | edit a person's contact details | reduces the need to delete and create new entries in order to edit them
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
@@ -73,6 +76,36 @@ Use case ends.
 
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
+  
+#### Use case: Rename tag
+
+**MSS**
+
+1. User requests to list tags
+2. AddressBook shows a list of tags
+3. User chooses a tag
+4. AddressBook asks user whether to show the persons of the tag or rename the tag
+5. User requests to rename the tag
+6. User enters new name of the tag
+7. AddressBook renames the tag <br>
+Use case ends.
+
+**Extensions**
+
+3a. The given tag is invalid
+
+> 3a1. AddressBook shows an error message <br>
+  Use case resumes at step 2
+
+5a. The given command is invalid
+
+> 5a1. AddressBook shows an error message <br>
+  Use case resumes at step 4
+
+6a. The given tag name is invalid
+
+> 6a1. AddressBook shows an error message <br>
+  Use case resumes at step 6
 
 ## Appendix C : Non Functional Requirements
 
@@ -80,6 +113,8 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should respond to user commands within 2 seconds.
+6. Should have a long mean time between failures.
 
 ## Appendix D : Glossary
 
