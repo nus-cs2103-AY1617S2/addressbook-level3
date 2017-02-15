@@ -45,9 +45,11 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* *` | user | update a person contact |
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user | export save file | can work on other computers
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
-
+`*` | user with many persons in the address book | group persons by tag | locate a group of person easily
 
 ## Appendix B : Use Cases
 
@@ -74,12 +76,43 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+
+#### Use case: Rename an existing tag
+
+**MSS**
+
+1. User chooses to rename existing tag
+2. AddressBook requests for the name of the existing tag
+3. AddressBook verifies existing tag is valid
+4. AddressBook requests for a new tag name
+5. User enters a new tag name
+6. AddressBook prompts user for confirmation
+7. AddressBook renames existing tag name to new tag name
+8. AddressBook displays operation has completed successfully.
+Use case ends. 
+
+**Extensions**
+
+3a. AddressBook detects an invalid tag
+> 3a1. AddressBook requests for the correct data
+> 3a2. User enters new data   
+Steps 3a1‐3a2 are repeated until the data entered are correct
+Use case resumes from step 4
+
+6a. User cancels the prompt             
+> 6a1. AddressBook display main menu. <br>
+ Use case ends   
+
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should work on non-internet environment
+6. Should support unicode encoding
+7. Should be lightweight on system resources
+8. Should be compact in save file size
 
 ## Appendix D : Glossary
 
