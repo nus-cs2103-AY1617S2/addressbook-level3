@@ -105,6 +105,8 @@ Guarantees: All instances of the original tag name will be changed to the new ta
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should perform user requests in 5 seconds or less.
+6. Should be intuitive and easy to pickup for users that are not used to a CLI.
 
 ## Appendix D : Glossary
 
