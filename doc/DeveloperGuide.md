@@ -74,12 +74,49 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+#### Use case: Rename tag
+
+**MSS**
+
+1. User requests to list all tags
+2. AddressBook shows a list of tags
+3. User requests to change a certain tag
+4. User input the current tag
+5. User input the new tag
+6. AddressBook display message for user to confirm the changes
+7. User reply to the confirmation
+8. AddressBook rename the tag
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. The given current tag is invalid
+
+> 3a1. AddressBook shows an error message <br>
+  Use case resumes at step 2
+  
+4a. The given new tag is invalid
+
+> 3a1. AddressBook shows an error message <br>
+  Use case resumes at step 5
+  
+5a. User does not confirm the changes
+
+> Use case ends
+  
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should have regular backup of data in case of program crashing
+6. Should have interface with no visible lag 
+7. Should respond to user comman within 1 second
 
 ## Appendix D : Glossary
 
