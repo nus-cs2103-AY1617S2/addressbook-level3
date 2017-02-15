@@ -12,12 +12,12 @@
 
         <TextField fx:id="commandInput" onAction="#onCommand" VBox.vgrow="NEVER">
          <tooltip>
-            <Tooltip text="View system output here" />
+            <Tooltip text="Enter your command here" />
          </tooltip></TextField>
 
         <TextArea fx:id="outputConsole" editable="false" wrapText="true" VBox.vgrow="ALWAYS">
          <tooltip>
-            <Tooltip text="Enter your command here" />
+            <Tooltip text="View system output here" />
          </tooltip></TextArea>
       <AmbientLight color="CHARTREUSE" lightOn="true" />
 
