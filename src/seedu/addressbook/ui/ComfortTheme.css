@@ -1,0 +1,19 @@
+@font-face {
+	src: url("Comfortaa-Light.ttf");
+}
+
+.text-field {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Comfortaa";
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-control-inner-background: white;
+}
+
+.text-area {
+    -fx-background-color: black;
+    -fx-control-inner-background: #333333;
+    -fx-font-family: "Comfortaa";
+    -fx-font-size: 14pt;
+    -fx-padding: 5 5 5 5;
+}
