@@ -1,4 +1,4 @@
-package seedu.addressbook.commands;
+	package seedu.addressbook.commands;
 
 /**
  * Terminates the program.
@@ -14,6 +14,11 @@ public class ExitCommand extends Command {
     @Override
     public CommandResult execute() {
         return new CommandResult(MESSAGE_EXIT_ACKNOWEDGEMENT);
+    }
+    
+    @Override
+    public boolean isMutating() {
+        return false;
     }
 
 }
