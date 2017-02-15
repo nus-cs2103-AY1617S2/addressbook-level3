@@ -6,6 +6,7 @@ import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.parser.Parser;
 import seedu.addressbook.storage.StorageFile;
+import seedu.addressbook.storage.StorageFile.StorageOperationException;
 
 import java.util.Collections;
 import java.util.List;
@@ -85,8 +86,15 @@ public class Logic {
     private CommandResult execute(Command command) throws Exception {
         command.setData(addressBook, lastShownList);
         CommandResult result = command.execute();
-        storage.save(addressBook);
+        saveToStorage(command);
         return result;
+    }
+    
+    /** Saves the address book and updates the storage**/
+    private void saveToStorage(Command command) throws StorageOperationException {
+        if (command.isMutating()) {
+            storage.save(addressBook);
+        }
     }
 
     /** Updates the {@link #lastShownList} if the result contains a list of Persons. */
