@@ -86,10 +86,9 @@ public class Logic {
     	command.setData(addressBook, lastShownList);
     	CommandResult result = command.execute();
     	if(command.isMutating()) {   		
-            storage.save(addressBook);
-            return result;
+    		storage.save(addressBook);
     	}   		
-    	return result;      
+    	return result;     	
     }
 
     /** Updates the {@link #lastShownList} if the result contains a list of Persons. */
