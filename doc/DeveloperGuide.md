@@ -47,7 +47,8 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
-
+`* * *` | user | write notes for each contact | remember where I met them
+`* * *` | user | add social media handles for each contact | find them online
 
 ## Appendix B : Use Cases
 
@@ -74,12 +75,40 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+#### Use case: Rename Existing Tag
+
+**MSS**
+
+1. User requests to rename tag
+2. Address Book asks which tag user would like to rename
+3. User enters tag he would like to rename
+4. Address Book shows a list of users with those tags and asks what user would like to rename tag to
+5. User enters his desired tag
+6. Address Book requests for confirmation, to change from <old tag> to <new tag>
+7. User confirms rename.
+8. Address Book renames all contacts with the old tag to new tag, and displays to user a list of contacts with their tags changed.
+Use case ends.
+
+Extensions: 
+3a. Address Book detects no such tag exists.
+3a1. Address Book shows a list of existing tags and requests for tag to be renamed
+3a2. User enters new tag to be renamed.
+Steps 3a1-3a2 repeated until user enters a tag that exists
+Use Case resumes from Step 4.
+
+*a. At any time, user chooses to cancel rename
+*a1. Address Book requests to confirm cancellation
+*a2. User confirms cancellation
+Use Case ends.
+
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should work on both 32-bit and 64-bit environments
+6. Should start-up within 2 seconds
 
 ## Appendix D : Glossary
 
