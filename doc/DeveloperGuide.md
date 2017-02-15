@@ -101,14 +101,19 @@ Use case ends.
 > 2a1. AddressBook shows an error message <br>
   Use case resumes at step 3
 
+2b. The given new tag is a duplicate of one of the old tags
+
+> 2b1. AddressBook shows an error message <br>
+  Use case resumes at step 3
+
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
-5. Should be able to display any response to user input within 5 seconds
-6. Should allow users who are not IT-savvy intuitively understand user interface
+5. Should be able to display any response to user input within 0.2 seconds.
+6. Should allow users who are not IT-savvy intuitively understand user interface.
 
 ## Appendix D : Glossary
 
