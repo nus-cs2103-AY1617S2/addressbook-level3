@@ -45,7 +45,9 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | edit an existing person | change details whenever necessary
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user | add tags on a person | view all contacts with the same tag
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
 
@@ -74,12 +76,45 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+#### Use Case: Rename Tag
+
+**MSS**
+
+1. User requests to list tags
+2. AddressBook shows list of tags
+3. User requests to edit specific tag in the list
+4. AddressBook requests for a new tag name
+5. User inputs a new tag name
+6. AddressBook requests for confirmation of new tag name
+7. User reply to the confirmation
+8. AddressBook renames previous tag name with user-input tag name
+Use case ends. 
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+5a. Existing tag name already exists
+
+> 5a1. AddressBook requests for another tag name 
+  Use case resumes at step 5
+  
+7a. User cancels the confirmation
+
+> 7a1. AddressBook requests if user would like to continue with the process of renaming
+  Use case resumes at step 1
+
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should adhere to the Java coding standard.
+6. Should be able to hold up to 1000 tags per name.
+7. Should be able to run efficiently
 
 ## Appendix D : Glossary
 
