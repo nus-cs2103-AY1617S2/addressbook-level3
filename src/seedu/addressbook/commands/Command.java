@@ -3,6 +3,7 @@ package seedu.addressbook.commands;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
+import seedu.addressbook.data.person.UniquePersonList.DuplicatePersonException;
 
 import java.util.List;
 
@@ -15,7 +16,13 @@ public abstract class Command {
     protected AddressBook addressBook;
     protected List<? extends ReadOnlyPerson> relevantPersons;
     private int targetIndex = -1;
-
+    
+    /**
+     * alerts that a command mutates the address book.
+     * @return true if the command mutates
+     */
+    public abstract boolean isMutating();
+    
     /**
      * @param targetIndex last visible listing index of the target person
      */
@@ -38,8 +45,9 @@ public abstract class Command {
 
     /**
      * Executes the command and returns the result.
+     * @throws DuplicatePersonException 
      */
-    public abstract CommandResult execute();
+    public abstract CommandResult execute() throws DuplicatePersonException;
 
     /**
      * Supplies the data the command will operate on.
