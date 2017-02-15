@@ -25,7 +25,8 @@ public class AddCommand extends Command {
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
     private final Person toAdd;
-
+    
+    @Override
     public boolean isMutating() {
     	return true;
     }
