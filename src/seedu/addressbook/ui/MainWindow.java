@@ -68,6 +68,7 @@ public class MainWindow {
     	exitApp();
     }
     
+    
     @FXML
     private TextArea outputConsole;
 
