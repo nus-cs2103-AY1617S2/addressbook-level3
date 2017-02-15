@@ -74,7 +74,6 @@ Use case ends.
 3a. The given index is invalid
 
 > 3a1. AddressBook shows an error message <br>
-  Use case resumes at step 2
 
 #### Use case: Rename tag
 
@@ -83,7 +82,8 @@ Use case ends.
 1. User requests to list tags
 2. AddressBook shows a list of tags
 3. User requests to rename a specific tag in the list
-4. AddressBook renames the tag <br>
+4. AddressBook confirms the change with the user
+5. AddressBook renames the tag <br>
 Use case ends.
 
 **Extensions**
@@ -95,7 +95,6 @@ Use case ends.
 3a. The given index is invalid
 
 > 3a1. AddressBook shows an error message <br>
-  Use case resumes at step 2
 
 
 ## Appendix C : Non Functional Requirements
