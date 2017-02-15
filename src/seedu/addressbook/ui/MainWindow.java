@@ -6,10 +6,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import seedu.addressbook.commands.ExitCommand;
+import seedu.addressbook.commands.ListCommand;
 import seedu.addressbook.logic.Logic;
+import seedu.addressbook.commands.AddCommand;
+import seedu.addressbook.commands.ClearCommand;
 import seedu.addressbook.commands.CommandResult;
+import seedu.addressbook.commands.DeleteCommand;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
+import java.awt.Button;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,13 +38,42 @@ public class MainWindow {
     public void setMainApp(Stoppable mainApp){
         this.mainApp = mainApp;
     }
-
+    
+    /**
+     * List of FXML buttons functions
+     * @throws Exception 
+     */  
+    @FXML
+    private void onAddButton() throws Exception {
+    	commandButton(AddCommand.COMMAND_WORD);
+    }
+    @FXML
+    private void onDeleteButton() throws Exception {
+    	commandButton(DeleteCommand.COMMAND_WORD);
+    }
+    
+    @FXML
+    private void onListButton() throws Exception {
+    	commandButton(ListCommand.COMMAND_WORD);
+    }
+    
+    @FXML
+    private void onClearButton() throws Exception {
+    	commandButton(ClearCommand.COMMAND_WORD);
+    }
+    
+    @FXML
+    private void onExitButton() throws Exception {
+    	commandButton(ExitCommand.COMMAND_WORD);
+    	exitApp();
+    }
+    
     @FXML
     private TextArea outputConsole;
 
     @FXML
     private TextField commandInput;
-
+    
 
     @FXML
     void onCommand(ActionEvent event) {
@@ -75,6 +109,18 @@ public class MainWindow {
     /** Clears the output display area */
     public void clearOutputConsole(){
         outputConsole.clear();
+    }
+    
+    /** Command button skeleton */
+    public void commandButton(String userCommandText) {
+        try {
+			CommandResult result = logic.execute(userCommandText);
+			displayResult(result);
+			clearCommandInput();
+		} catch (Exception e) {
+			display(e.getMessage());
+	        throw new RuntimeException(e);
+		}
     }
 
     /** Displays the result of a command execution to the user. */
