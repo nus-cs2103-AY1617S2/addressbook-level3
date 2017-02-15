@@ -81,7 +81,7 @@ Use case ends.
 **MSS**
 
 1. User requests to rename tag
-2. AddressBook shows a list of tags, then prompts for tag to rename, followed by   new name of tag, separated by a space
+2. AddressBook shows a list of tags, then prompts for tag to rename, followed by new name of tag, separated by a space
 3. User enters old tag and new tag, separated by a space
 4. AddressBook changes all tags of the current name to the new tag <br>
 Use case ends.
