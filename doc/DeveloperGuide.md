@@ -47,6 +47,10 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
+`* *` | user | remove all the contacts with only one operation |
+`*` | user | exit the program using command rather than click the button | I can quit the program more conveniently
+`* * *` | user | list all the contacts |
+`* *` | user | view the detailed information of the specifed contact |
 
 
 ## Appendix B : Use Cases
@@ -72,14 +76,42 @@ Use case ends.
 3a. The given index is invalid
 
 > 3a1. AddressBook shows an error message <br>
-  Use case resumes at step 2
+  Use case resumes at step 2 ? really
 
+#### Use case: View detailed information of a person
+
+**MSS**
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to view detailed info of a specific person in the list
+4. AddressBook displays the detilaed info <br>
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. The given index is out of bound
+
+> 3a1. AddressBook shows an error message <br>
+  use case resumes at step 1
+
+3b. The given index is of wrong format
+
+> 3b1. AddressBook shows an error message <br>
+  use case resumes at step 1  
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. searching should be fast
+6. adding should be fast
+7. removing should be fast
 
 ## Appendix D : Glossary
 
