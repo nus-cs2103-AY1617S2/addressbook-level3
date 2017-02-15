@@ -105,6 +105,10 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should have a easy to use user interface
+6. Should run quickly enough on a regular PC
+7. Should save data in a permanent place
+8. Should never allow data to be edited externally outside the program
 
 ## Appendix D : Glossary
 
