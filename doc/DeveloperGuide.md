@@ -45,6 +45,9 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | clear current data stored inside addressbook |
+`* * *` | user | add different tags to individual persons |
+`* * *` | user | view all current personal contacts stored inside addressbook |
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
@@ -73,6 +76,35 @@ Use case ends.
 
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
+  
+  #### Use case: Rename tag
+
+**MSS**
+
+1. User requests to update a certain person's tag in address book
+2. AddressBook shows this person's name and tags
+3. User requests to update a specific tag
+4. AddressBook confirm with user the old and the new tag
+5. User requests to confirm or discard the change
+6. AddressBook update the tag accordingly if confirmed, and shows successful result
+Use case ends.
+
+**Extensions**
+
+1a. The requested person does not exist
+
+> 1a1. AddressBook shows an error message <br>
+  Use case resumes at step 1
+
+2a. The given tag to be updated does not exist
+
+> 2a1. AddressBook shows an error message <br>
+  Use case resumes at step 3
+
+2b. The given new tag is a duplicate of one of the old tags
+
+> 2b1. AddressBook shows an error message <br>
+  Use case resumes at step 3
 
 ## Appendix C : Non Functional Requirements
 
@@ -80,6 +112,8 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should be able to display any response to user input within 0.2 seconds.
+6. Should allow users who are not IT-savvy intuitively understand user interface.
 
 ## Appendix D : Glossary
 
