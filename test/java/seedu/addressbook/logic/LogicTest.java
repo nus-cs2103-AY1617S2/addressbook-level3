@@ -193,7 +193,7 @@ public class LogicTest {
 
         // prepare address book state
         helper.addToAddressBook(addressBook, false, true);
-
+        saveFile.save(addressBook);
         assertCommandBehavior("list",
                               Command.getMessageForPersonListShownSummary(expectedList),
                               expectedAB,
@@ -240,7 +240,7 @@ public class LogicTest {
         List<Person> lastShownList = helper.generatePersonList(p1, p2);
         AddressBook expectedAB = helper.generateAddressBook(lastShownList);
         helper.addToAddressBook(addressBook, lastShownList);
-
+        saveFile.save(addressBook);
         logic.setLastShownList(lastShownList);
 
         assertCommandBehavior("view 1",
@@ -267,6 +267,7 @@ public class LogicTest {
         expectedAB.addPerson(p2);
 
         addressBook.addPerson(p2);
+        saveFile.save(addressBook);
         logic.setLastShownList(lastShownList);
 
         assertCommandBehavior("view 1",
@@ -296,7 +297,7 @@ public class LogicTest {
         List<Person> lastShownList = helper.generatePersonList(p1, p2);
         AddressBook expectedAB = helper.generateAddressBook(lastShownList);
         helper.addToAddressBook(addressBook, lastShownList);
-
+        saveFile.save(addressBook);
         logic.setLastShownList(lastShownList);
 
         assertCommandBehavior("viewall 1",
@@ -323,6 +324,7 @@ public class LogicTest {
         expectedAB.addPerson(p1);
 
         addressBook.addPerson(p1);
+        saveFile.save(addressBook);
         logic.setLastShownList(lastShownList);
 
         assertCommandBehavior("viewall 2",
@@ -409,7 +411,7 @@ public class LogicTest {
         AddressBook expectedAB = helper.generateAddressBook(fourPersons);
         List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
         helper.addToAddressBook(addressBook, fourPersons);
-
+        saveFile.save(addressBook);
         assertCommandBehavior("find KEY",
                                 Command.getMessageForPersonListShownSummary(expectedList),
                                 expectedAB,
@@ -429,7 +431,7 @@ public class LogicTest {
         AddressBook expectedAB = helper.generateAddressBook(fourPersons);
         List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
         helper.addToAddressBook(addressBook, fourPersons);
-
+        saveFile.save(addressBook);
         assertCommandBehavior("find KEY",
                                 Command.getMessageForPersonListShownSummary(expectedList),
                                 expectedAB,
@@ -449,7 +451,7 @@ public class LogicTest {
         AddressBook expectedAB = helper.generateAddressBook(fourPersons);
         List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
         helper.addToAddressBook(addressBook, fourPersons);
-
+        saveFile.save(addressBook);
         assertCommandBehavior("find KEY rAnDoM",
                                 Command.getMessageForPersonListShownSummary(expectedList),
                                 expectedAB,
