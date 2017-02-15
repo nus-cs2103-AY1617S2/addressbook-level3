@@ -55,6 +55,32 @@ Priority | As a ... | I want to ... | So that I can...
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
+#### Use case: Rename tag
+
+**MSS**
+
+1. User requests to list tags
+2. AddressBook shows a list of tags
+3. User requests to rename a specific tag in the list
+4. AddressBook renames the tag <br>
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. Tag to be changed does not exist
+
+> 3a1. AddressBook shows an error message <br>
+  Use case resumes at step 2
+
+3b. New tag contains invalid characters
+
+> 3b1. AddressBook shows an error message <br>
+  Use case resumes at step 2
+
 #### Use case: Delete person
 
 **MSS**
@@ -82,6 +108,8 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should list up to 1000 persons in 200ms.
+6. Should encrypt all AddressBook data.
 
 ## Appendix D : Glossary
 
