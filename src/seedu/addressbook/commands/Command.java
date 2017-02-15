@@ -41,6 +41,9 @@ public abstract class Command {
      */
     public abstract CommandResult execute() throws Exception;
     
+    /**
+     * Checks if the command mutates the state of the save file.
+     */
     public abstract boolean isMutating();
 
     /**
