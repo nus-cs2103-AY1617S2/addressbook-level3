@@ -39,8 +39,13 @@ public abstract class Command {
     /**
      * Executes the command and returns the result.
      */
-    public abstract CommandResult execute();
-
+    public abstract CommandResult execute() throws Exception;
+    
+    /**
+     * To check if the data is modified or not when a command is executed.
+     */
+    public abstract Boolean isMutating();
+    
     /**
      * Supplies the data the command will operate on.
      */
