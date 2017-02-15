@@ -13,8 +13,13 @@ public class IncorrectCommand extends Command{
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws Exception {
         return new CommandResult(feedbackToUser);
+    }
+
+    @Override
+    public boolean isMutating() {
+        return false;
     }
 
 }

@@ -31,7 +31,7 @@ public class FindCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws Exception {
         final List<ReadOnlyPerson> personsFound = getPersonsWithNameContainingAnyKeyword(keywords);
         return new CommandResult(getMessageForPersonListShownSummary(personsFound), personsFound);
     }
@@ -51,6 +51,11 @@ public class FindCommand extends Command {
             }
         }
         return matchedPersons;
+    }
+
+    @Override
+    public boolean isMutating() {
+        return false;
     }
 
 }
