@@ -92,15 +92,10 @@ Use case ends.
 2a. The list is empty
 
 > Use case ends
-
-3a. The given tag is invalid
+  
+3a. The new tag is already in use
 
 > 3a1. AddressBook shows an error message <br>
-  Use case resumes at step 2
-  
-3b. The new tag is already in use
-
-> 3b1. AddressBook shows an error message <br>
   Use case resumes at step 2
   
 5a. user declines the confirmation.
