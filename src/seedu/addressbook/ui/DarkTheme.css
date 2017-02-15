@@ -2,16 +2,17 @@
 
 .text-field {
     -fx-font-size: 12pt;
-    -fx-font-family: "Consolas";
+    -fx-font-family: "Times New Roman";
     -fx-font-weight: bold;
-    -fx-text-fill: yellow;
-    -fx-control-inner-background: derive(#1d1d1d,20%);
+    -fx-text-fill: black;
+    -fx-prompt-text-fill: black;
+    -fx-control-inner-background: white;
 }
 
 .text-area {
-    -fx-background-color: black;
-    -fx-control-inner-background: black;
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-font-size: 10pt;
-    -fx-padding: 5 5 5 5;
+	-fx-font-size: 12pt;
+	-fx-font-family: "Times New Roman";
+    -fx-background-color: white;
+    -fx-control-inner-background: white; 
+    -fx-padding: 2 2 2 2;
 }

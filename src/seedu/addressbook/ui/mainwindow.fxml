@@ -1,19 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox stylesheets="@/seedu/addressbook/ui/DarkTheme.css" alignment="center" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="seedu.addressbook.ui.MainWindow">
+<VBox alignment="center" stylesheets="@/seedu/addressbook/ui/DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seedu.addressbook.ui.MainWindow">
 
     <children>
 
-        <TextField fx:id="commandInput" onAction="#onCommand" VBox.vgrow="NEVER">
-        </TextField>
+        <TextField fx:id="commandInput" onAction="#onCommand" promptText="Type here" style="-: white;" styleClass="text-field" stylesheets="@LightTheme.css" VBox.vgrow="NEVER">
+         <font>
+            <Font name="Arial Black" size="14.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></TextField>
 
-        <TextArea fx:id="outputConsole" editable="false" wrapText="true" VBox.vgrow="ALWAYS">
-        </TextArea>
+        <TextArea fx:id="outputConsole" editable="false" styleClass="text-area" stylesheets="@LightTheme.css" wrapText="true" VBox.vgrow="ALWAYS">
+         <font>
+            <Font name="Arial Black" size="14.0" />
+         </font></TextArea>
+      <ButtonBar prefHeight="40.0" prefWidth="200.0" stylesheets="@DarkTheme.css">
+        <buttons>
+          <Button defaultButton="true" mnemonicParsing="false" text="Enter" textAlignment="CENTER">
+               <font>
+                  <Font name="Arial Black" size="14.0" />
+               </font>
+            </Button>
+        </buttons>
+      </ButtonBar>
 
     </children>
 
