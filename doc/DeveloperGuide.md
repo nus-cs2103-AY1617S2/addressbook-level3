@@ -102,6 +102,9 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Response time should be at most 1 second even list of people is full
+6. Codes should be properly commented on to maintain readability
+7. All classes should follow the single responsibility guideline
 
 ## Appendix D : Glossary
 
