@@ -45,12 +45,12 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | modify the contact information of a selected person | modify conveniently rather than recreate to do the modification
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user | keep social media account for each person |
+`* *` | user | keep some remark text for each person | I can store some extra but important information such as gender and nick name
+`*` | user | remove multiple persons at the same time | delete conveniently rather than remove them one after another
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
-`* *` | user | remove all the contacts with only one operation |
-`*` | user | exit the program using command rather than click the button | I can quit the program more conveniently
-`* * *` | user | list all the contacts |
-`* *` | user | view the detailed information of the specifed contact |
 
 
 ## Appendix B : Use Cases
@@ -78,40 +78,51 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2 ? really
 
-#### Use case: View detailed information of a person
+#### Use case: Rename tags
 
 **MSS**
 
-1. User requests to list persons
-2. AddressBook shows a list of persons
-3. User requests to view detailed info of a specific person in the list
-4. AddressBook displays the detilaed info <br>
+1. User requests to rename a specified tag name to a new tag name with one command
+2. AddressBook ask for the confirmation from the user
+3. User confirm the operation
+4. AddressBook replace the old tag name by the new one, and show successful message
 Use case ends.
 
 **Extensions**
 
-2a. The list is empty
+3a. User cancel the operation
 
 > Use case ends
 
-3a. The given index is out of bound
+4a. The old name does not exist
 
-> 3a1. AddressBook shows an error message <br>
-  use case resumes at step 1
+> AddressBook shows an error message <br>
+  use case ends
 
-3b. The given index is of wrong format
+4b. The new tag already exists
 
-> 3b1. AddressBook shows an error message <br>
-  use case resumes at step 1  
+> AddressBook shows an error message indicating the duplicate <br>
+  use case resumes to 1
+  
+4c. The new tag is of wrong format (length restriction or character restriction)
+
+> AddressBook shows an error message <br>
+  use case resumes to 1
+
+4d. The command is of wrong format
+
+> AddressBook shows an error message and display help page
+  use case ends
+  
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
-5. searching should be fast
-6. adding should be fast
-7. removing should be fast
+5. searching should take constant time
+6. adding should take constant time
+7. removing should take constant time
 
 ## Appendix D : Glossary
 
