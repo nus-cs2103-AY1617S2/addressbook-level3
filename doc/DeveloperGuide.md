@@ -45,9 +45,13 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | find a person by email| locate details of persons without having to go through the entire list
+`* * *` | user | find a person by phone | locate details of persons without having to go through the entire list
+`* * *` | user | find a person by address | locate details of persons without having to go through the entire list
+`* *` | user with many persons in the address book| group the persons by tags | list a group of persons from a certain group easily, e.g. colleagues
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
-
+`*` | user | modify the information about a particular user | do not need to delete and add the person every time there is a change in the contact information
 
 ## Appendix B : Use Cases
 
@@ -74,12 +78,48 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+#### Use case: Rename tag
+
+**MSS**
+
+1. User requests to list tags
+2. AddressBook shows a list of tags
+3. User chooses a particular tag and enters
+4. AddressBook asks user whether to show the persons of the tag or rename the tag (or any other possible action to be added in in the future)
+5. User requests to rename the tag
+6. AddressBook confirms with user 
+7. User types yes/enter
+8. AddressBook gets ready to read input
+9. User types in new name of the tag and enters
+10. AddressBook confirms with user
+11. User types yes/enter
+12. AddressBook update the tag with the new name
+Use case ends.
+
+**Extenions**
+
+3a. User types in incorrect tag (non-existing)
+>3a1. AddressBook shows an error message <br>
+ Use case resumes at step 2
+
+5a.User types in incorrect command
+>5a1. AddressBook shows an error message <br>
+ Use case resumes at step 4
+
+9a.User types in an invalid tag name
+>9a1. AddressBook shows an error message <br>
+ Use case resumes at step 8
+
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should not crash more than 1 per ten thousand correctly executed actions. 
+6. Should allow user to upgrade easily if and when an upgrade is available.
+7. Should contain a login mechanism for security purposes.
+8. Should contain a hierachy of authorization levels for different actions.
 
 ## Appendix D : Glossary
 
