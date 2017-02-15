@@ -38,5 +38,11 @@ public class DeleteCommand extends Command {
             return new CommandResult(Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK);
         }
     }
+    
+    @Override
+    public boolean isMutating() {
+    	// TODO Auto-generated method stub
+    	return true;
+    }
 
 }
