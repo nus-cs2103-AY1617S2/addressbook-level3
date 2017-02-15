@@ -2,7 +2,7 @@ package seedu.addressbook;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import seedu.addressbook.logic.Logic;
 import seedu.addressbook.ui.Gui;
@@ -15,12 +15,16 @@ public class Main extends Application implements Stoppable{
 
     /** Version info of the program. */
     public static final String VERSION = "AddessBook Level 3 - Version 1.0";
+    
+    /** Path to icon */
+    public static final String ICON_PATH = "file:doc/images/icon.png";
 
     private Gui gui;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         gui = new Gui(new Logic(), VERSION);
+        primaryStage.getIcons().add(new Image(ICON_PATH));
         gui.start(primaryStage, this);
     }
 
