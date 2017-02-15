@@ -80,6 +80,9 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should be able to output quickly after user has entered a command.
+6. Should have a foolproof interface that everyone will be able to use easily.
+7. Should be able to hold a back up of contacts.
 
 ## Appendix D : Glossary
 
