@@ -3,6 +3,7 @@ package seedu.addressbook.commands;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
+import seedu.addressbook.data.person.UniquePersonList.DuplicatePersonException;
 
 import java.util.List;
 
@@ -25,6 +26,11 @@ public abstract class Command {
 
     protected Command() {
     }
+    
+    /**
+     * Returns true if the command type mutates the data.
+     */
+    public abstract boolean isMutating();
 
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
@@ -38,8 +44,9 @@ public abstract class Command {
 
     /**
      * Executes the command and returns the result.
+     * @throws DuplicatePersonException 
      */
-    public abstract CommandResult execute();
+    public abstract CommandResult execute() throws Exception;
 
     /**
      * Supplies the data the command will operate on.
