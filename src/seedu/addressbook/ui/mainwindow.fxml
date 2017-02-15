@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox stylesheets="@/seedu/addressbook/ui/DarkTheme.css" alignment="center" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="seedu.addressbook.ui.MainWindow">
-
-    <children>
-
-        <TextField fx:id="commandInput" onAction="#onCommand" VBox.vgrow="NEVER">
-        </TextField>
-
-        <TextArea fx:id="outputConsole" editable="false" wrapText="true" VBox.vgrow="ALWAYS">
-        </TextArea>
-
-    </children>
+<VBox alignment="center" stylesheets="@/seedu/addressbook/ui/DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seedu.addressbook.ui.MainWindow">
+   <children>
+      <JFXTextField fx:id="commandInput" onAction="#onCommand" stylesheets="@DarkTheme.css" VBox.vgrow="NEVER" />
+      <JFXTextArea fx:id="outputConsole" editable="false" stylesheets="@DarkTheme.css" wrapText="true" VBox.vgrow="ALWAYS" />
+      <JFXButton fx:id="quitBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#exitApp" ripplerFill="#545454" text="Quit" VBox.vgrow="NEVER" />
+   </children>
 
 </VBox>

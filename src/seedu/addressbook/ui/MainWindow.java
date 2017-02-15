@@ -13,6 +13,9 @@ import seedu.addressbook.data.person.ReadOnlyPerson;
 import java.util.List;
 import java.util.Optional;
 
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
+
 import static seedu.addressbook.common.Messages.*;
 
 /**
@@ -35,10 +38,10 @@ public class MainWindow {
     }
 
     @FXML
-    private TextArea outputConsole;
+    private JFXTextArea outputConsole;
 
     @FXML
-    private TextField commandInput;
+    private JFXTextField commandInput;
 
 
     @FXML
@@ -57,7 +60,8 @@ public class MainWindow {
             throw new RuntimeException(e);
         }
     }
-
+    
+    @FXML
     private void exitApp() throws Exception {
         mainApp.stop();
     }
