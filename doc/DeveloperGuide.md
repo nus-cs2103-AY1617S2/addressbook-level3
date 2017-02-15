@@ -85,7 +85,7 @@ Use case ends.
 2. AddressBook shows a list of persons with the tag
 3. User requests to rename tag
 4. AddressBook confirms with user
-4. AddressBook deletes the person <br>
+4. AddressBook changes the tag <br>
 Use case ends.
 
 **Extensions**
