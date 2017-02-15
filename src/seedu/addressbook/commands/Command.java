@@ -57,6 +57,11 @@ public abstract class Command {
     protected ReadOnlyPerson getTargetPerson() throws IndexOutOfBoundsException {
         return relevantPersons.get(getTargetIndex() - DISPLAYED_INDEX_OFFSET);
     }
+    
+    /**
+     * Limits file saving to commands that mutate data
+     */
+    public abstract boolean isMutating();
 
     public int getTargetIndex() {
         return targetIndex;
