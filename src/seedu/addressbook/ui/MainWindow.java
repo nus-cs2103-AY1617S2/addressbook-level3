@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import seedu.addressbook.commands.ExitCommand;
+import seedu.addressbook.commands.ListCommand;
 import seedu.addressbook.logic.Logic;
 import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.data.person.ReadOnlyPerson;
@@ -50,6 +51,30 @@ public class MainWindow {
                 exitApp();
                 return;
             }
+            displayResult(result);
+            clearCommandInput();
+        } catch (Exception e) {
+            display(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+    
+    @FXML
+    void onListClick() {
+        try {
+            CommandResult result = logic.execute("list");
+            displayResult(result);
+            clearCommandInput();
+        } catch (Exception e) {
+            display(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+    
+    @FXML
+    void onClearClick() {
+        try {
+            CommandResult result = logic.execute("clear");
             displayResult(result);
             clearCommandInput();
         } catch (Exception e) {
