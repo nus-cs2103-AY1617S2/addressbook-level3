@@ -6,7 +6,7 @@
 * [Appendix A: User Stories](#appendix-a--user-stories)
 * [Appendix B: Use Cases](#appendix-b--use-cases)
 * [Appendix C: Non Functional Requirements](#appendix-c--non-functional-requirements)
-* [Appendix D: Gloassary](#appendix-d--glossary)
+* [Appendix D: Glossary](#appendix-d--glossary)
 
 ## Setting up
 
@@ -44,9 +44,12 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | new user | see usage instructions | refer to instructions when I forget how to use the App
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
+`* * *` | user | edit a person | change the details of an entry if contact details change
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
+`*` | user with many persons in the address book | delete in bulk | remove many entries at once
+`*` | user with many persons in the address book | favorite contacts | find persons that I contact frequently
 
 
 ## Appendix B : Use Cases
@@ -73,6 +76,27 @@ Use case ends.
 
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
+  
+#### Use case: Rename an existing tag
+
+**MSS**
+
+1. User requests to list tags
+2. AddressBook shows a list of tags
+3. User requests to edit details of a tag
+4. AddressBook renames the tag indicated
+Use case ends.
+
+ **Extensions**
+ 
+ 2a. The list is empty
+ 
+ > Use case ends
+ 
+ 3a. The given tag is invalid
+ 
+ > 3a1. AddressBook shows an error message <br>
+   Use case resumes at step 2
 
 ## Appendix C : Non Functional Requirements
 
@@ -80,6 +104,7 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should respond quickly to user commands within a set amount of time
 
 ## Appendix D : Glossary
 
