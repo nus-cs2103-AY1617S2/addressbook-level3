@@ -113,6 +113,11 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should have a nicer GUI
+6. Should work on iOS, Android and Windows Phone
+7. Should have a touchscreen interface
+8. Should have a built in keyboard
+9. Should have multiple language suppot
 
 ## Appendix D : Glossary
 
