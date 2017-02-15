@@ -46,6 +46,10 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user | group persons |
+`* *` | user | find by any contact details | search by details such as address or phone 
+`* *` | user | export address book | use the address book with other software
+`*` | user | save to cloud | access address book on multiple devices
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
 
