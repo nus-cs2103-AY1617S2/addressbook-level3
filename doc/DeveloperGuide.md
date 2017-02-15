@@ -76,6 +76,29 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+### Use case: Rename tag
+System: Address Book
+Use Case: Rename existing tag
+Actor: User
+Preconditions: User has created a tag and assigned it to one ore more entries.
+Guarantees: All instances of the original tag name will be changed to the new tag name.
+**MSS:**
+	1. User requests to change tag.
+	2. User inputs original tag name and new tag name.
+	3. Address Book requests for confirmation.
+	4. User confirms tag change.
+	5. Address Book displays confirmation message along with all changed entries.
+		Use case ends.
+**Extensions:**
+	2a. Address Book does not recognize original tag name.
+		2a1. Address Book notifies user that tag name does not exist and requests correct tag name.
+		2a2. User enters correct tag name and new tag name.
+	Steps 2a1‐2a2 are repeated until the data entered are correct.
+	Use case resumes from step 3.
+	4a. User declines tag change.
+		4a1. Address Book cancels tag change and notifies user.
+	Use case ends.
+
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
