@@ -81,10 +81,9 @@ Use case ends.
  **MSS**
  
  1. User requests to rename an existing tag to a new tag
- 2. AddressBook lists all people with the existing tag
- 3. AddressBook asks user if they want to rename the tag
- 4. User confirms renaming
- 5. AddressBook changes renames all existing tags to new tag
+ 2. AddressBook lists all people with the existing tag and asks user if they want to rename the tag
+ 3. User confirms renaming
+ 4. AddressBook changes renames all existing tags to new tag
  Use case ends.
  
  **Extensions**
@@ -99,8 +98,7 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
-5. Should have well documented code.
-6. Should be easily extensible to add new features.
+5. Should have documentation for all classes.
 7. Should reject incorrect user input and offer help to user.
 
 ## Appendix D : Glossary
