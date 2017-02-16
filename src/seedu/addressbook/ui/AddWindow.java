@@ -2,6 +2,7 @@ package seedu.addressbook.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import seedu.addressbook.commands.AddCommand;
 import seedu.addressbook.logic.Logic;
 
@@ -32,6 +33,7 @@ public class AddWindow extends MainWindow {
 	
 	@FXML
 	private TextField tagsField;
+	private Stage dialogStage;
 	
 	private void parseString() {
 		String name = nameField.getText();
@@ -57,6 +59,11 @@ public class AddWindow extends MainWindow {
 	
 	public void setOkClicked() {
 		this.okClicked = true;
+	}
+
+	public void setDialogStage(Stage dialogStage) {
+		this.dialogStage = dialogStage;
+		
 	}
 	
 }
