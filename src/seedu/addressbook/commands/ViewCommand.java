@@ -26,7 +26,7 @@ public class ViewCommand extends Command {
 
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws Exception {
         try {
             final ReadOnlyPerson target = getTargetPerson();
             if (!addressBook.containsPerson(target)) {
@@ -38,4 +38,8 @@ public class ViewCommand extends Command {
         }
     }
 
+    @Override
+    public boolean isMutating() {
+    	return false;
+    }
 }

@@ -48,9 +48,14 @@ public class AddCommand extends Command {
                 new UniqueTagList(tagSet)
         );
     }
-
+    
     public AddCommand(Person toAdd) {
         this.toAdd = toAdd;
+    }
+    
+    @Override
+    public boolean isMutating() {
+    	return true;
     }
 
     public ReadOnlyPerson getPerson() {
@@ -58,7 +63,7 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws Exception {
         try {
             addressBook.addPerson(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
