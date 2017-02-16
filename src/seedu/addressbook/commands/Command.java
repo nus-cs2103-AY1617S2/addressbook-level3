@@ -1,12 +1,12 @@
 package seedu.addressbook.commands;
 
+import static seedu.addressbook.ui.Gui.DISPLAYED_INDEX_OFFSET;
+
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
 import java.util.List;
-
-import static seedu.addressbook.ui.Gui.DISPLAYED_INDEX_OFFSET;
 
 /**
  * Represents an executable command.
@@ -65,4 +65,7 @@ public abstract class Command {
     public void setTargetIndex(int targetIndex) {
         this.targetIndex = targetIndex;
     }
+
+    /** This method will return true for command types that mutate the data. e.g. AddCommand */
+    public abstract boolean isMutating();
 }
