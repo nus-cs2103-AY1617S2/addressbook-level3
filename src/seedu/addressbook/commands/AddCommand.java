@@ -11,9 +11,13 @@ import java.util.Set;
 /**
  * Adds a person to the address book.
  */
-public class AddCommand extends Command {
+public class AddCommand extends Command{
 
     public static final String COMMAND_WORD = "add";
+    
+    public boolean isMutating(){
+    	return true;
+    }
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Adds a person to the address book. "
             + "Contact details can be marked private by prepending 'p' to the prefix.\n\t"
@@ -58,7 +62,7 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute()  throws Exception {
         try {
             addressBook.addPerson(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
