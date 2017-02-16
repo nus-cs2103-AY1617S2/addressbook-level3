@@ -10,9 +10,15 @@
     <children>
 
         <TextField fx:id="commandInput" onAction="#onCommand" VBox.vgrow="NEVER">
+        	<font>
+ +          	<Font name="Times New Roman" size="28.0" />
+ +      	</font>
         </TextField>
 
         <TextArea fx:id="outputConsole" editable="false" wrapText="true" VBox.vgrow="ALWAYS">
+        	<font>
+ +          	<Font name="Times New Roman" size="28.0" />
+ +      	</font>
         </TextArea>
 
     </children>
