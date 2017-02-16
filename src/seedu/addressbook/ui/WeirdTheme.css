@@ -1,0 +1,16 @@
+
+.text-field {
+    -fx-font-size:12pt;
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-weight: bold;
+    -fx-text-fill: green;
+    -fx-control-inner-background: derive(#1d1d1d,20%);
+}
+
+.text-area {
+    -fx-background-color: yellow;
+    -fx-control-inner-background: red;
+    -fx-font-family: "Arial";
+    -fx-font-size: 17pt;
+    -fx-padding: 5 5 5 5;
+}
