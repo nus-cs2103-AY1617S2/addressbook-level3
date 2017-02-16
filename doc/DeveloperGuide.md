@@ -45,6 +45,14 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | list all persons in the address book with index number | view everyone in the address book
+`* * *` | user | exit the program | close the program safely
+`* *` | user | edit a person's address | update the address of an existing person in the address book 
+`* *` | user | edit a person's email | update the email address of an existing person in the address book
+`* *` | user | edit a person's phone number | update the phone number of an existing person in the address book  
+`* *` | user | add a tag | tag an existing person
+`* *` | user | delete a tag | remove an existing tag that I no longer need
+`* *` | user | find a person by keyword | locate the details of the person with keyword matching name, address, email or phone
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
