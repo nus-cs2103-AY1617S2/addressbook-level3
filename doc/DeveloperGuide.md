@@ -84,11 +84,12 @@ Use case ends.
 
 1. User requests to list all tags in the Address Book. 
 2. Address Book shows a list of all tags.
-3. User requests to rename a specific tag and provides the new tag name.
+3. User requests to rename a specific tag.
 4. Address Book displays a list of persons with that particular tag.
-5. Address Book requests for confirmation.
-6. User confirms rename operation.
-7. Address Book renames tag.
+5. User provides the new tag name.
+6. Address Book requests for confirmation.
+7. User confirms rename operation.
+8. Address Book renames tag.
 Use case ends.
 
 **Extensions**
@@ -104,9 +105,14 @@ Use case ends.
 > 3a1.Address Book shows an error message.
   Use case ends.
   
-6a. User chooses to cancel the operation.
-> 6a1. Address Book requests to confirm the cancellation.
-  6a2. User confirms the cancellation.
+5a. The new tag provided by user is invalid.
+> 5a1.Address Book shows an error message.
+  Use case resumes from step 5.
+ 
+
+7a. User chooses to cancel the operation.
+> 7a1. Address Book requests to confirm the cancellation.
+  7a2. User confirms the cancellation.
   Use case ends.  
      
 ## Appendix C : Non Functional Requirements
