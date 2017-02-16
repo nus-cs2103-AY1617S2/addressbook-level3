@@ -25,4 +25,13 @@ public class HelpCommand extends Command {
     public CommandResult execute() {
         return new CommandResult(MESSAGE_ALL_USAGES);
     }
+    
+    /**
+     * Returns false since HelpCommand does not mutate the data
+     */
+    @Override
+    public boolean isMutating() {
+        return false;
+    }
+
 }

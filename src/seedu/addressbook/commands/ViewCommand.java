@@ -38,4 +38,12 @@ public class ViewCommand extends Command {
         }
     }
 
+    /**
+     * Returns false since ViewCommand does not mutate the data
+     */
+    @Override
+    public boolean isMutating() {
+        return false;
+    }
+
 }
