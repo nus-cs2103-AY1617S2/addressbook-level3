@@ -11,6 +11,10 @@ import java.util.*;
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
+    
+    public boolean isMutating(){
+    	return false;
+    }
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Finds all persons whose names contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n\t"

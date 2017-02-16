@@ -12,6 +12,10 @@ public class ViewAllCommand extends Command {
 
     public static final String COMMAND_WORD = "viewall";
 
+    public boolean isMutating(){
+    	return false;
+    }
+    
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Shows all details of the person "
             + "identified by the index number in the last shown person listing.\n\t"
             + "Parameters: INDEX\n\t"

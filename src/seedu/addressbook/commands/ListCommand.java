@@ -11,6 +11,10 @@ import java.util.List;
 public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
+    
+    public boolean isMutating(){
+    	return false;
+    }
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" 
             + "Displays all persons in the address book as a list with index numbers.\n\t"
