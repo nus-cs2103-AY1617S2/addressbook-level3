@@ -2,6 +2,7 @@ package seedu.addressbook.ui;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import seedu.addressbook.logic.Logic;
 import seedu.addressbook.Main;
@@ -17,7 +18,7 @@ public class Gui {
     /** Offset required to convert between 1-indexing and 0-indexing.  */
     public static final int DISPLAYED_INDEX_OFFSET = 1;
 
-    public static final int INITIAL_WINDOW_WIDTH = 800;
+    public static final int INITIAL_WINDOW_WIDTH = 1000;
     public static final int INITIAL_WINDOW_HEIGHT = 600;
     private final Logic logic;
 
@@ -37,11 +38,12 @@ public class Gui {
     private MainWindow createMainWindow(Stage stage, Stoppable mainApp) throws IOException{
         FXMLLoader loader = new FXMLLoader();
 
+        stage.getIcons().add(new Image("file:src/seedu/addressbook/ui/address_book_icon.png"));
+
         /* Note: When calling getResource(), use '/', instead of File.separator or '\\'
          * More info: http://docs.oracle.com/javase/8/docs/technotes/guides/lang/resources.html#res_name_context
          */
         loader.setLocation(Main.class.getResource("ui/mainwindow.fxml"));
-
         stage.setTitle(version);
         stage.setScene(new Scene(loader.load(), INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT));
         stage.show();
