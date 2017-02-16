@@ -15,7 +15,7 @@ public class SortCommandTest {
     private static final String COMMAND_SORT = "sort";
 
     @Test
-    public void sortCommand_ReturnObject() {
+    public void sortCommand_TestSortResultExist_ReturnTrue() {
         try {
             Logic logic = new Logic();
             CommandResult result = logic.execute(COMMAND_SORT);
@@ -26,7 +26,7 @@ public class SortCommandTest {
     }
 
     @Test
-    public void sortCommand_ReturnSorted() {
+    public void sortCommand_TestSortResults_ReturnTrue() {
         String[] inputs = {"add John Doe p/98765432 e/johnd@gmail.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney",
         "add Bob Doe p/98765432 e/bob@gmail.com a/311, Clementi Ave 3, #02-27 t/friends t/owesMoney"};
 
