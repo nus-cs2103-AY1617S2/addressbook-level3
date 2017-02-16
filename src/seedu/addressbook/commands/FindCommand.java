@@ -52,5 +52,11 @@ public class FindCommand extends Command {
         }
         return matchedPersons;
     }
+	
+	@Override
+	public Boolean isMutating() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }
