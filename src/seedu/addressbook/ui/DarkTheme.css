@@ -9,9 +9,9 @@
 }
 
 .text-area {
-    -fx-background-color: black;
-    -fx-control-inner-background: black;
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-font-size: 10pt;
+    -fx-background-color: Seashell;
+    -fx-control-inner-background: BurlyWood;
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 12pt;
     -fx-padding: 5 5 5 5;
 }
