@@ -50,5 +50,5 @@ public class Gui {
         mainWindow.setMainApp(mainApp);
         return mainWindow;
     }
-
+    
 }

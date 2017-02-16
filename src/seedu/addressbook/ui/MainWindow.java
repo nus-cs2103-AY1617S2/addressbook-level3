@@ -45,11 +45,11 @@ public class MainWindow {
      */  
     @FXML
     private void onAddButton() throws Exception {
-    	commandButton(AddCommand.COMMAND_WORD);
+    	
     }
     @FXML
     private void onDeleteButton() throws Exception {
-    	commandButton(DeleteCommand.COMMAND_WORD);
+
     }
     
     @FXML
