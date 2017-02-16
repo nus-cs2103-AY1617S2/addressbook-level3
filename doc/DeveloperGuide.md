@@ -45,8 +45,11 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | edit a person's contact information | update a person's information if something changes
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user with many persons in the address book | put persons to different groups | effectively manage my address book
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
+`*` | user with bad memory and | search person by phone number | know the person just called/message me if I do not recall his/her name
 
 
 ## Appendix B : Use Cases
@@ -73,6 +76,27 @@ Use case ends.
 
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
+  
+#### Use case: Rename tag
+
+**MSS**
+
+1. User request to list of existing tags
+2. AddressBook shows a list of existing tags
+3. User request to change the tag name of an existing tag
+4. AddressBook changes the tag name of this existing tag <br>
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> An empty list message is displayed and use case ends
+
+3a. The given key value cannot be found in the list of existing tags
+
+> 3a1. AddressBook shows an error message <br>
+  Use case resumes at step 2
 
 ## Appendix C : Non Functional Requirements
 
@@ -80,6 +104,8 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should use different colors to differentiate user input command and programme response message
+6. Should utilize auto correct/fill feature
 
 ## Appendix D : Glossary
 
