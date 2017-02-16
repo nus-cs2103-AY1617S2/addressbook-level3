@@ -47,7 +47,8 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
-
+'*' | user with one to many computers | have records on the cloud | reach my records anywhere
+'**' | clear all my files at once | I can wipe out the critical information in case I no longer use this computer
 
 ## Appendix B : Use Cases
 
