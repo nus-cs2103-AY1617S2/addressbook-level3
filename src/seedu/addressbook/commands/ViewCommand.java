@@ -23,7 +23,10 @@ public class ViewCommand extends Command {
     public ViewCommand(int targetVisibleIndex) {
         super(targetVisibleIndex);
     }
-
+    
+    public boolean isMutating() {
+        return false;
+    }
 
     @Override
     public CommandResult execute() {

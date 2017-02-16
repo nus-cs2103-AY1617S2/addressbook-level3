@@ -25,7 +25,7 @@ public abstract class Command {
 
     protected Command() {
     }
-
+    
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
      *
@@ -35,11 +35,18 @@ public abstract class Command {
     public static String getMessageForPersonListShownSummary(List<? extends ReadOnlyPerson> personsDisplayed) {
         return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, personsDisplayed.size());
     }
-
+    
+    /**
+     * Detects if a command type mutates data
+     * @return true for command type that does mutate data and vice versa.
+     */
+    public abstract boolean isMutating();
+    
     /**
      * Executes the command and returns the result.
+     * @throws Exception 
      */
-    public abstract CommandResult execute();
+    public abstract CommandResult execute() throws Exception;
 
     /**
      * Supplies the data the command will operate on.
