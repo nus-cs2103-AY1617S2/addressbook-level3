@@ -46,7 +46,10 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user | undo commands | undo erroneous commands
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
+`*` | user with many person in the address book | search via tags | see everything with this tag in one glance
+`*` | user | see upcoming birthdays |
 
 
 ## Appendix B : Use Cases
@@ -62,6 +65,17 @@ Priority | As a ... | I want to ... | So that I can...
 3. User requests to delete a specific person in the list
 4. AddressBook deletes the person <br>
 Use case ends.
+
+#### Use case: renaming a tag
+
+**MSS**
+
+1. User types in rename tags command, then type in the tag to be changed and the new tag name
+2. System prompts the users for confirmation
+3. User types in "yes"
+4. System replaces all tags with the new tag specified by the user <br>
+Use case ends.
+
 
 **Extensions**
 
@@ -80,6 +94,8 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should always prompt exceptions when user types in invalid commands
+6. Should record down the command history
 
 ## Appendix D : Glossary
 
