@@ -58,7 +58,7 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public CommandResult execute()throws Exception{
+    public CommandResult execute() {
         try {
             addressBook.addPerson(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
@@ -66,11 +66,5 @@ public class AddCommand extends Command {
             return new CommandResult(MESSAGE_DUPLICATE_PERSON);
         }
     }
-
-	@Override
-	public Boolean isMutating() {
-		// TODO Auto-generated method stub
-		return true;
-	}
 
 }

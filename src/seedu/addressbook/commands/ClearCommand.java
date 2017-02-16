@@ -16,10 +16,4 @@ public class ClearCommand extends Command {
         addressBook.clear();
         return new CommandResult(MESSAGE_SUCCESS);
     }
-
-	@Override
-	public Boolean isMutating() {
-		// TODO Auto-generated method stub
-		return true;
-	}
 }

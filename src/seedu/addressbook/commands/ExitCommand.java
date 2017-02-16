@@ -16,10 +16,4 @@ public class ExitCommand extends Command {
         return new CommandResult(MESSAGE_EXIT_ACKNOWEDGEMENT);
     }
 
-	@Override
-	public Boolean isMutating() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }
