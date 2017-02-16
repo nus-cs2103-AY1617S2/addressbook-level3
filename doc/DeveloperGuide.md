@@ -45,8 +45,15 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | Exiting the program | Exits the program
+`* * *` | user | list all persons | Shows a list of all persons in the address book
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user | View non-private details of a person | Displays the non-private details of the specified person
+`* *` | user | View Email | Displays Email of the specified person
+`* *` | user | View Phone | Displays Phone of the specified person
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
+`*` | user | Clearing all entries | Clears all entries from the address book
+`*` | user | Changing the save location | Address book data are saved in a file called addressbook.txt in the project root folder. You can change the location by specifying the file path as a program argument
 
 
 ## Appendix B : Use Cases
@@ -73,6 +80,30 @@ Use case ends.
 
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
+  
+#### Use case: Renaming of an existing tag
+
+**MSS**
+
+1. User requests to rename tags
+2. AddressBook shows a list of tags
+3. User requests to rename a specific tags in the list
+4. AddressBook asks for the confirmation of renaming the specific tag
+5. User confirms the change
+6. Addressbook renames the tag
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. The given index is invalid
+
+> 3a1. AddressBook shows an error message <br>
+  Use case resumes at step 2
+  
 
 ## Appendix C : Non Functional Requirements
 
@@ -80,6 +111,7 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should display a Command Line User Interface
 
 ## Appendix D : Glossary
 
