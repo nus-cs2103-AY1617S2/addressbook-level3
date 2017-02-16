@@ -45,15 +45,8 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
-`* * *` | user | Exiting the program | Exits the program
-`* * *` | user | list all persons | Shows a list of all persons in the address book
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
-`* *` | user | View non-private details of a person | Displays the non-private details of the specified person
-`* *` | user | View Email | Displays Email of the specified person
-`* *` | user | View Phone | Displays Phone of the specified person
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
-`*` | user | Clearing all entries | Clears all entries from the address book
-`*` | user | Changing the save location | Address book data are saved in a file called addressbook.txt in the project root folder. You can change the location by specifying the file path as a program argument
 
 
 ## Appendix B : Use Cases
