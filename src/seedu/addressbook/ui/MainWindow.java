@@ -13,6 +13,8 @@ import seedu.addressbook.data.person.ReadOnlyPerson;
 import java.util.List;
 import java.util.Optional;
 
+import javax.swing.JOptionPane;
+
 import static seedu.addressbook.common.Messages.*;
 
 /**
@@ -40,7 +42,6 @@ public class MainWindow {
     @FXML
     private TextField commandInput;
 
-
     @FXML
     void onCommand(ActionEvent event) {
         try {
@@ -58,6 +59,36 @@ public class MainWindow {
         }
     }
 
+    @FXML
+    void onInputClick() {
+        commandInput.setText("");
+    }
+    
+    @FXML
+    private void onHelpButton() {
+        try {
+            String userCommandText = "help";
+            CommandResult result = logic.execute(userCommandText);
+            if(isExitCommand(result)){
+                exitApp();
+                return;
+            }
+            displayResult(result);
+            clearCommandInput();
+        } catch (Exception e) {
+            display(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+    
+    @FXML
+    private void onExitButton() throws Exception {
+        int isConfirm = JOptionPane.showConfirmDialog(null, "Confirm Exit?");
+        if (isConfirm == JOptionPane.YES_OPTION){
+            exitApp();
+        }
+    }
+    
     private void exitApp() throws Exception {
         mainApp.stop();
     }
