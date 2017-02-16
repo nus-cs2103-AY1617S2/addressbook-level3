@@ -23,7 +23,7 @@ public class MainWindow {
     private Logic logic;
     private Stoppable mainApp;
 
-    public MainWindow(){
+    public MainWindow() { 
     }
 
     public void setLogic(Logic logic){
