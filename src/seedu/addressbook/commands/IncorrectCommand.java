@@ -16,5 +16,11 @@ public class IncorrectCommand extends Command{
     public CommandResult execute() {
         return new CommandResult(feedbackToUser);
     }
+	
+	@Override
+	public Boolean isMutating() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }
