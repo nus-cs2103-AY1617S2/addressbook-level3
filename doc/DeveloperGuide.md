@@ -91,6 +91,8 @@ Use case ends.
 
 2a. The list is empty
 
+> An empty list message is displayed and use case ends
+
 3a. The given key value cannot be found in the list of existing tags
 
 > 3a1. AddressBook shows an error message <br>
