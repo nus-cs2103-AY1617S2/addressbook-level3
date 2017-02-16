@@ -4,6 +4,7 @@ import seedu.addressbook.data.person.ReadOnlyPerson;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -21,13 +22,13 @@ public class SortCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        List<ReadOnlyPerson> allPersons = addressBook.getAllPersons().immutableListView();
+        List<ReadOnlyPerson> allPersons = new LinkedList<ReadOnlyPerson>(addressBook.getAllPersons().immutableListView());
         Collections.sort(allPersons, new PersonComparator());
         return new CommandResult(getMessageForPersonListShownSummary(allPersons), allPersons);
     }
 }
 
-/** Comparator to sort a list of ReadOnlyPerson by their names */
+/** Comparator to sort a list of ReadOnlyPerson by their names in alphabetical order */
 class PersonComparator implements Comparator<ReadOnlyPerson> {
 
     @Override
