@@ -111,6 +111,12 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should be responsive, not more than 2 sec for each command.
+6. Should ensure data is not lost.
+7. Should have proper documentations, user guide etc.
+8. Should follow Java Coding Standard.
+9. Should follow OOP.
+10. Should be easy to use.
 
 ## Appendix D : Glossary
 
