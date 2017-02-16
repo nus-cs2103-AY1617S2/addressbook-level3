@@ -20,9 +20,16 @@ public class HelpCommand extends Command {
             + "\n" + ViewAllCommand.MESSAGE_USAGE
             + "\n" + HelpCommand.MESSAGE_USAGE
             + "\n" + ExitCommand.MESSAGE_USAGE;
-
+    
+    private static final boolean isMutating = false;
+    
     @Override
     public CommandResult execute() {
         return new CommandResult(MESSAGE_ALL_USAGES);
+    }
+    
+    @Override
+    public boolean isMutating() {
+        return isMutating;
     }
 }
