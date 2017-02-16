@@ -1,12 +1,12 @@
 package seedu.addressbook.commands;
 
-import seedu.addressbook.common.Messages;
-import seedu.addressbook.data.AddressBook;
-import seedu.addressbook.data.person.ReadOnlyPerson;
+import static seedu.addressbook.ui.Gui.DISPLAYED_INDEX_OFFSET;
 
 import java.util.List;
 
-import static seedu.addressbook.ui.Gui.DISPLAYED_INDEX_OFFSET;
+import seedu.addressbook.common.Messages;
+import seedu.addressbook.data.AddressBook;
+import seedu.addressbook.data.person.ReadOnlyPerson;
 
 /**
  * Represents an executable command.
@@ -17,7 +17,8 @@ public abstract class Command {
     private int targetIndex = -1;
 
     /**
-     * @param targetIndex last visible listing index of the target person
+     * @param targetIndex
+     *            last visible listing index of the target person
      */
     public Command(int targetIndex) {
         this.setTargetIndex(targetIndex);
@@ -27,9 +28,11 @@ public abstract class Command {
     }
 
     /**
-     * Constructs a feedback message to summarise an operation that displayed a listing of persons.
+     * Constructs a feedback message to summarise an operation that displayed a
+     * listing of persons.
      *
-     * @param personsDisplayed used to generate summary
+     * @param personsDisplayed
+     *            used to generate summary
      * @return summary message for persons displayed
      */
     public static String getMessageForPersonListShownSummary(List<? extends ReadOnlyPerson> personsDisplayed) {
@@ -38,8 +41,14 @@ public abstract class Command {
 
     /**
      * Executes the command and returns the result.
+     * @throws Exception 
      */
-    public abstract CommandResult execute();
+    public abstract CommandResult execute() throws Exception;
+
+    /**
+     * Return true for command types that mutate the data
+     */
+    public abstract boolean isMutating();
 
     /**
      * Supplies the data the command will operate on.
@@ -50,9 +59,12 @@ public abstract class Command {
     }
 
     /**
-     * Extracts the the target person in the last shown list from the given arguments.
+     * Extracts the the target person in the last shown list from the given
+     * arguments.
      *
-     * @throws IndexOutOfBoundsException if the target index is out of bounds of the last viewed listing
+     * @throws IndexOutOfBoundsException
+     *             if the target index is out of bounds of the last viewed
+     *             listing
      */
     protected ReadOnlyPerson getTargetPerson() throws IndexOutOfBoundsException {
         return relevantPersons.get(getTargetIndex() - DISPLAYED_INDEX_OFFSET);
