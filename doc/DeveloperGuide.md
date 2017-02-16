@@ -45,7 +45,10 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | see the list of person added | keep track of the current list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user | see log history | able to track past records
+`* *` | user | filter contact list by category | easier to find people an manage the contact list
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
 
@@ -73,6 +76,29 @@ Use case ends.
 
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
+  
+#### Use case: Rename Tag
+
+**MSS**
+
+1. User requests to rename tag
+2. AddressBook prompt for name
+3. User enters name
+4. AddressBook shows current tag of the person if it exist
+5. AddressBook prompt for new tag
+6. User enters new tag
+7. AddressBook update with new tag
+
+**Extensions**
+
+2a. the person does not exist
+
+> 2a1. AddressBook shows an error message <br>
+  Use case resumes at step 2
+  
+3a. the new tag is invalid
+> 3a1. AddressBook shows an error message <br>
+  Use case resumes at step 5
 
 ## Appendix C : Non Functional Requirements
 
@@ -80,6 +106,9 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should come with a command prompt to improve user experience
+6. Should come with an auto save feature
+7. Should have an option to report any issues to the developer 
 
 ## Appendix D : Glossary
 
