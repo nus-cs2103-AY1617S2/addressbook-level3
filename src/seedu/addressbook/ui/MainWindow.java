@@ -32,6 +32,8 @@ public class MainWindow {
 
     public void setMainApp(Stoppable mainApp){
         this.mainApp = mainApp;
+        commandInput.setPromptText("Enter 'help' for list of commands");
+        outputConsole.requestFocus();
     }
 
     @FXML
