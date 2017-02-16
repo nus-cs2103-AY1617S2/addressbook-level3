@@ -13,6 +13,7 @@ import seedu.addressbook.data.person.*;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
 import seedu.addressbook.storage.StorageFile;
+import seedu.addressbook.storage.StorageFile.StorageOperationException;
 
 import java.util.*;
 
@@ -193,6 +194,7 @@ public class LogicTest {
 
         // prepare address book state
         helper.addToAddressBook(addressBook, false, true);
+        hackMutateSave();
 
         assertCommandBehavior("list",
                               Command.getMessageForPersonListShownSummary(expectedList),
@@ -240,6 +242,7 @@ public class LogicTest {
         List<Person> lastShownList = helper.generatePersonList(p1, p2);
         AddressBook expectedAB = helper.generateAddressBook(lastShownList);
         helper.addToAddressBook(addressBook, lastShownList);
+        hackMutateSave();
 
         logic.setLastShownList(lastShownList);
 
@@ -267,6 +270,7 @@ public class LogicTest {
         expectedAB.addPerson(p2);
 
         addressBook.addPerson(p2);
+        hackMutateSave();
         logic.setLastShownList(lastShownList);
 
         assertCommandBehavior("view 1",
@@ -296,6 +300,7 @@ public class LogicTest {
         List<Person> lastShownList = helper.generatePersonList(p1, p2);
         AddressBook expectedAB = helper.generateAddressBook(lastShownList);
         helper.addToAddressBook(addressBook, lastShownList);
+        hackMutateSave();
 
         logic.setLastShownList(lastShownList);
 
@@ -323,6 +328,7 @@ public class LogicTest {
         expectedAB.addPerson(p1);
 
         addressBook.addPerson(p1);
+        hackMutateSave();
         logic.setLastShownList(lastShownList);
 
         assertCommandBehavior("viewall 2",
@@ -409,6 +415,7 @@ public class LogicTest {
         AddressBook expectedAB = helper.generateAddressBook(fourPersons);
         List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
         helper.addToAddressBook(addressBook, fourPersons);
+        hackMutateSave();
 
         assertCommandBehavior("find KEY",
                                 Command.getMessageForPersonListShownSummary(expectedList),
@@ -429,6 +436,7 @@ public class LogicTest {
         AddressBook expectedAB = helper.generateAddressBook(fourPersons);
         List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
         helper.addToAddressBook(addressBook, fourPersons);
+        hackMutateSave();
 
         assertCommandBehavior("find KEY",
                                 Command.getMessageForPersonListShownSummary(expectedList),
@@ -449,12 +457,26 @@ public class LogicTest {
         AddressBook expectedAB = helper.generateAddressBook(fourPersons);
         List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
         helper.addToAddressBook(addressBook, fourPersons);
+        hackMutateSave();
 
         assertCommandBehavior("find KEY rAnDoM",
                                 Command.getMessageForPersonListShownSummary(expectedList),
                                 expectedAB,
                                 true,
                                 expectedList);
+    }
+
+    /**
+     * hack method for saving when data is not mutated by commands.
+     */
+    // FIXME data is mutated but will not be saved due to the assumption in the exercise that
+    // only commands mutates data. Therefore for any mutations in data outside of commands the
+    // following line of code has to be added to ensure data is saved to file. For convenience
+    // in the exercise, the following line is only added for commands that do not mutate the
+    // data as commands that mutate the data will ensure saving.
+    @Deprecated
+    private void hackMutateSave() throws StorageOperationException {
+        saveFile.save(addressBook);
     }
 
     /**
