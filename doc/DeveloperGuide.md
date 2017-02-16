@@ -97,6 +97,8 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should have proper spacing between each attribute to enchance table view.
+6. Shouldn't be case sensitive for inputs
 
 ## Appendix D : Glossary
 
