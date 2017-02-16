@@ -76,17 +76,22 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
-#### Use case: Rename tag 'friends' to 'buddies'
+#### Use case: Rename tag
 
 **MSS**
 
-1. User request to rename tag 'friends' to 'buddies'
+1. User request to rename a specific tag to a new tag
 2. AddressBook prompts for confirmation of the change
 3. User confirms the change
-4. AddressBook renames all 'friends' tag to 'buddies'
+4. AddressBook renames all instances of the tag to the new tag indicated
 Use case ends.
 
 **Extensions**
+
+1a. User specifies a tag that does not exist in AddressBook
+
+> 1a1. AddressBook notify user that the tag does not exist
+  Use case ends
 
 3a. User denies the change
 
@@ -99,7 +104,7 @@ Use case ends.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
 5. Should have simple commands for users to understand
-6. Should show progress in some manner if processing is long
+6. Should show progress in some manner if processing is long (more than 1 second)
 
 ## Appendix D : Glossary
 
