@@ -103,6 +103,9 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should have only commands that run within 2 seconds unless stated otherwise (excluding time waiting for user input).
+6. Should have reasonably high quality source code as determined by the project lead.
+7. Should not have any proprietary dependencies.
 
 ## Appendix D : Glossary
 
