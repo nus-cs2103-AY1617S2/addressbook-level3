@@ -67,7 +67,7 @@ public abstract class Command {
     }
     
     /**
-     * 
+     * Returns whether the command is mutating data
      */
     public abstract boolean isMutating();
 }
