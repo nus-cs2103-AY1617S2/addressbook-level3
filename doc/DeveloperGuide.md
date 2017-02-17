@@ -113,10 +113,8 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
-5. Should be able to export
-6. Should show messages in English
-7. Should be able to update itself with the latest version
-8. Should be able to export data in xml format
+5. Should show messages in English
+6. Should be able to update itself with the latest version
 
 ## Appendix D : Glossary
 
