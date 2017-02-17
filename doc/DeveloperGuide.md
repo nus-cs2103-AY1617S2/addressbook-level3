@@ -81,16 +81,18 @@ Use case ends.
 **MSS**
 
 1. User types in command to rename old tag with new tag name
-2. AddressBook shows list of persons whose tag will change
-3. AddressBook prompts user to confirm
-3. User confirms
-4. AddressBook changes tag names of people listed
+2. AddressBook shows list of persons whose tag will change, and prompts user to confirm action.
+3. User confirms to action to `replace`.
+4. AddressBook changes tag names of people listed.
 Use case ends.
 
 **Extensions**
 
 2a. The list is empty
 2a1. AddressBooks shows no existing tag name message
+Use case ends.
+
+3a. User chooses to cancel action
 Use case ends.
 
 ## Appendix C : Non Functional Requirements
