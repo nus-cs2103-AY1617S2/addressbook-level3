@@ -2,6 +2,7 @@ package seedu.addressbook.ui;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import seedu.addressbook.logic.Logic;
 import seedu.addressbook.Main;
@@ -23,6 +24,7 @@ public class Gui {
 
     private MainWindow mainWindow;
     private String version;
+    private ImageView imgLogo;
 
     public Gui(Logic logic, String version) {
         this.logic = logic;
@@ -40,6 +42,7 @@ public class Gui {
         /* Note: When calling getResource(), use '/', instead of File.separator or '\\'
          * More info: http://docs.oracle.com/javase/8/docs/technotes/guides/lang/resources.html#res_name_context
          */
+        // Loads xml file, edit xml file with scene builder
         loader.setLocation(Main.class.getResource("ui/mainwindow.fxml"));
 
         stage.setTitle(version);
