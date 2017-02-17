@@ -45,8 +45,8 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person | add details of persons without having duplicates
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
-`* * *` | user | find a person by category | locate details of persons of a certain group without having to go through the entire list
 `* * *` | user | edit a person | edit details of persons without having re-add
+`* *` | user | find a person by category | locate details of persons of a certain group without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
@@ -76,23 +76,25 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
-#### Use case: Rename tag 'friends' to 'buddies'
+#### Use case: Rename tag
 
 **MSS**
 
-1. User requests to rename tag 'friends' to 'buddies'
+1. User requests to rename tag #1 to tag #2
 2. AddressBook prompts for confirmation
 3. User confirms the change
-4. AddressBook renames all tag 'friends' to 'buddies' <br>
+4. AddressBook renames all tags tag #1 to tag #2 <br>
 Use case ends.
 
 **Extensions**
 
-1a. 'friends' tag does not exist
+1a. tag #1 does not exist
+	AddressBook shows an error message asking user whether to create tag #1
 
 > Use case ends
 
-1b. 'buddies' tag exist
+1b. tag #2 tag exist
+	AddressBook shows an error message asking user to use another name for it
 
 > Use case ends
 
