@@ -86,7 +86,7 @@ Use case ends.
 3. User requests to rename a specific tag in the list
 4. AddressBook requests for new tag name
 5. User types in new tag name
-6. AddressBook shows old tag name and new tag name
+6. AddressBook requests for confirmation on change to be made
 7. User confirms the change to be made
 8. AddressBook renames the tag <br>
 Use case ends.
@@ -95,16 +95,17 @@ Use case ends.
 
 2a. The list is empty
 
-> Use case ends
+> 2a1. AddressBook informs user that list is empty <br>
+  Use case ends
 
 3a. The given index is invalid
 
-> 3a1. AddressBook shows an error message <br>
+> 3a1. AddressBook informs user that index is invalid <br>
   Use case resumes at step 2
   
 5a. The new tag name is already used
 
-> 5a1. AddressBook shows an error message <br>
+> 5a1. AddressBook informs user that new tag name is already used <br>
   Use case resumes at step 4
 
 7a. The user retracts the request
