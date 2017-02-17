@@ -105,6 +105,10 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should make sure any files are smaller than 20MB
+6. Should handle global addresses
+7. Should come with a user manual
+8. Should provide capability to report bugs to developer
 
 ## Appendix D : Glossary
 
