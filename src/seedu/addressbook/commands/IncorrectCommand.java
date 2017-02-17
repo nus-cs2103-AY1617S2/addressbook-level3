@@ -16,5 +16,10 @@ public class IncorrectCommand extends Command{
     public CommandResult execute() {
         return new CommandResult(feedbackToUser);
     }
+    
+    //set the value of isMutating()
+    public  boolean isMutating(){
+    	return false;
+    }
 
 }
