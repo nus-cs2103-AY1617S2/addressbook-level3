@@ -1,4 +1,4 @@
-package seedu.addressbook.commands;
+    package seedu.addressbook.commands;
 
 
 /**
@@ -15,6 +15,11 @@ public class IncorrectCommand extends Command{
     @Override
     public CommandResult execute() {
         return new CommandResult(feedbackToUser);
+    }
+    
+    @Override
+    public boolean isMutating() {
+        return false;
     }
 
 }
