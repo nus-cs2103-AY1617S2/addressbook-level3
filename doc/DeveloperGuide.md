@@ -108,6 +108,9 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should support international characters for all functionalities
+6. Should quickly display the search result in last than a second.
+7. Should have a tutorial in each major language of users
 
 ## Appendix D : Glossary
 
