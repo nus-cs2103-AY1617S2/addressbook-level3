@@ -65,4 +65,9 @@ public abstract class Command {
     public void setTargetIndex(int targetIndex) {
         this.targetIndex = targetIndex;
     }
+    
+    /**
+     * Shows if the class is mutatible
+     */
+    public abstract boolean isMutating();
 }
