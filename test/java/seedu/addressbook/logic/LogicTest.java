@@ -96,8 +96,8 @@ public class LogicTest {
 
     @Test
     public void execute_unknownCommandWord() throws Exception {
-        String unknownCommand = "uicfhmowqewca";
-        assertCommandBehavior(unknownCommand, HelpCommand.MESSAGE_ALL_USAGES);
+        String expectedMessage = String.format(Messages.MESSAGE_DID_YOU_MEAN_THIS, ViewCommand.MESSAGE_USAGE);
+        assertCommandBehavior("ew args", expectedMessage);
     }
 
     @Test
