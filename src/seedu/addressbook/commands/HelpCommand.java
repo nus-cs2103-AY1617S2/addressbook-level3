@@ -5,6 +5,8 @@ package seedu.addressbook.commands;
  * Shows help instructions.
  */
 public class HelpCommand extends Command {
+    
+    public static final boolean IS_MUTATING_COMMAND = false;
 
     public static final String COMMAND_WORD = "help";
 
@@ -24,5 +26,10 @@ public class HelpCommand extends Command {
     @Override
     public CommandResult execute() {
         return new CommandResult(MESSAGE_ALL_USAGES);
+    }
+
+    @Override
+    public boolean isMutating() {
+        return IS_MUTATING_COMMAND;
     }
 }
