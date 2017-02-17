@@ -46,6 +46,10 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user | add tag | add tag to an existing entry
+`* *` | user | remove tag | remove tag from an existing entry
+`* *` | user | edit tag | edit tag of an existing entry
+`* *` | user | see all contacts | list all contacts in address book
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
 
