@@ -38,4 +38,11 @@ public class ViewCommand extends Command {
         }
     }
 
+
+	@Override
+	public boolean isMutating() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
