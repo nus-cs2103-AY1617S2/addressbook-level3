@@ -45,6 +45,8 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | edit contact details of person | update contact details of person when it changes
+`* *` | user | find people near a postal code | locate people who live near an area without having to go through entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
@@ -73,6 +75,37 @@ Use case ends.
 
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
+  
+#### Use case: Rename tag
+
+**MSS**
+
+1. User requests to see tags
+2. AddressBook shows a list of tags
+3. User requests to edit a specific tag in the list
+4. AddressBook prompts for new tag name
+5. User specifies new tag name
+6. AddressBook renames specified tag to new tag name <br>
+Use case ends.
+
+**Extensions**
+2a. The list is empty
+
+> Use case ends
+
+3a. The given index is invalid
+
+> 3a1. AddressBook shows an error message <br>
+  Use case resumes at step 2
+  
+6a. The new tag name is invalid
+
+> 6a1. AddressBook shows an error message <br>
+  Use case resumes at step 4
+
+*a. The user can exit anytime
+
+> *a1. Use case ends
 
 ## Appendix C : Non Functional Requirements
 
@@ -80,6 +113,8 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should show messages in English
+6. Should be able to update itself with the latest version
 
 ## Appendix D : Glossary
 
