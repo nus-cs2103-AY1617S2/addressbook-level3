@@ -1,6 +1,7 @@
 package seedu.addressbook.parser;
 
 import seedu.addressbook.commands.*;
+import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.exception.IllegalValueException;
 
 import java.util.*;
@@ -25,7 +26,6 @@ public class Parser {
                     + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
-
 
     /**
      * Signals that the user input could not be parsed.
@@ -81,9 +81,11 @@ public class Parser {
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
 
-            case HelpCommand.COMMAND_WORD: // Fallthrough
-            default:
+            case HelpCommand.COMMAND_WORD:
                 return new HelpCommand();
+
+            default:
+                return suggestCommand(commandWord);
         }
     }
 
@@ -226,5 +228,119 @@ public class Parser {
         return new FindCommand(keywordSet);
     }
 
+    /**
+     * Feedback a suggested command to the user.
+     *
+     * @param incorrectCommandWord the incorrect command word
+     * @return the suggested command
+     */
+    private IncorrectCommand suggestCommand(String incorrectCommandWord) {
+        String suggestedCommandWord = findMostProbableCommand(incorrectCommandWord);
+        switch (suggestedCommandWord) {
 
+        case AddCommand.COMMAND_WORD:
+            return new IncorrectCommand(String.format(Messages.MESSAGE_DID_YOU_MEAN_THIS,
+                    AddCommand.MESSAGE_USAGE));
+
+        case DeleteCommand.COMMAND_WORD:
+            return new IncorrectCommand(String.format(Messages.MESSAGE_DID_YOU_MEAN_THIS,
+                    DeleteCommand.MESSAGE_USAGE));
+
+        case ClearCommand.COMMAND_WORD:
+            return new IncorrectCommand(String.format(Messages.MESSAGE_DID_YOU_MEAN_THIS,
+                    ClearCommand.MESSAGE_USAGE));
+
+        case FindCommand.COMMAND_WORD:
+            return new IncorrectCommand(String.format(Messages.MESSAGE_DID_YOU_MEAN_THIS,
+                    FindCommand.MESSAGE_USAGE));
+
+        case ListCommand.COMMAND_WORD:
+            return new IncorrectCommand(String.format(Messages.MESSAGE_DID_YOU_MEAN_THIS,
+                    ListCommand.MESSAGE_USAGE));
+
+        case ViewCommand.COMMAND_WORD:
+            return new IncorrectCommand(String.format(Messages.MESSAGE_DID_YOU_MEAN_THIS,
+                    ViewCommand.MESSAGE_USAGE));
+
+        case ViewAllCommand.COMMAND_WORD:
+            return new IncorrectCommand(String.format(Messages.MESSAGE_DID_YOU_MEAN_THIS,
+                    ViewAllCommand.MESSAGE_USAGE));
+
+        case ExitCommand.COMMAND_WORD:
+            return new IncorrectCommand(String.format(Messages.MESSAGE_DID_YOU_MEAN_THIS,
+                    ExitCommand.MESSAGE_USAGE));
+
+        case HelpCommand.COMMAND_WORD:
+            // Fallthrough
+
+        default:
+            return new IncorrectCommand(String.format(Messages.MESSAGE_DID_YOU_MEAN_THIS,
+                    HelpCommand.MESSAGE_USAGE));
+        }
+    }
+
+    /**
+     * Find the most probable command word.
+     *
+     * Guarantees that the most probable command word always exist in the list of all command words
+     *
+     * @param incorrectCommandWord the incorrect command word
+     * @return the most probable command word
+     */
+    private String findMostProbableCommand(String incorrectCommandWord) {
+        final String[] allCommandWords = { AddCommand.COMMAND_WORD,
+                DeleteCommand.COMMAND_WORD,
+                ClearCommand.COMMAND_WORD,
+                FindCommand.COMMAND_WORD,
+                ListCommand.COMMAND_WORD,
+                ViewCommand.COMMAND_WORD,
+                ViewAllCommand.COMMAND_WORD,
+                HelpCommand.COMMAND_WORD,
+                ExitCommand.COMMAND_WORD };
+
+        String mostProbableCommandWord = "";
+        int lowestLevenshteinDistance = Integer.MAX_VALUE;
+        // Obtain the most probable command word with the lowest Levenshtein's distance
+        for (String commandWord : allCommandWords) {
+            int levenshteinDistance = computeLevenshteinDistance(incorrectCommandWord, commandWord);
+            if (levenshteinDistance < lowestLevenshteinDistance) {
+                lowestLevenshteinDistance = levenshteinDistance;
+                mostProbableCommandWord = commandWord;
+            } else if (levenshteinDistance == lowestLevenshteinDistance
+                    && commandWord.compareToIgnoreCase(mostProbableCommandWord) < 0 ) {
+                // If tie breaker exist, take the lexicographically smaller command word
+                mostProbableCommandWord = commandWord;
+            }
+        }
+
+        return mostProbableCommandWord;
+    }
+
+    /**
+     * Computes the Levenshtein's distance between two strings.
+     *
+     * @param string1 and string2
+     * @return the Levenshtein's distance between string1 and string2
+     */
+    private static int computeLevenshteinDistance(String string1, String string2) {
+        int[][] distance = new int[string1.length() + 1][string2.length() + 1];
+
+        for (int i = 0; i <= string1.length(); i++) {
+            distance[i][0] = i;
+        }
+        for (int j = 1; j <= string2.length(); j++) {
+            distance[0][j] = j;
+        }
+
+        for (int i = 1; i <= string1.length(); i++) {
+            for (int j = 1; j <= string2.length(); j++) {
+                distance[i][j] = Math.min(
+                        Math.min(distance[i - 1][j] + 1,
+                                 distance[i][j - 1] + 1),
+                        distance[i - 1][j - 1] + ((string1.charAt(i - 1) == string2.charAt(j - 1)) ? 0 : 1));
+            }
+        }
+
+        return distance[string1.length()][string2.length()];
+    }
 }
