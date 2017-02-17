@@ -24,7 +24,6 @@ public class Gui {
 
     private MainWindow mainWindow;
     private String version;
-    private ImageView imgLogo;
 
     public Gui(Logic logic, String version) {
         this.logic = logic;
