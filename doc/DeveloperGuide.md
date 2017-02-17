@@ -45,6 +45,7 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | find a person by phone, email or address | locate all other details of a person if one piece of information is known
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
@@ -73,6 +74,23 @@ Use case ends.
 
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
+  
+  
+#### Use case: Rename tag
+
+**MSS**
+
+1. User requests an existing tag of persons
+2. AddressBook shows an existing tag of persons
+3. User requests to rename the tag into another name
+4. AddressBook rename the tag requested
+Use case ends.
+
+**Extensions**
+
+2a. There is no such tag
+
+> Use case ends
 
 ## Appendix C : Non Functional Requirements
 
