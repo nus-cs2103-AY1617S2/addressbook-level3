@@ -79,6 +79,10 @@ Examples:
 * `find Betsy` <br> 
   `view 1`<br>
   Views the 1st person in the results of the `find` command.
+  
+## Listing all persons in a sorted alphabetical order by name : `sort`
+Shows a list of all persons in the address book sorted in alphabetical order by their names.<br>
+Format: `sort`
 
 ## View all details of a person : `viewall`
 Displays all details (including private details) of the specified person.<br>
