@@ -5,7 +5,6 @@ import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.storage.jaxb.AdaptedAddressBook;
 
 import java.io.*;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import javax.xml.bind.JAXBContext;
@@ -16,11 +15,9 @@ import javax.xml.bind.Unmarshaller;
 /**
  * Represents the file used to store address book data.
  */
-public class StorageFile implements Storage {
+public class StorageFile extends Storage {
 
     private final JAXBContext jaxbContext;
-
-    public final Path path;
 
     /**
      * @throws InvalidStorageFilePathException if the default path is invalid
@@ -50,7 +47,6 @@ public class StorageFile implements Storage {
      *
      * @throws StorageOperationException if there were errors converting and/or storing data to file.
      */
-    @Override
     public void save(AddressBook addressBook) throws StorageOperationException {
 
         /* Note: Note the 'try with resource' statement below.
@@ -76,7 +72,6 @@ public class StorageFile implements Storage {
      *
      * @throws StorageOperationException if there were errors reading and/or converting data from file.
      */
-    @Override
     public AddressBook load() throws StorageOperationException {
         try (final Reader fileReader =
                 new BufferedReader(new FileReader(path.toFile()))) {
@@ -108,11 +103,6 @@ public class StorageFile implements Storage {
         } catch (IllegalValueException ive) {
             throw new StorageOperationException("File contains illegal data values; data type constraints not met");
         }
-    }
-
-    @Override
-    public String getPath() {
-        return path.toString();
     }
 
 }

@@ -5,9 +5,10 @@ import seedu.addressbook.data.exception.IllegalValueException;
 
 import java.nio.file.Path;
 
-public interface Storage {
+public abstract class Storage {
     /** Default file path used if the user doesn't provide the file name. */
     public static final String DEFAULT_STORAGE_FILEPATH = "addressbook.txt";
+    protected Path path;
 
     /* Note: Note the use of nested classes below.
      * More info https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html
@@ -40,15 +41,19 @@ public interface Storage {
         return filePath.toString().endsWith(".txt");
     }
 
+    public String getPath() {
+        return path.toString();
+    }
+
     /**
      * Creates the StorageFile object based on the default storage path.
      * @throws StorageFile.InvalidStorageFilePathException if the target file path is incorrect.
      */
-    static StorageFile initializeStorageFile() throws Storage.InvalidStorageFilePathException {
+    public static StorageFile initializeStorageFile() throws Storage.InvalidStorageFilePathException {
         return new StorageFile();
     }
 
-    public void save(AddressBook addressBook) throws StorageOperationException;
-    public AddressBook load() throws StorageOperationException;
-    public String getPath();
+    public abstract void save(AddressBook addressBook) throws StorageOperationException;
+    public abstract AddressBook load() throws StorageOperationException;
+
 }
