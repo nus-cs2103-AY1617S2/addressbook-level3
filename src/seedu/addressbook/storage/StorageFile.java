@@ -52,8 +52,7 @@ public class StorageFile extends Storage {
         /* Note: Note the 'try with resource' statement below.
          * More info: https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
          */
-        try (final Writer fileWriter =
-                new BufferedWriter(new FileWriter(path.toFile()))) {
+        try (final Writer fileWriter = new BufferedWriter(new FileWriter(path.toFile()))) {
 
             final AdaptedAddressBook toSave = new AdaptedAddressBook(addressBook);
             final Marshaller marshaller = jaxbContext.createMarshaller();
@@ -73,8 +72,7 @@ public class StorageFile extends Storage {
      * @throws StorageOperationException if there were errors reading and/or converting data from file.
      */
     public AddressBook load() throws StorageOperationException {
-        try (final Reader fileReader =
-                new BufferedReader(new FileReader(path.toFile()))) {
+        try (final Reader fileReader = new BufferedReader(new FileReader(path.toFile()))) {
 
             final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             final AdaptedAddressBook loaded = (AdaptedAddressBook) unmarshaller.unmarshal(fileReader);
@@ -84,13 +82,13 @@ public class StorageFile extends Storage {
             }
             return loaded.toModelType();
 
+        } catch (FileNotFoundException fnfe) {
             /* Note: Here, we are using an exception to create the file if it is missing. However, we should minimize
              * using exceptions to facilitate normal paths of execution. If we consider the missing file as a 'normal'
              * situation (i.e. not truly exceptional) we should not use an exception to handle it.
              */
 
             // create empty file if not found
-        } catch (FileNotFoundException fnfe) {
             final AddressBook empty = new AddressBook();
             save(empty);
             return empty;
