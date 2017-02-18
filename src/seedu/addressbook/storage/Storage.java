@@ -5,6 +5,7 @@ import seedu.addressbook.data.exception.IllegalValueException;
 
 import java.nio.file.Path;
 
+/** Represents a form of storage for the application */
 public abstract class Storage {
     /** Default file path used if the user doesn't provide the file name. */
     public static final String DEFAULT_STORAGE_FILEPATH = "addressbook.txt";
@@ -41,6 +42,7 @@ public abstract class Storage {
         return filePath.toString().endsWith(".txt");
     }
 
+    /** Returns the path of the storage */
     public String getPath() {
         return path.toString();
     }
