@@ -44,8 +44,11 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | new user | see usage instructions | refer to instructions when I forget how to use the App
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
+`* * *` | user | edit a person | edit entries that require changes
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user | see frequently checked person | quickly access someone that I frequently contacted
+`* *` | user | see recently checked person | quickly access someone in the address book that I recently checked
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
 
@@ -74,12 +77,51 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+#### Use case: Renaming an existing tag
+
+**MSS**
+
+1. User requests to see existing tags
+2. AddressBook shows a list of tags
+3. User requests to change a specific tag in the list
+4. AddressBook requests for new tag name
+5. AddressBook confirms the change of tag name with user
+6. AddressBook changes the tag for all associated persons <br>
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. The given index is invalid
+
+> 3a1. AddressBook shows an error message <br>
+  Use case resumes at step 2
+  
+4a. The new tag name is invalid
+
+> 4a1. AddressBook shows an error message <br>
+  Use case resumes at step 4
+
+5a. The new tag name has already exists
+
+> 5a1. AddressBook shows an error message <br>
+  Use case resumes at step 4
+
+6a. User cancels operation
+
+> Use case ends
+    
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should use English as command language.
+6. Should complete any given tasks within 3 seconds.
 
 ## Appendix D : Glossary
 
