@@ -15,7 +15,7 @@ public class Birthday {
     public final Date value;
     private boolean isPrivate;
 
-    public static String EXAMPLE = "September 15th 1994";
+    public static String EXAMPLE = "Sat Feb 18 16:03:28 SGT 2017";
     public static String MESSAGE_BIRTHDAY_CONSTRAINTS = "Birthday should be valid";
 
     /**
