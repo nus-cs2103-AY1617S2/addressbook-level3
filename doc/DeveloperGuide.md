@@ -45,6 +45,9 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | add an existing person to favorite list | instantly access contact
+`* *` | user | update contact | modify contact information
+`* *` | user | search a person by email address | look up the details of a person by his/her email
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
@@ -69,7 +72,25 @@ Use case ends.
 
 > Use case ends
 
-3a. The given index is invalid
+#### Use case: Rename person tag
+
+**MSS**
+
+1. User requests to rename a tag
+2. Address book displays list of tags to user
+3. User select desired tag to be renamed
+4. System prompts for new name
+5. User enters the new name for the selected tag
+6. Address book renames the tag for the user
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. The given tag is invalid
 
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
@@ -80,6 +101,9 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should be able to fetch required name within 1 second.
+6. Should be able to work across all platforms.
+7. Should be easily understood by users of all ages.
 
 ## Appendix D : Glossary
 
