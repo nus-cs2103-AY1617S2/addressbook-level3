@@ -72,7 +72,25 @@ Use case ends.
 
 > Use case ends
 
-3a. The given index is invalid
+#### Use case: Rename person tag
+
+**MSS**
+
+1. User requests to rename a tag
+2. Address book displays list of tags to user
+3. User select desired tag to be renamed
+4. System prompts for new name
+5. User enters the new name for the selected tag
+6. Address book renames the tag for the user
+Use case ends.
+
+**Extensions**
+
+2a. The list is empty
+
+> Use case ends
+
+3a. The given tag is invalid
 
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
