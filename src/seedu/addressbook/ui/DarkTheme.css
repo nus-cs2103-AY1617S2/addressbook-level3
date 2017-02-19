@@ -1,4 +1,13 @@
+.label {
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 10pt;
+}
 
+.split-pane > .split-pane-divider {  
+    -fx-padding: 0 0 0 0;  
+} 
 
 .text-field {
     -fx-font-size: 12pt;
@@ -14,4 +23,8 @@
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 10pt;
     -fx-padding: 5 5 5 5;
+}
+
+.background {
+    -fx-background-color: black;
 }
