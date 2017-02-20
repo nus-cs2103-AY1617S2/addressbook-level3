@@ -47,7 +47,8 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
-
+`*` | user | sort my contacts by groups | find them easily in the groups
+`*` | user | put some contacts as hidden | hide from people that i know this person 
 
 ## Appendix B : Use Cases
 
@@ -74,12 +75,36 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+#### Use case: Rename existing tag
+
+**MSS**
+1. User requests an existing tag
+2. AddressBook shows a list of persons with the tag 
+3. User requests to edit that tag to another tag
+4. AddressBook changes the tag for every person <br>
+Use case ends.
+
+**Extensions**
+1a. Tag that user requests for does not exist
+
+>1a1 AddressBook shows an error message to ask user to key in tag again <br>
+	Use case resumes at step 1
+
+3a. User edits the tag to the same tag
+
+>3a1 AddressBook shows an error and prompts the user to change the tag to something else <br>
+Use case resumes at step 3
+
+
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should be able to start up in 5 seconds.
+6. Should be able to recover all data if app crashes. 
+7. Should be able to keep all data safe and secure. 
 
 ## Appendix D : Glossary
 
