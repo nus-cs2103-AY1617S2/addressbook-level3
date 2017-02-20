@@ -29,7 +29,11 @@ public class FindCommand extends Command {
     public Set<String> getKeywords() {
         return new HashSet<>(keywords);
     }
-
+    
+    public boolean isMutating() {
+    	return false;
+    }
+    
     @Override
     public CommandResult execute() {
         final List<ReadOnlyPerson> personsFound = getPersonsWithNameContainingAnyKeyword(keywords);
