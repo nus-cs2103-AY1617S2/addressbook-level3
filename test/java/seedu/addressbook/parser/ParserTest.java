@@ -33,7 +33,7 @@ public class ParserTest {
 
     @Test
     public void unknownCommandWord_returnsIncorrectCommand() {
-        final String input = "unknowncommandword arguments arguments";
+        final String input = "lnt";
         parseAndAssertCommandType(input, IncorrectCommand.class);
     }
 
