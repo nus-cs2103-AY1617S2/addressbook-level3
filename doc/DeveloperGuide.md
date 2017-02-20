@@ -44,6 +44,9 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | new user | see usage instructions | refer to instructions when I forget how to use the App
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
+`* *` | user | edit contact details | update addressbook
+`* *` | user | sort address book by tag | easily retrieve data of similar groups of friends
+`* *` | user | undo previous command | quickly ammend erroneous commands
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
@@ -53,8 +56,41 @@ Priority | As a ... | I want to ... | So that I can...
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-#### Use case: Delete person
+#### Use case: change phone number of person
 
+**MSS**
+
+1. User request to edit contact details
+2. AddressBook shows a list of persons
+3. User request to edit a specific person in the list
+4. AddressBook shows particulars of the specified person
+5. User choose what details to edit
+6. AddressBook shows a screen to edit a particular detail
+7. User keys in edits
+8. AddressBook edits the details 
+9. AddressBook shows updated particulars of the specified person
+10. User request to exit to home page
+11. AddressBook goes to home page
+Use case ends.
+
+**Extensions** 
+
+2a. The list is empty
+
+> Use case ends
+
+6. User gives an invalid field to edit
+
+> AddressBook shows an error message <br>
+  Use case resumes at step 5
+  
+8. Edits is of the wrong format
+
+> AddressBook shows an error message <br>
+  Use case case resumes at step 7
+
+#### Use case: Delete person
+ 
 **MSS**
 
 1. User requests to list persons
@@ -80,6 +116,9 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should have auto-backup option available
+6. Should be able to execute commands below 2seconds
+7. Should have password system to assess private details
 
 ## Appendix D : Glossary
 
