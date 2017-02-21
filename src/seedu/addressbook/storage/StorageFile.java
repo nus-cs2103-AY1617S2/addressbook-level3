@@ -8,9 +8,13 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+
 
 /**
  * Represents the file used to store address book data.
@@ -19,7 +23,7 @@ public class StorageFile {
 
     /** Default file path used if the user doesn't provide the file name. */
     public static final String DEFAULT_STORAGE_FILEPATH = "addressbook.txt";
-
+    public static final String DEFAULT_BACKUP_FILEPATH = "backup.txt";
     /* Note: Note the use of nested classes below.
      * More info https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html
      */
@@ -46,18 +50,20 @@ public class StorageFile {
     private final JAXBContext jaxbContext;
 
     public final Path path;
+    public final Path backupPath;
+
 
     /**
      * @throws InvalidStorageFilePathException if the default path is invalid
      */
     public StorageFile() throws InvalidStorageFilePathException {
-        this(DEFAULT_STORAGE_FILEPATH);
+        this(DEFAULT_STORAGE_FILEPATH, DEFAULT_BACKUP_FILEPATH);
     }
 
     /**
      * @throws InvalidStorageFilePathException if the given file path is invalid
      */
-    public StorageFile(String filePath) throws InvalidStorageFilePathException {
+    public StorageFile(String filePath, String backupFilePath) throws InvalidStorageFilePathException {
         try {
             jaxbContext = JAXBContext.newInstance(AdaptedAddressBook.class);
         } catch (JAXBException jaxbe) {
@@ -65,7 +71,8 @@ public class StorageFile {
         }
 
         path = Paths.get(filePath);
-        if (!isValidPath(path)) {
+        backupPath = Paths.get(backupFilePath);
+        if (!(isValidPath(path) && isValidPath(backupPath))) {
             throw new InvalidStorageFilePathException("Storage file should end with '.txt'");
         }
     }
@@ -102,6 +109,24 @@ public class StorageFile {
             throw new StorageOperationException("Error converting address book into storage format");
         }
     }
+
+    /**
+     * Back up all data to this backup file.
+     *
+     * @throws StorageOperationException if there were errors converting and/or storing data to file.
+     */
+    public void backup() throws StorageOperationException {
+
+        /* Note: Note the 'try with resource' statement below.
+         * More info: https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
+         */
+        try{
+        	Files.copy(path, backupPath);           
+        } catch (IOException ioe) {
+            throw new StorageOperationException("Error writing to file: " + path + " error: " + ioe.getMessage());
+        }
+    }
+
 
     /**
      * Loads data from this storage file.
