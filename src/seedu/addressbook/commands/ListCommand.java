@@ -26,7 +26,6 @@ public class ListCommand extends Command {
 
 	@Override
 	public boolean isMutating() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

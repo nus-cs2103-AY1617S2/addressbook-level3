@@ -19,7 +19,6 @@ public class ClearCommand extends Command {
 
 	@Override
 	public boolean isMutating() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 }

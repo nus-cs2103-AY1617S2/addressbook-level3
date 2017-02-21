@@ -42,8 +42,6 @@ public class DeleteCommand extends Command {
 
 	@Override
 	public boolean isMutating() {
-		// TODO Auto-generated method stub
 		return true;
 	}
-
 }
