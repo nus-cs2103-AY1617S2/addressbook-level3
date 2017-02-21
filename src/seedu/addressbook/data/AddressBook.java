@@ -105,6 +105,22 @@ public class AddressBook {
         allPersons.clear();
         allTags.clear();
     }
+    
+    /**
+     * Backs up all persons and tags from the address book.
+     */
+    public void backup(){
+    	allPersons.backup();
+    	allTags.backup();
+    }
+    
+    /**
+     * Undoes the last change to the address book.
+     */
+    public void undo(){
+    	allPersons.undo();
+    	allTags.undo();
+    }
 
     /**
      * Defensively copied UniquePersonList of all persons in the address book at the time of the call.
