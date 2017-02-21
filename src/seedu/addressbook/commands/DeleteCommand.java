@@ -28,6 +28,7 @@ public class DeleteCommand extends Command {
     @Override
     public CommandResult execute() {
         try {
+        	addressBook.backup();
             final ReadOnlyPerson target = getTargetPerson();
             addressBook.removePerson(target);
             return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, target));
