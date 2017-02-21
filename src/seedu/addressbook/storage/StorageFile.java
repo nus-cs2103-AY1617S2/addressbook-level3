@@ -20,11 +20,6 @@ public class StorageFile extends Storage{
     /** Default file path used if the user doesn't provide the file name. */
     public static final String DEFAULT_STORAGE_FILEPATH = "addressbook.txt";
 
-
-
-
-
-
     private final JAXBContext jaxbContext;
 
     public final Path path;
