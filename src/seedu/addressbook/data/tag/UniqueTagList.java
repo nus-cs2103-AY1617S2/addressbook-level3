@@ -76,6 +76,17 @@ public class UniqueTagList implements Iterable<Tag> {
     public Set<Tag> toSet() {
         return new HashSet<>(internalList);
     }
+    
+    /**
+     * Retrieves a listing of every tag.
+     */
+    public List<String> getTagsInName() {
+        ArrayList<String> tagsList = new ArrayList<String>();
+        for (Tag tag : internalList){
+            tagsList.add(tag.getTagName());
+        }
+        return tagsList;  
+    }
 
     /**
      * Checks if the list contains an equivalent Tag as the given argument.
