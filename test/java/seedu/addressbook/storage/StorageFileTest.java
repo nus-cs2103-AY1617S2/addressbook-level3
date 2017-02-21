@@ -17,7 +17,7 @@ import seedu.addressbook.data.person.Person;
 import seedu.addressbook.data.person.Phone;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
-import seedu.addressbook.storage.StorageFile.StorageOperationException;
+import seedu.addressbook.storage.Storage.StorageOperationException;
 import static seedu.addressbook.util.TestUtil.assertTextFilesEqual;
 
 public class StorageFileTest {
@@ -81,7 +81,7 @@ public class StorageFileTest {
      * Asserts that the contents of two storage files are the same.
      */
     private void assertStorageFilesEqual(StorageFile sf1, StorageFile sf2) throws Exception {
-        assertTextFilesEqual(Paths.get(sf1.getPath()), Paths.get(sf2.getPath()));
+        assertTextFilesEqual(Paths.get(sf1.getLocation()), Paths.get(sf2.getLocation()));
     }
 
     private StorageFile getStorage(String fileName) throws Exception {
