@@ -13,6 +13,7 @@ import seedu.addressbook.data.person.*;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
 import seedu.addressbook.storage.StorageFile;
+import seedu.addressbook.storage.StorageFile.StorageOperationException;
 
 import java.util.*;
 
@@ -193,12 +194,20 @@ public class LogicTest {
 
         // prepare address book state
         helper.addToAddressBook(addressBook, false, true);
+        helpSave();
 
         assertCommandBehavior("list",
                               Command.getMessageForPersonListShownSummary(expectedList),
                               expectedAB,
                               true,
                               expectedList);
+    }
+    
+    /**
+     * a method that saves the addressBook when Command is not one of the commands that mutates the data
+     */
+    private void helpSave() throws StorageOperationException {
+        saveFile.save(addressBook);
     }
 
     @Test
@@ -240,6 +249,7 @@ public class LogicTest {
         List<Person> lastShownList = helper.generatePersonList(p1, p2);
         AddressBook expectedAB = helper.generateAddressBook(lastShownList);
         helper.addToAddressBook(addressBook, lastShownList);
+        helpSave();
 
         logic.setLastShownList(lastShownList);
 
@@ -296,6 +306,7 @@ public class LogicTest {
         List<Person> lastShownList = helper.generatePersonList(p1, p2);
         AddressBook expectedAB = helper.generateAddressBook(lastShownList);
         helper.addToAddressBook(addressBook, lastShownList);
+        helpSave();
 
         logic.setLastShownList(lastShownList);
 
@@ -358,6 +369,7 @@ public class LogicTest {
 
 
         helper.addToAddressBook(addressBook, threePersons);
+        helpSave();
         logic.setLastShownList(threePersons);
 
         assertCommandBehavior("delete 2",
@@ -381,6 +393,7 @@ public class LogicTest {
         expectedAB.removePerson(p2);
 
         helper.addToAddressBook(addressBook, threePersons);
+        helpSave();
         addressBook.removePerson(p2);
         logic.setLastShownList(threePersons);
 
@@ -409,6 +422,7 @@ public class LogicTest {
         AddressBook expectedAB = helper.generateAddressBook(fourPersons);
         List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
         helper.addToAddressBook(addressBook, fourPersons);
+        helpSave();
 
         assertCommandBehavior("find KEY",
                                 Command.getMessageForPersonListShownSummary(expectedList),
@@ -429,6 +443,7 @@ public class LogicTest {
         AddressBook expectedAB = helper.generateAddressBook(fourPersons);
         List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
         helper.addToAddressBook(addressBook, fourPersons);
+        helpSave();
 
         assertCommandBehavior("find KEY",
                                 Command.getMessageForPersonListShownSummary(expectedList),
@@ -449,6 +464,7 @@ public class LogicTest {
         AddressBook expectedAB = helper.generateAddressBook(fourPersons);
         List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
         helper.addToAddressBook(addressBook, fourPersons);
+        helpSave();
 
         assertCommandBehavior("find KEY rAnDoM",
                                 Command.getMessageForPersonListShownSummary(expectedList),
