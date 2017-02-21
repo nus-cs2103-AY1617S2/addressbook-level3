@@ -31,6 +31,14 @@ public class AddCommand extends Command {
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
+    
+    private final boolean isMutating = true;
+    
+    @Override
+    public boolean isMutating(){
+    	return isMutating;
+    }
+    
     public AddCommand(String name,
                       String phone, boolean isPhonePrivate,
                       String email, boolean isEmailPrivate,

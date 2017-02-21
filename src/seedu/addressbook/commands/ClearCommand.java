@@ -16,4 +16,11 @@ public class ClearCommand extends Command {
         addressBook.clear();
         return new CommandResult(MESSAGE_SUCCESS);
     }
+    
+    private final boolean isMutating = true;
+    
+    @Override
+    public boolean isMutating(){
+    	return isMutating;
+    }
 }
