@@ -111,7 +111,7 @@ public class StorageFile {
     }
 
     /**
-     * Back up all data to this backup file.
+     * Backs up all data to this backup file.
      *
      * @throws StorageOperationException if there were errors converting and/or storing data to file.
      */
@@ -122,6 +122,23 @@ public class StorageFile {
          */
         try{
         	Files.copy(path, backupPath);           
+        } catch (IOException ioe) {
+            throw new StorageOperationException("Error writing to file: " + path + " error: " + ioe.getMessage());
+        }
+    }
+    
+    /**
+     * Replaces the current addressbook.txt with backup.txt
+     *
+     * @throws StorageOperationException if there were errors converting and/or storing data to file.
+     */
+    public void restore() throws StorageOperationException {
+
+        /* Note: Note the 'try with resource' statement below.
+         * More info: https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
+         */
+        try{
+        	Files.copy(backupPath, path);           
         } catch (IOException ioe) {
             throw new StorageOperationException("Error writing to file: " + path + " error: " + ioe.getMessage());
         }
