@@ -1,0 +1,24 @@
+# Generated class files
+*.class
+
+# Default data file
+addressbook.txt
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Idea files
+.idea/
+*.iml
+out/
+test/data/
+/bin/
+/data/
+publish.sh
+
+# Gradle build files
+.gradle/
+build/
+
