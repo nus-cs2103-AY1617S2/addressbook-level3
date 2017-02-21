@@ -23,7 +23,6 @@ public class StorageFile {
 
     /** Default file path used if the user doesn't provide the file name. */
     public static final String DEFAULT_STORAGE_FILEPATH = "addressbook.txt";
-    public static final String DEFAULT_BACKUP_FILEPATH = "backup.txt";
     /* Note: Note the use of nested classes below.
      * More info https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html
      */
@@ -50,20 +49,19 @@ public class StorageFile {
     private final JAXBContext jaxbContext;
 
     public final Path path;
-    public final Path backupPath;
 
 
     /**
      * @throws InvalidStorageFilePathException if the default path is invalid
      */
     public StorageFile() throws InvalidStorageFilePathException {
-        this(DEFAULT_STORAGE_FILEPATH, DEFAULT_BACKUP_FILEPATH);
+        this(DEFAULT_STORAGE_FILEPATH);
     }
 
     /**
      * @throws InvalidStorageFilePathException if the given file path is invalid
      */
-    public StorageFile(String filePath, String backupFilePath) throws InvalidStorageFilePathException {
+    public StorageFile(String filePath) throws InvalidStorageFilePathException {
         try {
             jaxbContext = JAXBContext.newInstance(AdaptedAddressBook.class);
         } catch (JAXBException jaxbe) {
@@ -71,8 +69,7 @@ public class StorageFile {
         }
 
         path = Paths.get(filePath);
-        backupPath = Paths.get(backupFilePath);
-        if (!(isValidPath(path) && isValidPath(backupPath))) {
+        if (!(isValidPath(path))) {
             throw new InvalidStorageFilePathException("Storage file should end with '.txt'");
         }
     }
@@ -110,39 +107,6 @@ public class StorageFile {
         }
     }
 
-    /**
-     * Backs up all data to this backup file.
-     *
-     * @throws StorageOperationException if there were errors converting and/or storing data to file.
-     */
-    public void backup() throws StorageOperationException {
-
-        /* Note: Note the 'try with resource' statement below.
-         * More info: https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
-         */
-        try{
-        	Files.copy(path, backupPath);           
-        } catch (IOException ioe) {
-            throw new StorageOperationException("Error writing to file: " + path + " error: " + ioe.getMessage());
-        }
-    }
-    
-    /**
-     * Replaces the current addressbook.txt with backup.txt
-     *
-     * @throws StorageOperationException if there were errors converting and/or storing data to file.
-     */
-    public void restore() throws StorageOperationException {
-
-        /* Note: Note the 'try with resource' statement below.
-         * More info: https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
-         */
-        try{
-        	Files.copy(backupPath, path);           
-        } catch (IOException ioe) {
-            throw new StorageOperationException("Error writing to file: " + path + " error: " + ioe.getMessage());
-        }
-    }
 
 
     /**
