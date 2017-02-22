@@ -44,7 +44,7 @@ public class Email {
      * Retrieves a listing of the breakdown of the email address, in order.
      */
     public List<String> getBreakDownOfEmailAddress() {
-        return Arrays.asList(value.split("."));
+        return Arrays.asList(value.split("@"));
     }
 
     @Override

@@ -178,7 +178,7 @@ public class UniqueTagList implements Iterable<Tag> {
     public List<String> getPersonTagString(List<Tag> internalList) {
         List<String> strTagList = new ArrayList<String>();
         for (Tag tag : internalList) {
-            strTagList.add(tag.toString().replaceAll("[\\[\\]]", ""));
+            strTagList.add(tag.toString().toLowerCase().replaceAll("[\\[\\]]", ""));
         }
         return strTagList;
     }
