@@ -53,8 +53,14 @@ public class Parser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        final String commandWord = matcher.group("commandWord");
+        String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
+        
+        AlternativeCommand ac = new AlternativeCommand();
+        if (ac.isAlternative(commandWord)) {
+            commandWord = ac.getStandardCommandWord(commandWord);
+        }
+        
         switch (commandWord) {
 
             case AddCommand.COMMAND_WORD:
@@ -93,7 +99,7 @@ public class Parser {
      * @param args full command args string
      * @return the prepared command
      */
-    private Command prepareAdd(String args){
+    private Command prepareAdd(String args) {
         final Matcher matcher = PERSON_DATA_ARGS_FORMAT.matcher(args.trim());
         // Validate arg string format
         if (!matcher.matches()) {
