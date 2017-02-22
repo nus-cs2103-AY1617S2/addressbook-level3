@@ -48,6 +48,7 @@ public class FindCommand extends Command {
             final Set<String> wordsInName = new HashSet<>(person.getName().getWordsInName());
             final Set<String> detailsInAddress = new HashSet<>(person.getAddress().getBreakDownOfAddress());
             final Set<String> detailsInEmailAddress = new HashSet<>(person.getEmail().getBreakDownOfEmailAddress());
+            final Set<String> detailsInPhone = new HashSet<>(person.getPhone().getBreakDownOfPhone());
             final Set<String> wordsInTag = new HashSet<>(person.getTags().getPersonTag());
             if (!Collections.disjoint(wordsInName, keywords)) {
                 matchedPersons.add(person);
@@ -56,6 +57,8 @@ public class FindCommand extends Command {
             } else if (!Collections.disjoint(detailsInEmailAddress, keywords)) {
                 matchedPersons.add(person);
             } else if (!Collections.disjoint(wordsInTag, keywords)) {
+                matchedPersons.add(person);
+            } else if (!Collections.disjoint(detailsInPhone, keywords)) {
                 matchedPersons.add(person);
             }
         }

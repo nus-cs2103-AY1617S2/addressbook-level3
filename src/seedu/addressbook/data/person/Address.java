@@ -42,7 +42,7 @@ public class Address {
      * Retrieves a listing of the breakdown of the address, in order.
      */
     public List<String> getBreakDownOfAddress() {
-        return Arrays.asList(value.replaceAll(",", "").toLowerCase().split("\\s+"));
+        return Arrays.asList(value.toLowerCase().replaceAll(",", "").split("\\s+"));
     }
 
     @Override
