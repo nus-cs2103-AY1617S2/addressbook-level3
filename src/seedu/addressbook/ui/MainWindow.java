@@ -10,6 +10,7 @@ import seedu.addressbook.logic.Logic;
 import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,6 +85,10 @@ public class MainWindow {
         if(resultPersons.isPresent()) {
             display(resultPersons.get());
         }
+        final Optional<ArrayList<String>> resultCommands = result.getRelevantCommands();
+        if(resultCommands.isPresent()) {
+            display(resultCommands.get());
+        }
         display(result.feedbackToUser);
     }
 
@@ -100,6 +105,13 @@ public class MainWindow {
         display(new Formatter().format(persons));
     }
 
+    /**
+     * Displays the list of commands in the output display area, formatted as an indexed list.
+     */
+    private void display(ArrayList<String> commands) {
+        display(new Formatter().format(commands));
+    }
+    
     /**
      * Displays the given messages on the output display area, after formatting appropriately.
      */
