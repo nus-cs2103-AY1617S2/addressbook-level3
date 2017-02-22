@@ -5,6 +5,7 @@ import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import static seedu.addressbook.ui.Gui.DISPLAYED_INDEX_OFFSET;
 
@@ -12,6 +13,7 @@ import static seedu.addressbook.ui.Gui.DISPLAYED_INDEX_OFFSET;
  * Represents an executable command.
  */
 public abstract class Command {
+    protected static ArrayList<String> commandList = new ArrayList<String>();
     protected AddressBook addressBook;
     protected List<? extends ReadOnlyPerson> relevantPersons;
     private int targetIndex = -1;
@@ -64,5 +66,22 @@ public abstract class Command {
 
     public void setTargetIndex(int targetIndex) {
         this.targetIndex = targetIndex;
+    }
+    
+    public static void addCommand(String command) {
+        commandList.add(command);
+    }
+    
+    public static ArrayList<String> getCommandList() {
+        return commandList;
+    }
+    
+    /**
+     * Constructs a feedback message to summarise an operation that displayed a listing of commands.
+     *
+     * @return summary message for commands displayed
+     */
+    public static String getMessageForCommandListShownSummary() {
+        return String.format(Messages.MESSAGE_COMMANDS_LISTED_OVERVIEW, commandList.size());
     }
 }
