@@ -45,8 +45,11 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | undo deletion | flexibly manage the changes
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user | find a person by email | find the owner of the email 
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
+
 
 
 ## Appendix B : Use Cases
@@ -69,6 +72,30 @@ Use case ends.
 
 > Use case ends
 
+#### Use case: Rename a tag
+
+**MSS**
+
+1. User requests to rename a tag
+2. AddressBook requires for more details about renaming
+3. User enters renaming details
+4. AddressBook requests for confirmation
+5. User confirms to rename
+6. AddressBook renames all tags and show the status
+Use case ends.
+
+**Extensions**
+
+3a. AddressBook2 detects an error in the entered data.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3a1. AddressBook2 requests for the correct data.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3a2. User enters new data.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Steps 3a1-3a2 are repeated until the data entered are correct.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use case resumes from step 4.
+3b. User decides to cancel renaming.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3b1. AddressBook2 requests for confirmation of cancellation
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3b2. User confirms cancellation. 
+> Use case ends
+
 3a. The given index is invalid
 
 > 3a1. AddressBook shows an error message <br>
@@ -80,6 +107,8 @@ Use case ends.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should be able to run on different platforms
+6. Should easy to use for beginners
 
 ## Appendix D : Glossary
 
