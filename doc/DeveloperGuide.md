@@ -72,6 +72,30 @@ Use case ends.
 
 > Use case ends
 
+#### Use case: Rename a tag
+
+**MSS**
+
+1. User requests to rename a tag
+2. AddressBook requires for more details about renaming
+3. User enters renaming details
+4. AddressBook requests for confirmation
+5. User confirms to rename
+6. AddressBook renames all tags and show the status
+Use case ends.
+
+**Extensions**
+
+3a. AddressBook2 detects an error in the entered data.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3a1. AddressBook2 requests for the correct data.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3a2. User enters new data.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Steps 3a1-3a2 are repeated until the data entered are correct.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use case resumes from step 4.
+3b. User decides to cancel renaming.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3b1. AddressBook2 requests for confirmation of cancellation
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3b2. User confirms cancellation. 
+> Use case ends
+
 3a. The given index is invalid
 
 > 3a1. AddressBook shows an error message <br>
