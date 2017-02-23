@@ -34,6 +34,15 @@ public class Formatter {
         return sb.toString();
     }
 
+    /** Formats the given list of commands for displaying to the user. */
+    public String format(ArrayList<String> commands) {
+        final List<String> formattedCommands = new ArrayList<>();
+        for (String command : commands) {
+            formattedCommands.add(command.toString());
+        }
+        return format(asIndexedList(formattedCommands));
+    }
+    
     /** Formats the given list of persons for displaying to the user. */
     public String format(List<? extends ReadOnlyPerson> persons) {
         final List<String> formattedPersons = new ArrayList<>();
@@ -42,7 +51,7 @@ public class Formatter {
         }
         return format(asIndexedList(formattedPersons));
     }
-
+    
     /** Formats a list of strings as an indexed list. */
     private static String asIndexedList(List<String> listItems) {
         final StringBuilder formatted = new StringBuilder();
