@@ -13,6 +13,7 @@ public interface ReadOnlyPerson {
     Phone getPhone();
     Email getEmail();
     Address getAddress();
+    Race getRace();
     Religion getReligion();
 
     /**
@@ -31,6 +32,7 @@ public interface ReadOnlyPerson {
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress())
+                && other.getRace().equals(this.getRace())
                 && other.getReligion().equals(this.getReligion()));
     }
 
@@ -54,6 +56,11 @@ public interface ReadOnlyPerson {
                 .append(" Address: ");
         if (getAddress().isPrivate()) {
             builder.append(detailIsPrivate);
+        }
+        builder.append(getRace())
+        		.append(" Race: ");
+        if (getRace().isPrivate()) {
+        	builder.append(detailIsPrivate);
         }
         builder.append(getAddress())
                 .append(" Religion: ");
@@ -82,6 +89,9 @@ public interface ReadOnlyPerson {
         }
         if (!getAddress().isPrivate()) {
             builder.append(" Address: ").append(getAddress());
+        }
+        if (!getRace().isPrivate()) {
+            builder.append(" Race: ").append(getRace());
         }
         if (!getReligion().isPrivate()) {
             builder.append(" Religion: ").append(getReligion());

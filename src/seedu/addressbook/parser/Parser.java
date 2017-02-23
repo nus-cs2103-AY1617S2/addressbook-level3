@@ -113,6 +113,9 @@ public class Parser {
                     matcher.group("address"),
                     isPrivatePrefixPresent(matcher.group("isAddressPrivate")),
                     
+                    matcher.group("race"),
+                    isPrivatePrefixPresent(matcher.group("isRacePrivate")),
+              
                     matcher.group("religion"),
                     isPrivatePrefixPresent(matcher.group("isReligionPrivate")),
 

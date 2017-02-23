@@ -33,6 +33,8 @@ public class AdaptedPerson {
     @XmlElement(required = true)
     private AdaptedContactDetail address;
     @XmlElement(required = true)
+    private AdaptedContactDetail race;
+    @XmlElement(required = true)
     private AdaptedContactDetail religion;
 
     @XmlElement
@@ -64,6 +66,10 @@ public class AdaptedPerson {
         address.isPrivate = source.getAddress().isPrivate();
         address.value = source.getAddress().value;
         
+        race = new AdaptedContactDetail();
+        race.isPrivate = source.getRace().isPrivate();
+        race.value = source.getRace().value;
+
         religion = new AdaptedContactDetail();
         religion.isPrivate = source.getReligion().isPrivate();
         religion.value = source.getReligion().value;
@@ -89,8 +95,8 @@ public class AdaptedPerson {
             }
         }
         // second call only happens if phone/email/address are all not null
-        return Utils.isAnyNull(name, phone, email, address, religion)
-                || Utils.isAnyNull(phone.value, email.value, address.value);
+        return Utils.isAnyNull(name, phone, email, address, race, religion)
+                || Utils.isAnyNull(phone.value, email.value, address.value, race.value, religion.value);
     }
 
     /**
@@ -107,8 +113,9 @@ public class AdaptedPerson {
         final Phone phone = new Phone(this.phone.value, this.phone.isPrivate);
         final Email email = new Email(this.email.value, this.email.isPrivate);
         final Address address = new Address(this.address.value, this.address.isPrivate);
-        final Religion religion = new Religion(this.religion.value, this.religion.isPrivate);
+        final Race race = new Race(this.race.value, this.race.isPrivate);
         final UniqueTagList tags = new UniqueTagList(personTags);
-        return new Person(name, phone, email, address, religion, tags);
+        final Religion religion = new Religion(this.religion.value, this.religion.isPrivate);
+        return new Person(name, phone, email, address, race, religion, tags);
     }
 }

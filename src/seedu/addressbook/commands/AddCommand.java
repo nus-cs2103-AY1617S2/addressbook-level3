@@ -35,6 +35,7 @@ public class AddCommand extends Command {
                       String phone, boolean isPhonePrivate,
                       String email, boolean isEmailPrivate,
                       String address, boolean isAddressPrivate,
+                      String race, boolean isRacePrivate,
                       String religion, boolean isReligionPrivate,
                       Set<String> tags) throws IllegalValueException {
         final Set<Tag> tagSet = new HashSet<>();
@@ -46,6 +47,7 @@ public class AddCommand extends Command {
                 new Phone(phone, isPhonePrivate),
                 new Email(email, isEmailPrivate),
                 new Address(address, isAddressPrivate),
+                new Race(race, isRacePrivate),
                 new Religion(religion, isReligionPrivate),
                 new UniqueTagList(tagSet)
         );
