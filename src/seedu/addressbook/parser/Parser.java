@@ -277,6 +277,10 @@ public class Parser {
         case ExitCommand.COMMAND_WORD:
             return new IncorrectCommand(String.format(Messages.MESSAGE_DID_YOU_MEAN_THIS,
                     ExitCommand.MESSAGE_USAGE));
+            
+        case HistoryCommand.COMMAND_WORD:
+            return new IncorrectCommand(String.format(Messages.MESSAGE_DID_YOU_MEAN_THIS,
+                    HistoryCommand.MESSAGE_USAGE));
 
         case HelpCommand.COMMAND_WORD:
             // Fallthrough
@@ -305,6 +309,7 @@ public class Parser {
                 ViewCommand.COMMAND_WORD,
                 ViewAllCommand.COMMAND_WORD,
                 HelpCommand.COMMAND_WORD,
+                HistoryCommand.COMMAND_WORD,
                 ExitCommand.COMMAND_WORD };
 
         String mostProbableCommandWord = "";
