@@ -136,13 +136,13 @@ public class LogicTest {
     @Test
     public void execute_add_invalidPersonData() throws Exception {
         assertCommandBehavior(
-                "add []\\[;] p/12345 e/valid@e.mail a/valid, address, r/Chinese", Name.MESSAGE_NAME_CONSTRAINTS);
+                "add []\\[;] p/12345 e/valid@e.mail a/valid, address, r/Chinese, r/buddhism", Name.MESSAGE_NAME_CONSTRAINTS);
         assertCommandBehavior(
-                "add Valid Name p/not_numbers e/valid@e.mail a/valid, address, r/Chinese", Phone.MESSAGE_PHONE_CONSTRAINTS);
+                "add Valid Name p/not_numbers e/valid@e.mail a/valid, address, r/Chinese, r/buddhism", Phone.MESSAGE_PHONE_CONSTRAINTS);
         assertCommandBehavior(
-                "add Valid Name p/12345 e/notAnEmail a/valid, address, r/Chinese", Email.MESSAGE_EMAIL_CONSTRAINTS);
+                "add Valid Name p/12345 e/notAnEmail a/valid, address, r/Chinese, r/buddhism", Email.MESSAGE_EMAIL_CONSTRAINTS);
         assertCommandBehavior(
-                "add Valid Name p/12345 e/valid@e.mail a/valid, address, r/Chinese t/invalid_-[.tag", Tag.MESSAGE_TAG_CONSTRAINTS);
+                "add Valid Name p/12345 e/valid@e.mail a/valid, address, r/Chinese, r/buddhism, t/invalid_-[.tag", Tag.MESSAGE_TAG_CONSTRAINTS);
 
     }
 
@@ -468,10 +468,12 @@ public class LogicTest {
             Email email = new Email("adam@gmail.com", false);
             Address privateAddress = new Address("111, alpha street", true);
             Race race = new Race("malay", false);
+            Religion religion = new Religion("Christian", false);
             Tag tag1 = new Tag("tag1");
             Tag tag2 = new Tag("tag2");
             UniqueTagList tags = new UniqueTagList(tag1, tag2);
-            return new Person(name, privatePhone, email, privateAddress, race, tags);
+            return new Person(name, privatePhone, email, privateAddress, race, religion, tags);
+
         }
 
         /**
@@ -488,7 +490,8 @@ public class LogicTest {
                     new Phone("" + Math.abs(seed), isAllFieldsPrivate),
                     new Email(seed + "@email", isAllFieldsPrivate),
                     new Address("House of " + seed, isAllFieldsPrivate),
-                    new Race("Malay", isAllFieldsPrivate),
+                    new Race("Race ", isAllFieldsPrivate),
+                    new Religion("Religion " + seed, isAllFieldsPrivate),
                     new UniqueTagList(new Tag("tag" + Math.abs(seed)), new Tag("tag" + Math.abs(seed + 1)))
             );
         }
@@ -504,7 +507,7 @@ public class LogicTest {
             cmd.add((p.getEmail().isPrivate() ? "pe/" : "e/") + p.getEmail());
             cmd.add((p.getAddress().isPrivate() ? "pa/" : "a/") + p.getAddress());
             cmd.add((p.getRace().isPrivate() ? "pr/" : "r/") + p.getRace());
-
+            cmd.add((p.getReligion().isPrivate() ? "pr/" : "r/") + p.getReligion());
             UniqueTagList tags = p.getTags();
             for(Tag t: tags){
                 cmd.add("t/" + t.tagName);
@@ -586,7 +589,8 @@ public class LogicTest {
                     new Phone("1", false),
                     new Email("1@email", false),
                     new Address("House of 1", false),
-                    new Race("chinese", false),
+                    new Race("Race 1", false),
+                    new Religion("Religion 1", false),
                     new UniqueTagList(new Tag("tag"))
             );
         }

@@ -15,17 +15,19 @@ public class Person implements ReadOnlyPerson {
     private Email email;
     private Address address;
     private Race race;
+    private Religion religion;
 
     private final UniqueTagList tags;
     /**
      * Assumption: Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Race race, UniqueTagList tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Race race, Religion religion, UniqueTagList tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.race = race;
+        this.religion = religion;
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
 
@@ -33,7 +35,7 @@ public class Person implements ReadOnlyPerson {
      * Copy constructor.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRace(), source.getTags());
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRace(), source.getReligion(), source.getTags());;
     }
 
     
@@ -60,6 +62,12 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Race getRace() {
         return race;
+    
+    }
+  
+    @Override
+    public Religion getReligion() {
+        return religion;
     }
 
     @Override
@@ -84,7 +92,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, race, tags);
+        return Objects.hash(name, phone, email, address, race, religion, tags);
     }
 
     @Override

@@ -254,6 +254,7 @@ public class ParserTest {
                 new Email(Email.EXAMPLE, false),
                 new Address(Address.EXAMPLE, true),
                 new Race(Race.EXAMPLE, true),
+                new Religion(Religion.EXAMPLE, false),
                 new UniqueTagList(new Tag("tag1"), new Tag("tag2"), new Tag("tag3"))
             );
         } catch (IllegalValueException ive) {
@@ -268,6 +269,7 @@ public class ParserTest {
                 + (person.getEmail().isPrivate() ? " pe/" : " e/") + person.getEmail().value
                 + (person.getAddress().isPrivate() ? " pa/" : " a/") + person.getAddress().value
                 + (person.getRace().isPrivate() ? " pr/" : " r/") + person.getRace().value;
+                + (person.getReligion().isPrivate() ? " pr/" : " r/") + person.getReligion().value;
         for (Tag tag : person.getTags()) {
             addCommand += " t/" + tag.tagName;
         }
