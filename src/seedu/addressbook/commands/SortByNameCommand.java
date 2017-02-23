@@ -5,9 +5,9 @@ import seedu.addressbook.data.person.UniquePersonList;
 
 import java.util.List;
 
-public class SortCommand extends Command{
+public class SortByNameCommand extends Command{
 
-	public static final String COMMAND_WORD = "sort";
+	public static final String COMMAND_WORD = "sortbyname";
 	
 	public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Sorts all persons in addressbook according to name"
 			+ "and displays them as a list with index numbers.\n\t"
