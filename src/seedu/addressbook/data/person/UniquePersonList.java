@@ -114,7 +114,7 @@ public class UniquePersonList implements Iterable<Person> {
     }
     
     /**
-     * 
+     * Sorts all persons by name
      */
     public void sortListByName() {
     	Collections.sort(internalList);
