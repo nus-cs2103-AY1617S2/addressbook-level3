@@ -174,6 +174,46 @@ public class ParserTest {
                 parseAndAssertCommandType(input, FindCommand.class);
         assertEquals(keySet, result.getKeywords());
     }
+    
+    /**
+     * Test find persons by keyword in email command
+     */
+    @Test
+    public void findEmailCommand_invalidArgs() {
+        // no keywords
+        final String[] inputs = {
+                "findEmail",
+                "findEmail "
+        };
+        final String resultMessage =
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindByEmailCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage, inputs);
+    }
+    
+    @Test
+    public void findCommandByEmail_validArgs_parsedCorrectly() {
+        final String[] keywords = { "alice@gmail.com", "emily@yahoo.com" };
+        final Set<String> keySet = new HashSet<>(Arrays.asList(keywords));
+
+        final String input = "findEmail " + String.join(" ", keySet);
+        final FindByEmailCommand result =
+                parseAndAssertCommandType(input, FindByEmailCommand.class);
+        assertEquals(keySet, result.getKeywords());
+    }
+    
+    @Test
+    public void findByEmailCommand_duplicateKeys_parsedCorrectly() {
+        final String[] keywords = { "alice@gmail.com", "emily@yahoo.com" };
+        final Set<String> keySet = new HashSet<>(Arrays.asList(keywords));
+
+        // duplicate every keyword
+        final String input = "findEmail " + String.join(" ", keySet) + " " + String.join(" ", keySet);
+        final FindByEmailCommand result =
+                parseAndAssertCommandType(input, FindByEmailCommand.class);
+        assertEquals(keySet, result.getKeywords());
+    }
+
+
 
     /**
      * Test add person command
