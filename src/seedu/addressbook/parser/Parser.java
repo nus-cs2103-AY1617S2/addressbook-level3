@@ -26,7 +26,7 @@ public class Parser {
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
     
-    public static final Pattern EDIT_COMMAND_FORMAT = Pattern.compile("(?<targetIndex>.+)(?<arguments>.*)");
+    public static final Pattern EDIT_COMMAND_FORMAT = Pattern.compile("(?<targetIndex>\\d+)(?<arguments>.*)");
 
     /**
      * Signals that the user input could not be parsed.
@@ -98,7 +98,7 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareEdit(String args) {
-        final Matcher editMatcher = EDIT_COMMAND_FORMAT.matcher(args);
+        final Matcher editMatcher = EDIT_COMMAND_FORMAT.matcher(args.trim());
         if (!editMatcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
