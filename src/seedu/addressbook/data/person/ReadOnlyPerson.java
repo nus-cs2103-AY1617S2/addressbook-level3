@@ -55,12 +55,12 @@ public interface ReadOnlyPerson {
         if (getAddress().isPrivate()) {
             builder.append(detailIsPrivate);
         }
-        builder.append(getBirthday())
+        builder.append(getAddress())
                 .append(" Birthday: ");
         if (getBirthday().isPrivate()) {
             builder.append(detailIsPrivate);
         }
-        builder.append(getAddress())
+        builder.append(getBirthday())
                 .append(" Tags: ");
         for (Tag tag : getTags()) {
             builder.append(tag);
