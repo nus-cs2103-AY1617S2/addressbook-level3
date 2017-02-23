@@ -45,7 +45,9 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | edit existing contact details | update contacts when their change their details
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user | find a person by first name | locate details of a person if I forget their surnames
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
 
@@ -74,12 +76,41 @@ Use case ends.
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
 
+#### Use case: Rename existing tag
+
+**MSS**
+
+1. User requests to list tags
+2. AddressBook shows a list of tags
+3. User requests to rename a specific tag
+4. AddressBook shows a list of persons with this tag and ask for confirmation
+5. User confirms the request
+6. AddressBook changes the tag for every person <br>
+Use case ends.
+
+**Extensions**
+2a. The list is empty
+
+> Use case ends
+
+3a. The given tag is invalid
+
+> 3a1. AddressBook shows an error message <br>
+  Use Case resumes at step 2
+  
+5a. User changes decision and recall his request
+
+> Use case ends
+
 ## Appendix C : Non Functional Requirements
 
 1. Should work on any [mainstream OS](#mainstream-os) as long as it has Java 8 or higher installed.
 2. Should be able to hold up to 1000 persons.
 3. Should come with automated unit tests and open source code.
 4. Should favor DOS style commands over Unix-style commands.
+5. Should have automated back-up function
+6. Should take less than 3 seconds to start up
+7. Should take less than 0.5 second to complete search by name
 
 ## Appendix D : Glossary
 
