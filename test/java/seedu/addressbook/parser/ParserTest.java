@@ -32,9 +32,9 @@ public class ParserTest {
     }
 
     @Test
-    public void unknownCommandWord_returnsHelp() {
-        final String input = "unknowncommandword arguments arguments";
-        parseAndAssertCommandType(input, HelpCommand.class);
+    public void unknownCommandWord_returnsIncorrectCommand() {
+        final String input = "lnt";
+        parseAndAssertCommandType(input, IncorrectCommand.class);
     }
 
     /**
@@ -66,7 +66,7 @@ public class ParserTest {
     }
 
     /**
-     * Test ingle index argument commands
+     * Test single index argument commands
      */
     
     @Test
