@@ -32,9 +32,9 @@ public class ParserTest {
     }
 
     @Test
-    public void unknownCommandWord_returnsHelp() {
-        final String input = "unknowncommandword arguments arguments";
-        parseAndAssertCommandType(input, HelpCommand.class);
+    public void unknownCommandWord_returnsIncorrectCommand() {
+        final String input = "lnt";
+        parseAndAssertCommandType(input, IncorrectCommand.class);
     }
 
     /**
@@ -66,7 +66,7 @@ public class ParserTest {
     }
 
     /**
-     * Test ingle index argument commands
+     * Test single index argument commands
      */
     
     @Test
@@ -253,6 +253,7 @@ public class ParserTest {
                 new Phone(Phone.EXAMPLE, true),
                 new Email(Email.EXAMPLE, false),
                 new Address(Address.EXAMPLE, true),
+                new Birthday(Birthday.EXAMPLE, false),
                 new UniqueTagList(new Tag("tag1"), new Tag("tag2"), new Tag("tag3"))
             );
         } catch (IllegalValueException ive) {
@@ -265,7 +266,8 @@ public class ParserTest {
                 + person.getName().fullName
                 + (person.getPhone().isPrivate() ? " pp/" : " p/") + person.getPhone().value
                 + (person.getEmail().isPrivate() ? " pe/" : " e/") + person.getEmail().value
-                + (person.getAddress().isPrivate() ? " pa/" : " a/") + person.getAddress().value;
+                + (person.getAddress().isPrivate() ? " pa/" : " a/") + person.getAddress().value
+                + (person.getBirthday().isPrivate() ? " pb/" : " b/") + person.getBirthday().toString();
         for (Tag tag : person.getTags()) {
             addCommand += " t/" + tag.tagName;
         }

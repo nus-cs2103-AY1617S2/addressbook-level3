@@ -65,10 +65,11 @@ public class Logic {
     }
 
     /**
-     * Parses the user command, executes it, and returns the result.
+     * Adds the user command to the list, parses it, executes it, and returns the result.
      * @throws Exception if there was any problem during command execution.
      */
     public CommandResult execute(String userCommandText) throws Exception {
+        Command.addCommand(userCommandText);
         Command command = new Parser().parseCommand(userCommandText);
         CommandResult result = execute(command);
         recordResult(result);
