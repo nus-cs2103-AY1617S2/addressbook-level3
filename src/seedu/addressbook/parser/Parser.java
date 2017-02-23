@@ -111,6 +111,9 @@ public class Parser {
 
                     matcher.group("address"),
                     isPrivatePrefixPresent(matcher.group("isAddressPrivate")),
+                    
+                    matcher.group("race"),
+                    isPrivatePrefixPresent(matcher.group("isRacePrivate")),
 
                     getTagsFromArgs(matcher.group("tagArguments"))
             );
