@@ -7,6 +7,7 @@ import java.nio.file.Path;
 
 
 public abstract class Storage {
+    
     /**
      * Signals that the given file path does not fulfill the storage filepath constraints.
      */
