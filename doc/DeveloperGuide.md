@@ -45,7 +45,9 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | edit existing contact details | update contacts when their change their details
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
+`* *` | user | find a person by first name | locate details of a person if I forget their surnames
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 
 
