@@ -28,7 +28,8 @@ public class EditCommand extends Command {
             + "Edits the person's details identified by the index number used in the last person listing.\n\t"
             + "All details must be present, even if it is not changed. Name, phone, email and address.\n\t"
             + "Parameters: INDEX\n\t"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Example: " + COMMAND_WORD + " 1" 
+            + " John Doe p/98765432 e/johnd@gmail.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney";
     
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Editted Person: %1$s";
     
@@ -57,7 +58,7 @@ public class EditCommand extends Command {
     @Override
     public CommandResult execute() {
         try {
-            final ReadOnlyPerson target = getTargetPerson();
+            final int target = getTargetIndex();
             addressBook.editPerson(target, toEdit);
             return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, toEdit));
         } catch (IndexOutOfBoundsException ie) {
