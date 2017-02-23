@@ -195,7 +195,7 @@ public class LogicTest {
         helper.addToAddressBook(addressBook, false, true);
 
         assertCommandBehavior("list",
-                              Command.getMessageForPersonListShownSummary(expectedList),
+                              Command.getMessageForPersonListShownSummary(expectedList),         
                               expectedAB,
                               true,
                               expectedList);
@@ -457,6 +457,72 @@ public class LogicTest {
                                 expectedList);
     }
 
+    @Test
+    public void execute_findByEmail_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindByEmailCommand.MESSAGE_USAGE);
+        assertCommandBehavior("findEmail ", expectedMessage);
+    }
+    
+    @Test
+    public void execute_findByEmail_onlyMatchesExactEmail() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Person pTarget1 = helper.generatePersonWithEmail("target1@gmail.com");
+        Person pTarget2 = helper.generatePersonWithEmail("target1@yahoo.com");
+        Person p1 = helper.generatePersonWithEmail("p1@gmail.com");
+        Person p2 = helper.generatePersonWithEmail("p2@hotmail.com");
+
+        List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
+        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
+        List<Person> expectedList = helper.generatePersonList(pTarget1);
+        helper.addToAddressBook(addressBook, fourPersons);
+
+        assertCommandBehavior("findEmail target1@gmail.com",
+                Command.getMessageForPersonListShownSummary(expectedList),
+                expectedAB,
+                true,
+                expectedList);
+    }
+    @Test
+    public void execute_findByEmail_matchesIfAnyKeywordPresent() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Person pTarget1 = helper.generatePersonWithEmail("target1@gmail.com");
+        Person pTarget2 = helper.generatePersonWithEmail("target1@yahoo.com");
+        Person p1 = helper.generatePersonWithEmail("p1@gmail.com");
+        Person p2 = helper.generatePersonWithEmail("p2@hotmail.com");
+
+        List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
+        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
+        List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
+        helper.addToAddressBook(addressBook, fourPersons);
+
+        assertCommandBehavior("findEmail target1",
+                Command.getMessageForPersonListShownSummary(expectedList),
+                expectedAB,
+                true,
+                expectedList);
+    }
+    
+    @Test
+    public void execute_findByEmail_isCaseSensitive() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Person pTarget1 = helper.generatePersonWithEmail("Target1@gmail.com");
+        Person pTarget2 = helper.generatePersonWithEmail("target1@yahoo.com");
+        Person p1 = helper.generatePersonWithEmail("p1@gmail.com");
+        Person p2 = helper.generatePersonWithEmail("p2@hotmail.com");
+        
+        List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
+        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
+        List<Person> expectedList = helper.generatePersonList(pTarget1);
+        helper.addToAddressBook(addressBook, fourPersons);
+
+        assertCommandBehavior("findEmail Target",
+                Command.getMessageForPersonListShownSummary(expectedList),
+                expectedAB,
+                true,
+                expectedList);
+    }
+
+
     /**
      * A utility class to generate test data.
      */
@@ -585,6 +651,19 @@ public class LogicTest {
                     new Address("House of 1", false),
                     new UniqueTagList(new Tag("tag"))
             );
+        }
+
+        /**
+         * Generates a Person object with given email. Other fields will have some dummy values.
+         */
+        Person generatePersonWithEmail(String email) throws Exception {
+            return new Person(
+                    new Name("testUser1"),
+                    new Phone("1", false),
+                    new Email(email, false),
+                    new Address("House of 1", false),
+                    new UniqueTagList(new Tag("tag"))
+                    );
         }
     }
 
