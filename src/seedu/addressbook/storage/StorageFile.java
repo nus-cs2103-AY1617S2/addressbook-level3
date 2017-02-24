@@ -15,33 +15,10 @@ import java.nio.file.Paths;
 /**
  * Represents the file used to store address book data.
  */
-public class StorageFile {
+public class StorageFile extends Storage{
 
     /** Default file path used if the user doesn't provide the file name. */
     public static final String DEFAULT_STORAGE_FILEPATH = "addressbook.txt";
-
-    /* Note: Note the use of nested classes below.
-     * More info https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html
-     */
-
-    /**
-     * Signals that the given file path does not fulfill the storage filepath constraints.
-     */
-    public static class InvalidStorageFilePathException extends IllegalValueException {
-        public InvalidStorageFilePathException(String message) {
-            super(message);
-        }
-    }
-
-    /**
-     * Signals that some error has occured while trying to convert and read/write data between the application
-     * and the storage file.
-     */
-    public static class StorageOperationException extends Exception {
-        public StorageOperationException(String message) {
-            super(message);
-        }
-    }
 
     private final JAXBContext jaxbContext;
 
@@ -85,9 +62,6 @@ public class StorageFile {
      */
     public void save(AddressBook addressBook) throws StorageOperationException {
 
-        /* Note: Note the 'try with resource' statement below.
-         * More info: https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
-         */
         try (final Writer fileWriter =
                      new BufferedWriter(new FileWriter(path.toFile()))) {
 
@@ -119,11 +93,6 @@ public class StorageFile {
                 throw new StorageOperationException("File data missing some elements");
             }
             return loaded.toModelType();
-
-        /* Note: Here, we are using an exception to create the file if it is missing. However, we should minimize
-         * using exceptions to facilitate normal paths of execution. If we consider the missing file as a 'normal'
-         * situation (i.e. not truly exceptional) we should not use an exception to handle it.
-         */
 
         // create empty file if not found
         } catch (FileNotFoundException fnfe) {
