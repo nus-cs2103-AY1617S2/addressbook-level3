@@ -53,7 +53,6 @@ public class Parser {
      * @throws java.text.ParseException 
      */
     public Command parseCommand(String userInput) throws java.text.ParseException {
-    	System.out.println(userInput.trim());
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));

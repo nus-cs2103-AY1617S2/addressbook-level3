@@ -25,12 +25,9 @@ public class Birthday {
 		if(!isValidBirthday(birthday)){
 			throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
 		}
-		System.out.println("string "+ birthday);
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		Date date = formatter.parse(birthday);
-		System.out.println(date);
 		this.value= formatter.format(date);
-		System.out.println(value);
 	}
 
 	public static boolean isValidBirthday(String test) {
