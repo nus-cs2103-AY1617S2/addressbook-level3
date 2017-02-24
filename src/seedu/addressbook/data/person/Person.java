@@ -54,6 +54,22 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
         return address;
     }
 
+    public void setName(String name) {
+        this.name.setFullName(name);
+    }
+
+    public void setPhone(String phone) {
+        this.phone.setValue(phone);
+    }
+
+    public void setEmail(String email) {
+        this.email.setValue(email);
+    }
+
+    public void setAddress(String address) {
+        this.address.setValue(address);
+    }
+    
     @Override
     public UniqueTagList getTags() {
         return new UniqueTagList(tags);
