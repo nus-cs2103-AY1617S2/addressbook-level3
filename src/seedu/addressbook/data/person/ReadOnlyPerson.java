@@ -13,7 +13,7 @@ public interface ReadOnlyPerson {
     Phone getPhone();
     Email getEmail();
     Address getAddress();
-
+    DateOfBirth getDob();
     /**
      * The returned TagList is a deep copy of the internal TagList,
      * changes on the returned list will not affect the person's internal tags.
@@ -29,7 +29,8 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress()))
+        		&& other.getDob().equals(this.getDob());
     }
 
     /**
@@ -54,10 +55,16 @@ public interface ReadOnlyPerson {
             builder.append(detailIsPrivate);
         }
         builder.append(getAddress())
+        		.append(" D.O.B: ");
+        if (getDob().isPrivate()) {
+            builder.append(detailIsPrivate);
+        }
+        builder.append(getDob())
                 .append(" Tags: ");
         for (Tag tag : getTags()) {
             builder.append(tag);
         }
+       
         return builder.toString();
     }
 
@@ -75,6 +82,9 @@ public interface ReadOnlyPerson {
         }
         if (!getAddress().isPrivate()) {
             builder.append(" Address: ").append(getAddress());
+        }
+        if (!getDob().isPrivate()) {
+            builder.append(" D.O.B: ").append(getDob());
         }
         builder.append(" Tags: ");
         for (Tag tag : getTags()) {
