@@ -35,6 +35,9 @@ public class Person implements ReadOnlyPerson {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getTags());
     }
     
+    /*
+     * Returns a Comparator for Person Name
+     */
     public static Comparator<Person> getPersonNameComparator() {
     	return new Comparator<Person>() {
     		public int compare(Person first, Person second) {
