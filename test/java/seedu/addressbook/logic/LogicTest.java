@@ -126,23 +126,23 @@ public class LogicTest {
         assertCommandBehavior(
                 "add wrong args wrong args", expectedMessage);
         assertCommandBehavior(
-                "add Valid Name 12345 e/valid@email.butNoPhonePrefix a/valid, address", expectedMessage);
+                "add Valid Name 12345 e/valid@email.butNoPhonePrefix a/valid, address, dob", expectedMessage);
         assertCommandBehavior(
-                "add Valid Name p/12345 valid@email.butNoPrefix a/valid, address", expectedMessage);
+                "add Valid Name p/12345 valid@email.butNoPrefix a/valid, address, dob", expectedMessage);
         assertCommandBehavior(
-                "add Valid Name p/12345 e/valid@email.butNoAddressPrefix valid, address", expectedMessage);
+                "add Valid Name p/12345 e/valid@email.butNoAddressPrefix valid, address, dob", expectedMessage);
     }
 
     @Test
     public void execute_add_invalidPersonData() throws Exception {
         assertCommandBehavior(
-                "add []\\[;] p/12345 e/valid@e.mail a/valid, address", Name.MESSAGE_NAME_CONSTRAINTS);
+                "add []\\[;] p/12345 e/valid@e.mail a/valid, address, dob", Name.MESSAGE_NAME_CONSTRAINTS);
         assertCommandBehavior(
-                "add Valid Name p/not_numbers e/valid@e.mail a/valid, address", Phone.MESSAGE_PHONE_CONSTRAINTS);
+                "add Valid Name p/not_numbers e/valid@e.mail a/valid, address, dob", Phone.MESSAGE_PHONE_CONSTRAINTS);
         assertCommandBehavior(
-                "add Valid Name p/12345 e/notAnEmail a/valid, address", Email.MESSAGE_EMAIL_CONSTRAINTS);
+                "add Valid Name p/12345 e/notAnEmail a/valid, address, dob", Email.MESSAGE_EMAIL_CONSTRAINTS);
         assertCommandBehavior(
-                "add Valid Name p/12345 e/valid@e.mail a/valid, address t/invalid_-[.tag", Tag.MESSAGE_TAG_CONSTRAINTS);
+                "add Valid Name p/12345 e/valid@e.mail a/valid, address, dob t/invalid_-[.tag", Tag.MESSAGE_TAG_CONSTRAINTS);
 
     }
 
@@ -467,10 +467,11 @@ public class LogicTest {
             Phone privatePhone = new Phone("111111", true);
             Email email = new Email("adam@gmail.com", false);
             Address privateAddress = new Address("111, alpha street", true);
+            DateOfBirth dob = new DateOfBirth("12/12/1993", true);
             Tag tag1 = new Tag("tag1");
             Tag tag2 = new Tag("tag2");
             UniqueTagList tags = new UniqueTagList(tag1, tag2);
-            return new Person(name, privatePhone, email, privateAddress, tags);
+            return new Person(name, privatePhone, email, privateAddress, dob, tags);
         }
 
         /**
@@ -487,6 +488,7 @@ public class LogicTest {
                     new Phone("" + Math.abs(seed), isAllFieldsPrivate),
                     new Email(seed + "@email", isAllFieldsPrivate),
                     new Address("House of " + seed, isAllFieldsPrivate),
+                    new DateOfBirth("12/12/1993" + seed, isAllFieldsPrivate),
                     new UniqueTagList(new Tag("tag" + Math.abs(seed)), new Tag("tag" + Math.abs(seed + 1)))
             );
         }
@@ -501,6 +503,7 @@ public class LogicTest {
             cmd.add((p.getPhone().isPrivate() ? "pp/" : "p/") + p.getPhone());
             cmd.add((p.getEmail().isPrivate() ? "pe/" : "e/") + p.getEmail());
             cmd.add((p.getAddress().isPrivate() ? "pa/" : "a/") + p.getAddress());
+            cmd.add((p.getDob().isPrivate() ? "pa/" : "a/") + p.getDob());
 
             UniqueTagList tags = p.getTags();
             for(Tag t: tags){
@@ -583,6 +586,7 @@ public class LogicTest {
                     new Phone("1", false),
                     new Email("1@email", false),
                     new Address("House of 1", false),
+                    new DateOfBirth("1993/12/12", false),
                     new UniqueTagList(new Tag("tag"))
             );
         }

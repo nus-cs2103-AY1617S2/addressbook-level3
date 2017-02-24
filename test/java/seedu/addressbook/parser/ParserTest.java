@@ -186,11 +186,11 @@ public class ParserTest {
                 "add ",
                 "add wrong args format",
                 // no phone prefix
-                String.format("add $s $s e/$s a/$s", Name.EXAMPLE, Phone.EXAMPLE, Email.EXAMPLE, Address.EXAMPLE),
+                String.format("add $s $s e/$s a/$s", Name.EXAMPLE, Phone.EXAMPLE, Email.EXAMPLE, Address.EXAMPLE, DateOfBirth.EXAMPLE),
                 // no email prefix
-                String.format("add $s p/$s $s a/$s", Name.EXAMPLE, Phone.EXAMPLE, Email.EXAMPLE, Address.EXAMPLE),
+                String.format("add $s p/$s $s a/$s", Name.EXAMPLE, Phone.EXAMPLE, Email.EXAMPLE, Address.EXAMPLE, DateOfBirth.EXAMPLE),
                 // no address prefix
-                String.format("add $s p/$s e/$s $s", Name.EXAMPLE, Phone.EXAMPLE, Email.EXAMPLE, Address.EXAMPLE)
+                String.format("add $s p/$s e/$s $s", Name.EXAMPLE, Phone.EXAMPLE, Email.EXAMPLE, Address.EXAMPLE, DateOfBirth.EXAMPLE)
         };
         final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
         parseAndAssertIncorrectWithMessage(resultMessage, inputs);
@@ -253,6 +253,7 @@ public class ParserTest {
                 new Phone(Phone.EXAMPLE, true),
                 new Email(Email.EXAMPLE, false),
                 new Address(Address.EXAMPLE, true),
+                new DateOfBirth(DateOfBirth.EXAMPLE, true),
                 new UniqueTagList(new Tag("tag1"), new Tag("tag2"), new Tag("tag3"))
             );
         } catch (IllegalValueException ive) {
@@ -265,7 +266,8 @@ public class ParserTest {
                 + person.getName().fullName
                 + (person.getPhone().isPrivate() ? " pp/" : " p/") + person.getPhone().value
                 + (person.getEmail().isPrivate() ? " pe/" : " e/") + person.getEmail().value
-                + (person.getAddress().isPrivate() ? " pa/" : " a/") + person.getAddress().value;
+                + (person.getAddress().isPrivate() ? " pa/" : " a/") + person.getAddress().value
+        		+ (person.getDob().isPrivate() ? " pa/" : " a/") + person.getDob().value;
         for (Tag tag : person.getTags()) {
             addCommand += " t/" + tag.tagName;
         }
