@@ -24,8 +24,12 @@ public class Parser {
                     + " (?<isPhonePrivate>p?)p/(?<phone>[^/]+)"
                     + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
+                    + " (?<isBirthdayPrivate>p?)b/(?<birthday>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
 
+    public static final Pattern PERSON_EDIT_ARGS_FORMAT = 
+            Pattern.compile("(?<targetIndex>.+)"
+                    + " (?<option>(n|p|e|a))/(?<value>[^/]+)"); 
 
     /**
      * Signals that the user input could not be parsed.
@@ -46,8 +50,10 @@ public class Parser {
      *
      * @param userInput full user input string
      * @return the command based on the user input
+     * @throws java.text.ParseException 
      */
-    public Command parseCommand(String userInput) {
+    public Command parseCommand(String userInput) throws java.text.ParseException {
+    	System.out.println(userInput.trim());
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
@@ -63,6 +69,9 @@ public class Parser {
             case DeleteCommand.COMMAND_WORD:
                 return prepareDelete(arguments);
 
+            case EditCommand.COMMAND_WORD:
+                return prepareEdit(arguments);
+                
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
 
@@ -71,6 +80,9 @@ public class Parser {
 
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
+                
+            case ListInOrderCommand.COMMAND_WORD:
+            	return new ListInOrderCommand();
 
             case ViewCommand.COMMAND_WORD:
                 return prepareView(arguments);
@@ -92,8 +104,9 @@ public class Parser {
      *
      * @param args full command args string
      * @return the prepared command
+     * @throws java.text.ParseException 
      */
-    private Command prepareAdd(String args){
+    private Command prepareAdd(String args) throws java.text.ParseException{
         final Matcher matcher = PERSON_DATA_ARGS_FORMAT.matcher(args.trim());
         // Validate arg string format
         if (!matcher.matches()) {
@@ -111,7 +124,8 @@ public class Parser {
 
                     matcher.group("address"),
                     isPrivatePrefixPresent(matcher.group("isAddressPrivate")),
-
+                    matcher.group("birthday"),
+                    //isPrivatePrefixPresent(matcher.group("isbirthdayPrivate")),
                     getTagsFromArgs(matcher.group("tagArguments"))
             );
         } catch (IllegalValueException ive) {
@@ -140,7 +154,6 @@ public class Parser {
         return new HashSet<>(tagStrings);
     }
 
-
     /**
      * Parses arguments in the context of the delete person command.
      *
@@ -156,6 +169,32 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses arguments in the context of the edit person command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareEdit(String args) {
+        try {
+            final Matcher matcher = PERSON_EDIT_ARGS_FORMAT.matcher(args.trim());
+                                    
+            // Validate arg string format
+            if (!matcher.matches()) {
+                return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+            }         
+            
+            final int targetIndex = Integer.parseInt(matcher.group("targetIndex"));
+           
+            return new EditCommand(targetIndex, matcher.group("option"), matcher.group("value"));
+            
+        } catch (NumberFormatException e) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        } catch (IllegalValueException ive) {
+            return new IncorrectCommand(ive.getMessage());
+        } 
+    }
+    
     /**
      * Parses arguments in the context of the view command.
      *

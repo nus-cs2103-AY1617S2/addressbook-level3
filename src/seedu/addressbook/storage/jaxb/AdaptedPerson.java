@@ -9,6 +9,8 @@ import seedu.addressbook.data.tag.UniqueTagList;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlValue;
+
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +34,8 @@ public class AdaptedPerson {
     private AdaptedContactDetail email;
     @XmlElement(required = true)
     private AdaptedContactDetail address;
+    @XmlElement(required = true)
+    private AdaptedContactDetail birthday;
 
     @XmlElement
     private List<AdaptedTag> tagged = new ArrayList<>();
@@ -91,8 +95,9 @@ public class AdaptedPerson {
      * Converts this jaxb-friendly adapted person object into the Person object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     * @throws ParseException 
      */
-    public Person toModelType() throws IllegalValueException {
+    public Person toModelType() throws IllegalValueException, ParseException {
         final List<Tag> personTags = new ArrayList<>();
         for (AdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
@@ -101,7 +106,8 @@ public class AdaptedPerson {
         final Phone phone = new Phone(this.phone.value, this.phone.isPrivate);
         final Email email = new Email(this.email.value, this.email.isPrivate);
         final Address address = new Address(this.address.value, this.address.isPrivate);
+        final Birthday birthday = new Birthday(this.birthday.value,this.birthday.isPrivate);
         final UniqueTagList tags = new UniqueTagList(personTags);
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, email, address,birthday, tags);
     }
 }
