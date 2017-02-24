@@ -18,7 +18,7 @@ public class ListTagCommand extends Command{
 	public static final String COMMAND_WORD = "listTag";
 	public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" 
 	+ "Displays all persons in the address book with the specified tag.\n\t"
-	            + "Example: " + COMMAND_WORD + " friend";
+	            + "Example: " + COMMAND_WORD + " friends";
 	private final Set<Tag> tag;
 	
 	public ListTagCommand(Set<Tag> tag) {
