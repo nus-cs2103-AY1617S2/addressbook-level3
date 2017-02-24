@@ -26,6 +26,9 @@ public class Parser {
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
 
+    public static final Pattern PERSON_EDIT_ARGS_FORMAT = 
+            Pattern.compile("(?<targetIndex>.+)"
+                    + " (n|p|e|a)/(?<value>[^/]+)"); 
 
     /**
      * Signals that the user input could not be parsed.
@@ -63,6 +66,9 @@ public class Parser {
             case DeleteCommand.COMMAND_WORD:
                 return prepareDelete(arguments);
 
+            case EditCommand.COMMAND_WORD:
+                return prepareEdit(arguments);
+                
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
 
@@ -140,7 +146,6 @@ public class Parser {
         return new HashSet<>(tagStrings);
     }
 
-
     /**
      * Parses arguments in the context of the delete person command.
      *
@@ -156,6 +161,30 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses arguments in the context of the edit person command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareEdit(String args) {
+        try {
+            final Matcher matcher = PERSON_EDIT_ARGS_FORMAT.matcher(args.trim());
+                                    
+            // Validate arg string format
+            if (!matcher.matches()) {
+                return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+            }         
+            
+            final int targetIndex = Integer.parseInt(matcher.group("targetIndex"));
+           
+            return new EditCommand(targetIndex, matcher.group("value"));
+            
+        } catch (NumberFormatException e) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        } 
+    }
+    
     /**
      * Parses arguments in the context of the view command.
      *
