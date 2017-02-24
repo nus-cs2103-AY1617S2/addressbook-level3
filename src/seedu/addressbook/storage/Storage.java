@@ -1,24 +1,9 @@
 package seedu.addressbook.storage;
 
 import seedu.addressbook.data.AddressBook;
-import seedu.addressbook.storage.StorageFile;
 import seedu.addressbook.storage.StorageFile.StorageOperationException;
 
 public abstract class Storage {
-    
-    StorageFile storageFile;
-    
-    /**
-     * Creates the StorageFile object based on the user specified path (if any) or the default storage path.
-     * @throws StorageFile.InvalidStorageFilePathException if the target file path is incorrect.
-     */
-    public static StorageFile initializeStorage() throws StorageFile.InvalidStorageFilePathException {
-        return new StorageFile();
-    }    
-    
-    public void setStorage(StorageFile storageFile){
-        this.storageFile = storageFile;
-    }
     
     /**
      * Saves all data to this storage file.

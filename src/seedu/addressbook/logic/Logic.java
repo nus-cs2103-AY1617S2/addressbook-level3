@@ -6,6 +6,7 @@ import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.parser.Parser;
 import seedu.addressbook.storage.Storage;
+import seedu.addressbook.storage.StorageFile;
 import seedu.addressbook.storage.StorageFile.InvalidStorageFilePathException;
 
 import java.util.Collections;
@@ -19,24 +20,25 @@ public class Logic {
 
 
     private Storage storage;
+    private StorageFile storageFile;
     private AddressBook addressBook;
 
     /** The list of person shown to the user most recently.  */
     private List<? extends ReadOnlyPerson> lastShownList = Collections.emptyList();
 
     public Logic() throws Exception{
-        storage.setStorage(Storage.initializeStorage());
+        setStorage(initializeStorage());
         setAddressBook(storage.load());
     }
 
-    Logic(Storage storageFile, AddressBook addressBook) throws InvalidStorageFilePathException{
-       storage.setStorage(Storage.initializeStorage());
+    Logic(Storage storage, AddressBook addressBook) throws InvalidStorageFilePathException{
+        setStorage(initializeStorage());
         setAddressBook(addressBook);
     }
 
-    /*void setStorage(Storage storage){
-        this.storage = storage;
-    }*/
+    void setStorage(StorageFile storageFile){
+        this.storageFile = storageFile;
+    }
 
     void setAddressBook(AddressBook addressBook){
         this.addressBook = addressBook;
@@ -89,4 +91,13 @@ public class Logic {
             lastShownList = personList.get();
         }
     }
+    
+    /**
+     * Creates the StorageFile object based on the user specified path (if any) or the default storage path.
+     * @throws StorageFile.InvalidStorageFilePathException if the target file path is incorrect.
+     */
+    public static StorageFile initializeStorage() throws StorageFile.InvalidStorageFilePathException {
+        return new StorageFile();
+    }    
+    
 }
