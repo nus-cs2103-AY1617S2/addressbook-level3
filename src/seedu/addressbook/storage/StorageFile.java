@@ -11,6 +11,7 @@ import javax.xml.bind.Unmarshaller;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
 
 /**
  * Represents the file used to store address book data.
@@ -107,8 +108,9 @@ public class StorageFile {
      * Loads data from this storage file.
      *
      * @throws StorageOperationException if there were errors reading and/or converting data from file.
+     * @throws ParseException 
      */
-    public AddressBook load() throws StorageOperationException {
+    public AddressBook load() throws StorageOperationException, ParseException {
         try (final Reader fileReader =
                      new BufferedReader(new FileReader(path.toFile()))) {
 
