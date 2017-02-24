@@ -16,9 +16,10 @@ public class EditCommand extends Command {
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" 
-            + "Edit the person identified by the index number used in the last person listing.\n\t"
-            + "Parameters: INDEX\n\t"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Edit the person identified by the index number used in the last person listing. "
+            + "Indicate only ONE field to edit with n/, p/, e/ or a/\n\t"
+            + "Parameters: INDEX (n/NAME | p/PHONE | e/EMAIL | a/ADDRESS)\n\t"
+            + "Example: " + COMMAND_WORD + " 1 n/new name here";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
 
@@ -27,33 +28,43 @@ public class EditCommand extends Command {
     private final PersonProperty propertyToEdit;
     private final String newValue;
     
-    public EditCommand(int targetVisibleIndex, String editInfo) {
+    public EditCommand(int targetVisibleIndex, String option, String newValue) throws IllegalValueException {
         super(targetVisibleIndex);
         
-        char toEdit = editInfo.charAt(0);
-        switch (toEdit) {
-
-        case 'n':
-            this.propertyToEdit = PersonProperty.NAME;
-            break;
-
-        case 'p':
-            this.propertyToEdit = PersonProperty.PHONE;
-            break;
-
-        case 'e':
-            this.propertyToEdit = PersonProperty.EMAIL;
-            break;
-
-        case 'a':
-            this.propertyToEdit = PersonProperty.ADDRESS;
-            break;
+        if (option.equals("n")){
             
-        default:            
+            if (!Name.isValidName(newValue)){
+                throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+            }
+            
             this.propertyToEdit = PersonProperty.NAME;
-        }
+            
+        } else if (option.equals("p")){
+            
+            if (!Phone.isValidPhone(newValue)){
+                throw new IllegalValueException(Phone.MESSAGE_PHONE_CONSTRAINTS);
+            }
+            
+            this.propertyToEdit = PersonProperty.PHONE;
+            
+        } else if (option.equals("e")){
+            
+            if (!Email.isValidEmail(newValue)){
+                throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
+            }
+            
+            this.propertyToEdit = PersonProperty.EMAIL;
+            
+        } else {
+            
+            if (!Address.isValidAddress(newValue)){
+                throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
+            }
+            
+            this.propertyToEdit = PersonProperty.ADDRESS;
+        } 
         
-        this.newValue = editInfo.substring(3);        
+        this.newValue = newValue;        
     }
 
     @Override
@@ -66,9 +77,9 @@ public class EditCommand extends Command {
             } else if (propertyToEdit == PersonProperty.PHONE){
                 target.setPhone(newValue);                
             } else if (propertyToEdit == PersonProperty.EMAIL){
-                target.setName(newValue);                
+                target.setEmail(newValue);                
             } else if (propertyToEdit == PersonProperty.ADDRESS){
-                target.setName(newValue);                
+                target.setAddress(newValue);                
             }             
             
             return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, target));

@@ -28,7 +28,7 @@ public class Parser {
 
     public static final Pattern PERSON_EDIT_ARGS_FORMAT = 
             Pattern.compile("(?<targetIndex>.+)"
-                    + " (n|p|e|a)/(?<value>[^/]+)"); 
+                    + " (?<option>(n|p|e|a))/(?<value>[^/]+)"); 
 
     /**
      * Signals that the user input could not be parsed.
@@ -178,10 +178,12 @@ public class Parser {
             
             final int targetIndex = Integer.parseInt(matcher.group("targetIndex"));
            
-            return new EditCommand(targetIndex, matcher.group("value"));
+            return new EditCommand(targetIndex, matcher.group("option"), matcher.group("value"));
             
         } catch (NumberFormatException e) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        } catch (IllegalValueException ive) {
+            return new IncorrectCommand(ive.getMessage());
         } 
     }
     
