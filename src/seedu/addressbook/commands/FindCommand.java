@@ -46,11 +46,33 @@ public class FindCommand extends Command {
         final List<ReadOnlyPerson> matchedPersons = new ArrayList<>();
         for (ReadOnlyPerson person : addressBook.getAllPersons()) {
             final Set<String> wordsInName = new HashSet<>(person.getName().getWordsInName());
-            if (!Collections.disjoint(wordsInName, keywords)) {
+            /*if (!Collections.disjoint(wordsInName, keywords)) {
+                matchedPersons.add(person);
+            }*/
+            if(keyMatchName(keywords, wordsInName)){
                 matchedPersons.add(person);
             }
         }
         return matchedPersons;
+    }
+
+    /**
+     * Matches names ignoring case sensitivity
+     * 
+     * @param keywords for searching
+     * @param wordsInName 
+     * @return
+     */
+   private static boolean keyMatchName(Collection<String> keywords, Set<String> wordsInName) {
+        for(String keyword: keywords){
+            for(String word: wordsInName){
+                if(keyword.equalsIgnoreCase(word)){
+                    return true;
+                }
+            }
+        }
+        
+        return false;
     }
 
 }
