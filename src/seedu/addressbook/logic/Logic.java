@@ -15,6 +15,7 @@ import java.util.Optional;
 /**
  * Represents the main Logic of the AddressBook.
  */
+public abstract class Logic extends Storage{
 
 
     private Storage storage;
