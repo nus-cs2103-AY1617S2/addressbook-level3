@@ -36,7 +36,7 @@ public class StorageFile extends Storage{
     }
 
     /**
-     * @throws InvalidStorageFilePathException if the given file path is invalid
+     * @throws InvalidStoragePathException if the given file path is invalid
      */
     public StorageFile(String filePath) throws InvalidStoragePathException {
         try {
