@@ -14,16 +14,18 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     private Phone phone;
     private Email email;
     private Address address;
+    private Birthday birthday;
 
     private final UniqueTagList tags;
     /**
      * Assumption: Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, UniqueTagList tags) {
+    public Person(Name name, Phone phone, Email email, Address address,Birthday birthday, UniqueTagList tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.birthday = birthday;
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
 
@@ -31,7 +33,7 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
      * Copy constructor.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getTags());
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getBirthday(), source.getTags());
     }
 
     @Override
@@ -53,6 +55,10 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     public Address getAddress() {
         return address;
     }
+    @Override
+    public Birthday getBirthday() {
+        return birthday;
+    }
 
     public void setName(String name) {
         this.name.setFullName(name);
@@ -64,6 +70,10 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
 
     public void setEmail(String email) {
         this.email.setValue(email);
+    }
+    
+    public void setBirthday(String birthday) {
+        this.birthday.setValue(birthday);
     }
 
     public void setAddress(String address) {

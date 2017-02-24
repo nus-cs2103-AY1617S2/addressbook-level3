@@ -10,6 +10,8 @@ import seedu.addressbook.data.tag.UniqueTagList;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,8 +74,9 @@ public class AdaptedAddressBook {
     /**
      * Converts this jaxb-friendly {@code AdaptedAddressBook} object into the corresponding(@code AddressBook} object.
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     * @throws ParseException 
      */
-    public AddressBook toModelType() throws IllegalValueException {
+    public AddressBook toModelType() throws IllegalValueException, ParseException {
         final List<Tag> tagList = new ArrayList<>();
         final List<Person> personList = new ArrayList<>();
         for (AdaptedTag tag : tags) {

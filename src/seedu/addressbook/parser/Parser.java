@@ -24,6 +24,7 @@ public class Parser {
                     + " (?<isPhonePrivate>p?)p/(?<phone>[^/]+)"
                     + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
+                    + " (?<isBirthdayPrivate>p?)b/(?<birthday>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
 
     public static final Pattern PERSON_EDIT_ARGS_FORMAT = 
@@ -49,8 +50,9 @@ public class Parser {
      *
      * @param userInput full user input string
      * @return the command based on the user input
+     * @throws java.text.ParseException 
      */
-    public Command parseCommand(String userInput) {
+    public Command parseCommand(String userInput) throws java.text.ParseException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
@@ -101,8 +103,9 @@ public class Parser {
      *
      * @param args full command args string
      * @return the prepared command
+     * @throws java.text.ParseException 
      */
-    private Command prepareAdd(String args){
+    private Command prepareAdd(String args) throws java.text.ParseException{
         final Matcher matcher = PERSON_DATA_ARGS_FORMAT.matcher(args.trim());
         // Validate arg string format
         if (!matcher.matches()) {
@@ -120,7 +123,8 @@ public class Parser {
 
                     matcher.group("address"),
                     isPrivatePrefixPresent(matcher.group("isAddressPrivate")),
-
+                    matcher.group("birthday"),
+                    //isPrivatePrefixPresent(matcher.group("isbirthdayPrivate")),
                     getTagsFromArgs(matcher.group("tagArguments"))
             );
         } catch (IllegalValueException ive) {
