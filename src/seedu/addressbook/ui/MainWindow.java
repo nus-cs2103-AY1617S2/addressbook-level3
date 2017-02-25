@@ -13,6 +13,12 @@ import seedu.addressbook.data.person.ReadOnlyPerson;
 import java.util.List;
 import java.util.Optional;
 
+import javax.swing.KeyStroke;
+
+import com.tulskiy.keymaster.common.HotKey;
+import com.tulskiy.keymaster.common.HotKeyListener;
+import com.tulskiy.keymaster.common.Provider;
+
 import static seedu.addressbook.common.Messages.*;
 
 /**
@@ -22,8 +28,10 @@ public class MainWindow {
 
     private Logic logic;
     private Stoppable mainApp;
+    private Provider hotkeyManager;
 
     public MainWindow(){
+        initializeSystemHotkey();
     }
 
     public void setLogic(Logic logic){
@@ -60,6 +68,8 @@ public class MainWindow {
 
     private void exitApp() throws Exception {
         mainApp.stop();
+        hotkeyManager.reset();
+        hotkeyManager.stop();
     }
 
     /** Returns true of the result given is the result of an exit command */
@@ -107,4 +117,13 @@ public class MainWindow {
         outputConsole.setText(outputConsole.getText() + new Formatter().format(messages));
     }
 
+
+    private void initializeSystemHotkey() {
+        hotkeyManager = Provider.getCurrentProvider(false);
+        hotkeyManager.register(KeyStroke.getKeyStroke("control alt D"), new HotKeyListener() {
+            public void onHotKey(HotKey hotKey) {
+                System.out.println(hotKey);
+            }
+        });   
+    }
 }
