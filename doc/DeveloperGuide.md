@@ -69,19 +69,19 @@ Use case ends.
 **MSS**
 
 1. User requests to rename tags
-2. AddressBook ask for the person's name
-3. User verifies the current tag.
-4. User inputs the new tags. 
-5. AddressBook shows the updated tag. <br>
+2. AddressBook asks for the existing tag to be renamed
+3. User inputs the existing tag
+4. AddressBook asks for the new tag name 
+5. User inputs the new tag name <br>
 Use case ends.
 
 **Extensions**
 
-2a. The list is empty
+2a. Any fields for user to input is empty
 
 > Use case ends
 
-3a. The given index is invalid
+3a. The given tag is invalid
 
 > 3a1. AddressBook shows an error message <br>
   Use case resumes at step 2
