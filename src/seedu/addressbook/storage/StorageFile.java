@@ -32,14 +32,14 @@ public class StorageFile extends Storage{
     /**
      * @throws InvalidStorageFilePathException if the default path is invalid
      */
-    public StorageFile() throws InvalidStorageFilePathException {
+    public StorageFile() throws InvalidStoragePathException {
         this(DEFAULT_STORAGE_FILEPATH);
     }
 
     /**
      * @throws InvalidStorageFilePathException if the given file path is invalid
      */
-    public StorageFile(String filePath) throws InvalidStorageFilePathException {
+    public StorageFile(String filePath) throws InvalidStoragePathException {
         try {
             jaxbContext = JAXBContext.newInstance(AdaptedAddressBook.class);
         } catch (JAXBException jaxbe) {
@@ -48,7 +48,7 @@ public class StorageFile extends Storage{
 
         path = Paths.get(filePath);
         if (!isValidPath(path)) {
-            throw new InvalidStorageFilePathException("Storage file should end with '.txt'");
+            throw new InvalidStoragePathException("Storage file should end with '.txt'");
         }
     }
 
