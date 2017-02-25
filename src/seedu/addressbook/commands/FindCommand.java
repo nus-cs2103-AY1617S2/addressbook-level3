@@ -49,22 +49,31 @@ public class FindCommand extends Command {
             lowerCaseKeywords.add(k.toLowerCase());
         }
         for (ReadOnlyPerson person : addressBook.getAllPersons()) {
-            final Set<String> wordsInName = new HashSet<String>();
+            final Set<String> wordsToSearch = new HashSet<String>();
             for(String w : person.getName().getWordsInName()) {
-                wordsInName.add(w.toLowerCase());
+                wordsToSearch.add(w.toLowerCase());
             }
+            for(String w : person.getAddress().getWordsInAddress()) {
+                wordsToSearch.add(w.toLowerCase());
+            }
+            wordsToSearch.add(person.getPhone().toString());
+            wordsToSearch.add(person.getEmail().toString());
+            
             /* Exact Match */
-            if (!Collections.disjoint(wordsInName, lowerCaseKeywords)) {
+            if (!Collections.disjoint(wordsToSearch, lowerCaseKeywords)) {
                 matchedPersons.add(person);
+                continue;
             }
-            /* Partial Match from Start 
+            /* Partial Match
              * Near Match (Error Margin Allowed: 2)*/
             for(String k: lowerCaseKeywords) {
-                for(String w : wordsInName) {
-                    if(w.startsWith(k)) {
+                for(String w : wordsToSearch) {
+                    if(w.contains(k)) {
                         matchedPersons.add(person);
+                        break;
                     }else if(computeLevenshteinDistance(w,k) <= 2) {
                         matchedPersons.add(person);
+                        break;
                     }
                 }
             }
