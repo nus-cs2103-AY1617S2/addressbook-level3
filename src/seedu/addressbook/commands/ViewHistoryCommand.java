@@ -18,10 +18,15 @@ public class ViewHistoryCommand extends Command {
     public ViewHistoryCommand() {
     }
 
+    /**
+     * Constructs a feedback message to display command history
+     * 
+     * @return feedback message
+     */
     public String getMessageForCommandHistoryShow() {
         StringBuilder message = new StringBuilder();
         ArrayList<String> commandList = commandHistory.getAll();
-        int displayIndex = 0;
+        int displayIndex = 1;
         for(String command : commandList) {
             message.append(String.format(COMMAND_HISTORY_LINE_FORMAT, displayIndex, command));
             displayIndex++;
