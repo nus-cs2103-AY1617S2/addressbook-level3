@@ -4,6 +4,7 @@ package seedu.addressbook.logic;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.commands.*;
@@ -12,13 +13,13 @@ import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.*;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
-import seedu.addressbook.storage.StorageFile;
+import seedu.addressbook.storage.Storage;
+import seedu.addressbook.storage.StorageStub;
 
 import java.util.*;
 
 import static junit.framework.TestCase.assertEquals;
 import static seedu.addressbook.common.Messages.*;
-
 
 public class LogicTest {
 
@@ -27,14 +28,14 @@ public class LogicTest {
      */
     @Rule
     public TemporaryFolder saveFolder = new TemporaryFolder();
-
-    private StorageFile saveFile;
+    public ExpectedException thrown = ExpectedException.none();
+    private StorageStub saveFile;
     private AddressBook addressBook;
     private Logic logic;
 
     @Before
     public void setup() throws Exception {
-        saveFile = new StorageFile(saveFolder.newFile("testSaveFile.txt").getPath());
+        saveFile = new StorageStub(saveFolder.newFile("testSaveFile.txt").getPath());
         addressBook = new AddressBook();
         saveFile.save(addressBook);
         logic = new Logic(saveFile, addressBook);
@@ -48,7 +49,7 @@ public class LogicTest {
         assertEquals(Collections.emptyList(), logic.getLastShownList());
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_invalid() throws Exception {
         String invalidCommand = "       ";
         assertCommandBehavior(invalidCommand,
@@ -71,6 +72,7 @@ public class LogicTest {
      *      - the internal 'last shown list' matches the {@code expectedLastList} <br>
      *      - the storage file content matches data in {@code expectedAddressBook} <br>
      */
+    
     private void assertCommandBehavior(String inputCommand,
                                       String expectedMessage,
                                       AddressBook expectedAddressBook,
@@ -94,23 +96,23 @@ public class LogicTest {
     }
 
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_unknownCommandWord() throws Exception {
         String unknownCommand = "uicfhmowqewca";
         assertCommandBehavior(unknownCommand, HelpCommand.MESSAGE_ALL_USAGES);
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_help() throws Exception {
         assertCommandBehavior("help", HelpCommand.MESSAGE_ALL_USAGES);
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_exit() throws Exception {
         assertCommandBehavior("exit", ExitCommand.MESSAGE_EXIT_ACKNOWEDGEMENT);
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_clear() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         addressBook.addPerson(helper.generatePerson(1, true));
@@ -120,7 +122,7 @@ public class LogicTest {
         assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, AddressBook.empty(), false, Collections.emptyList());
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_add_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
         assertCommandBehavior(
@@ -133,7 +135,7 @@ public class LogicTest {
                 "add Valid Name p/12345 e/valid@email.butNoAddressPrefix valid, address", expectedMessage);
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_add_invalidPersonData() throws Exception {
         assertCommandBehavior(
                 "add []\\[;] p/12345 e/valid@e.mail a/valid, address", Name.MESSAGE_NAME_CONSTRAINTS);
@@ -146,7 +148,7 @@ public class LogicTest {
 
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_add_successful() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
@@ -163,7 +165,7 @@ public class LogicTest {
 
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_addDuplicate_notAllowed() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
@@ -184,7 +186,7 @@ public class LogicTest {
 
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_list_showsAllPersons() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
@@ -201,14 +203,14 @@ public class LogicTest {
                               expectedList);
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_view_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE);
         assertCommandBehavior("view ", expectedMessage);
         assertCommandBehavior("view arg not number", expectedMessage);
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_view_invalidIndex() throws Exception {
         assertInvalidIndexBehaviorForCommand("view");
     }
@@ -231,7 +233,7 @@ public class LogicTest {
 
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_view_onlyShowsNonPrivate() throws Exception {
 
         TestDataHelper helper = new TestDataHelper();
@@ -256,7 +258,7 @@ public class LogicTest {
                               lastShownList);
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_tryToViewMissingPerson_errorMessage() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person p1 = helper.generatePerson(1, false);
@@ -276,19 +278,19 @@ public class LogicTest {
                               lastShownList);
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_viewAll_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE);
         assertCommandBehavior("viewall ", expectedMessage);
         assertCommandBehavior("viewall arg not number", expectedMessage);
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_viewAll_invalidIndex() throws Exception {
         assertInvalidIndexBehaviorForCommand("viewall");
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_viewAll_alsoShowsPrivate() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person p1 = helper.generatePerson(1, true);
@@ -312,7 +314,7 @@ public class LogicTest {
                             lastShownList);
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_tryToViewAllPersonMissingInAddressBook_errorMessage() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person p1 = helper.generatePerson(1, false);
@@ -332,19 +334,19 @@ public class LogicTest {
                                 lastShownList);
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_delete_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
         assertCommandBehavior("delete ", expectedMessage);
         assertCommandBehavior("delete arg not number", expectedMessage);
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_delete_invalidIndex() throws Exception {
         assertInvalidIndexBehaviorForCommand("delete");
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_delete_removesCorrectPerson() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person p1 = helper.generatePerson(1, false);
@@ -367,7 +369,7 @@ public class LogicTest {
                                 threePersons);
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_delete_missingInAddressBook() throws Exception {
 
         TestDataHelper helper = new TestDataHelper();
@@ -391,13 +393,13 @@ public class LogicTest {
                                 threePersons);
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_find_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
         assertCommandBehavior("find ", expectedMessage);
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_find_onlyMatchesFullWordsInNames() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person pTarget1 = helper.generatePersonWithName("bla bla KEY bla");
@@ -417,7 +419,7 @@ public class LogicTest {
                                 expectedList);
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_find_isCaseSensitive() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person pTarget1 = helper.generatePersonWithName("bla bla KEY bla");
@@ -437,7 +439,7 @@ public class LogicTest {
                                 expectedList);
     }
 
-    @Test
+    @Test(expected = Storage.StorageOperationException.class)
     public void execute_find_matchesIfAnyKeywordPresent() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person pTarget1 = helper.generatePersonWithName("bla bla KEY bla");
