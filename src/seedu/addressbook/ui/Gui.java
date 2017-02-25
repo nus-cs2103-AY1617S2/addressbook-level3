@@ -75,7 +75,11 @@ public class Gui {
         hotkeyManager.register(KeyStroke.getKeyStroke("control alt D"), new HotKeyListener() {
             public void onHotKey(HotKey hotKey) {
                 System.out.println(hotKey);
-                Platform.runLater(()-> {stage.setIconified(true);});
+                if(stage.isIconified()){
+                    Platform.runLater(()-> {stage.setIconified(false);});
+                }else{
+                    Platform.runLater(()-> {stage.setIconified(true);});
+                }
             }
         });   
     }
