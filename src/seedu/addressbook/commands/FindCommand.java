@@ -1,6 +1,7 @@
 package seedu.addressbook.commands;
 
 import seedu.addressbook.data.person.ReadOnlyPerson;
+import seedu.addressbook.data.tag.Tag;
 
 import java.util.*;
 
@@ -55,6 +56,9 @@ public class FindCommand extends Command {
             }
             for(String w : person.getAddress().getWordsInAddress()) {
                 wordsToSearch.add(w.toLowerCase());
+            }
+            for(Tag t : person.getTags().toSet()) {
+                wordsToSearch.add(t.tagName.toLowerCase());
             }
             wordsToSearch.add(person.getPhone().toString());
             wordsToSearch.add(person.getEmail().toString());
