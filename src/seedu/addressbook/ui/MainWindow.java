@@ -3,13 +3,22 @@ package seedu.addressbook.ui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import seedu.addressbook.commands.ExitCommand;
+import seedu.addressbook.commands.FindCommand;
 import seedu.addressbook.logic.Logic;
+import seedu.addressbook.Main;
 import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +31,31 @@ public class MainWindow {
 
     private Logic logic;
     private Stoppable mainApp;
+    SuggestionWindow suggestionWindow;
+    Stage suggestionStage;
 
     public MainWindow(){
+        initializeSuggestionWindow();
+    }
+
+    private void initializeSuggestionWindow() {
+        try{
+            suggestionStage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            
+            /* Note: When calling getResource(), use '/', instead of File.separator or '\\'
+             * More info: http://docs.oracle.com/javase/8/docs/technotes/guides/lang/resources.html#res_name_context
+             */
+            loader.setLocation(Main.class.getResource("ui/suggestionwindow.fxml"));
+    
+            suggestionStage.setTitle("Suggestions");
+            suggestionStage.setScene(new Scene(loader.load(), 500, 200));
+            
+            suggestionWindow = loader.getController();
+        } catch (Exception e) {
+            display(e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     public void setLogic(Logic logic){
@@ -52,6 +84,32 @@ public class MainWindow {
             }
             displayResult(result);
             clearCommandInput();
+        } catch (Exception e) {
+            display(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+    
+    @FXML
+    void OnTextChanged(KeyEvent event) {
+        try {
+            String userCommandText = commandInput.getText();
+            if(userCommandText.length() > 4 && userCommandText.startsWith(FindCommand.COMMAND_WORD)){
+                CommandResult result = logic.execute(userCommandText);
+                final Optional<List<? extends ReadOnlyPerson>> resultPersons = result.getRelevantPersons();
+                if(resultPersons.isPresent()) {
+                    if(!suggestionStage.isShowing()){
+                        suggestionStage.show();
+                        commandInput.requestFocus();
+                    }
+                    suggestionWindow.setMenuList(new Formatter().format(resultPersons.get()));
+                    suggestionWindow.display();
+                }else{
+                    suggestionStage.hide();
+                }
+                
+                
+            }
         } catch (Exception e) {
             display(e.getMessage());
             throw new RuntimeException(e);
