@@ -1,6 +1,7 @@
 package seedu.addressbook.parser;
 
 import seedu.addressbook.commands.*;
+import seedu.addressbook.commands.UpdateCommand.UpdateWhich;
 import seedu.addressbook.data.exception.IllegalValueException;
 
 import java.util.*;
@@ -25,6 +26,14 @@ public class Parser {
                     + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
+    
+    public static final Pattern PRIORITY_ARGS_FORMAT = 
+            Pattern.compile("(?<targetIndex>[^/]+)" + "(?<level>[^/]+)");
+
+	private static final Pattern UPDATE_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
+            Pattern.compile("(?<name>[^/]+)"
+                    + " (?<updateWhich>[^/]+)"
+                    + " (?<isPrivate>p?)/(?<updateString>[^/]+)"); // variable number of tags
 
 
     /**
@@ -74,17 +83,33 @@ public class Parser {
 
             case ViewCommand.COMMAND_WORD:
                 return prepareView(arguments);
+                
+            case SetPriorityCommand.COMMAND_WORD:
+                return preparePriority(arguments);
 
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
+                
+            case VIPCommand.COMMAND_WORD:
+            	return prepareVIP(arguments);
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
+                
+            case UpdateCommand.COMMAND_WORD:
+            	return prepareUpdate(arguments);
 
             case HelpCommand.COMMAND_WORD: // Fallthrough
             default:
                 return new HelpCommand();
         }
+    }
+
+    private Command preparePriority(String arguments) {
+        final Matcher matcher = PRIORITY_ARGS_FORMAT.matcher(arguments.trim());
+        return new SetPriorityCommand(
+                Integer.parseInt(matcher.group("targerIndex")), 
+                Integer.parseInt(matcher.group("level")));
     }
 
     /**
@@ -155,7 +180,7 @@ public class Parser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
     }
-
+    
     /**
      * Parses arguments in the context of the view command.
      *
@@ -189,7 +214,16 @@ public class Parser {
                     ViewAllCommand.MESSAGE_USAGE));
         }
     }
+    private Command prepareVIP(String args) {
+    	try {
+    		final int targetIndex = parseArgsAsDisplayedIndex(args);
+    		return new VIPCommand(targetIndex);
+    	} catch (ParseException | NumberFormatException e) {
+    		return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+    	}
+    }
 
+    
     /**
      * Parses the given arguments string as a single index number.
      *
@@ -226,5 +260,38 @@ public class Parser {
         return new FindCommand(keywordSet);
     }
 
+    /**
+     * Parses arguments in the context of the update person command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareUpdate(String args) {
+    	String updateString;
+    	UpdateWhich updateWhich;
+    	final Matcher matcher = UPDATE_DATA_ARGS_FORMAT.matcher(args.trim());
+        // Validate arg string format
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateCommand.MESSAGE_USAGE));
+        }
+        // keywords delimited by whitespace
+        final Matcher keywordMatcher = KEYWORDS_ARGS_FORMAT.matcher(matcher.group("name"));
+        final String[] keywords = keywordMatcher.group("keywords").split("\\s+");
+        final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
+        String updateWhichString = matcher.group("updateWhich");
+        updateString = matcher.group("updateString");
+        if (updateWhichString.equals("EMAIL")) {
+        	updateWhich = UpdateWhich.EMAIL;
+        }
+        else {
+        	updateWhich = UpdateWhich.PHONE;
+        }
+        boolean isPrivate = isPrivatePrefixPresent(matcher.group("isPrivate"));
+        return new UpdateCommand(
+        		keywordSet,
+        		updateWhich,
+        		updateString,
+        		isPrivate);
+    }
 
 }
