@@ -97,17 +97,15 @@ public class MainWindow {
             if(userCommandText.length() > 4 && userCommandText.startsWith(FindCommand.COMMAND_WORD)){
                 CommandResult result = logic.execute(userCommandText);
                 final Optional<List<? extends ReadOnlyPerson>> resultPersons = result.getRelevantPersons();
-                if(resultPersons.isPresent()) {
+                if(resultPersons.isPresent() && resultPersons.get().size() > 0) {
                     if(!suggestionStage.isShowing()){
                         suggestionStage.show();
-                        commandInput.requestFocus();
                     }
                     suggestionWindow.setMenuList(new Formatter().format(resultPersons.get()));
                     suggestionWindow.display();
                 }else{
                     suggestionStage.hide();
                 }
-                
                 
             }
         } catch (Exception e) {
