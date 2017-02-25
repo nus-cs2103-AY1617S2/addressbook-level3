@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.VBox?>
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
 <VBox stylesheets="@/seedu/addressbook/ui/DarkTheme.css" alignment="center" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="seedu.addressbook.ui.MainWindow">
-
+	<MenuBar fx:id="menuBar" focusTraversable="true">  
+		<menus>
+			<Menu text="File">  
+				<items>  
+					<MenuItem text="Change Save Location..." onAction="#handleSaveLocation" />
+				</items>  
+			</Menu>
+		</menus>
+	</MenuBar>
     <children>
 
         <TextField fx:id="commandInput" onAction="#onCommand" VBox.vgrow="NEVER">

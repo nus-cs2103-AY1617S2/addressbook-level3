@@ -3,6 +3,7 @@ package seedu.addressbook.ui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import seedu.addressbook.commands.ExitCommand;
@@ -33,13 +34,15 @@ public class MainWindow {
     public void setMainApp(Stoppable mainApp){
         this.mainApp = mainApp;
     }
+    
+    @FXML  
+    private MenuBar menuBar;
 
     @FXML
     private TextArea outputConsole;
 
     @FXML
     private TextField commandInput;
-
 
     @FXML
     void onCommand(ActionEvent event) {
@@ -57,6 +60,12 @@ public class MainWindow {
             throw new RuntimeException(e);
         }
     }
+    
+    @FXML  
+    void handleSaveLocation(ActionEvent event)  
+    {  
+       System.out.println("Clciked");
+    }  
 
     private void exitApp() throws Exception {
         mainApp.stop();
@@ -105,6 +114,6 @@ public class MainWindow {
      */
     private void display(String... messages) {
         outputConsole.setText(outputConsole.getText() + new Formatter().format(messages));
-    }
+    } 
 
 }

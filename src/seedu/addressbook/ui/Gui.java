@@ -6,7 +6,6 @@ import javafx.stage.Stage;
 import seedu.addressbook.logic.Logic;
 import seedu.addressbook.Main;
 
-import java.io.File;
 import java.io.IOException;
 
 /**
