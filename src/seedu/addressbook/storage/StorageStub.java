@@ -1,22 +1,32 @@
 package seedu.addressbook.storage;
 
-import seedu.addressbook.data.AddressBook;
-import seedu.addressbook.data.exception.IllegalValueException;
-import seedu.addressbook.storage.jaxb.AdaptedAddressBook;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
+import seedu.addressbook.data.AddressBook;
+import seedu.addressbook.data.exception.IllegalValueException;
+import seedu.addressbook.storage.Storage.InvalidStorageFilePathException;
+import seedu.addressbook.storage.Storage.StorageOperationException;
+import seedu.addressbook.storage.jaxb.AdaptedAddressBook;
 
 /**
- * Represents the file used to store address book data.
+ * This class works as a stub for StorageFile class in order to test Logic class without any dependency on StorageFile. 
+ *
  */
-public class StorageFile extends Storage{
-
+public class StorageStub extends Storage{
     /** Default file path used if the user doesn't provide the file name. */
     public static final String DEFAULT_STORAGE_FILEPATH = "addressbook.txt";
 
@@ -27,14 +37,14 @@ public class StorageFile extends Storage{
     /**
      * @throws InvalidStorageFilePathException if the default path is invalid
      */
-    public StorageFile() throws InvalidStorageFilePathException {
+    public StorageStub() throws InvalidStorageFilePathException {
         this(DEFAULT_STORAGE_FILEPATH);
     }
 
     /**
      * @throws InvalidStorageFilePathException if the given file path is invalid
      */
-    public StorageFile(String filePath) throws InvalidStorageFilePathException {
+    public StorageStub(String filePath) throws InvalidStorageFilePathException {
         try {
             jaxbContext = JAXBContext.newInstance(AdaptedAddressBook.class);
         } catch (JAXBException jaxbe) {
@@ -56,25 +66,10 @@ public class StorageFile extends Storage{
     }
 
     /**
-     * Saves all data to this storage file.
+     * Empty body for testing
      *
-     * @throws StorageOperationException if there were errors converting and/or storing data to file.
      */
-    public void save(AddressBook addressBook) throws StorageOperationException {
-
-        try (final Writer fileWriter =
-                     new BufferedWriter(new FileWriter(path.toFile()))) {
-
-            final AdaptedAddressBook toSave = new AdaptedAddressBook(addressBook);
-            final Marshaller marshaller = jaxbContext.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            marshaller.marshal(toSave, fileWriter);
-
-        } catch (IOException ioe) {
-            throw new StorageOperationException("Error writing to file: " + path + " error: " + ioe.getMessage());
-        } catch (JAXBException jaxbe) {
-            throw new StorageOperationException("Error converting address book into storage format");
-        }
+    public void save(AddressBook addressBook) {
     }
 
     /**
@@ -113,5 +108,4 @@ public class StorageFile extends Storage{
     public String getPath() {
         return path.toString();
     }
-
 }
