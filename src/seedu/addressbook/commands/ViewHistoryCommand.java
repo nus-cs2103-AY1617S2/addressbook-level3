@@ -10,7 +10,7 @@ public class ViewHistoryCommand extends Command {
     public static final String COMMAND_WORD = "history";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD;
-    public static final String COMMAND_HISTORY_LINE_FORMAT = "%1$. %2$\n";
+    public static final String COMMAND_HISTORY_LINE_FORMAT = "%1$s. %2$s\n";
 
     /**
      * Default empty constructor.
