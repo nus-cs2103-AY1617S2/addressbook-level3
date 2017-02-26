@@ -25,7 +25,8 @@ public class Parser {
                     + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
-
+    
+    public static final Pattern EDIT_COMMAND_FORMAT = Pattern.compile("(?<targetIndex>\\d+)(?<arguments>.*)");
 
     /**
      * Signals that the user input could not be parsed.
@@ -80,10 +81,49 @@ public class Parser {
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
+                
+            case EditCommand.COMMAND_WORD:
+                return prepareEdit(arguments);
 
             case HelpCommand.COMMAND_WORD: // Fallthrough
             default:
                 return new HelpCommand();
+        }
+    }
+    
+    /**
+     * Parses arguments in the context of the edit person command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareEdit(String args) {
+        final Matcher editMatcher = EDIT_COMMAND_FORMAT.matcher(args.trim());
+        if (!editMatcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+        final String index = editMatcher.group("targetIndex");
+        final String dataArgs = editMatcher.group("arguments");
+        final Matcher argsMatcher = PERSON_DATA_ARGS_FORMAT.matcher(dataArgs.trim());
+        if (!argsMatcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+        try {
+            return new EditCommand(
+                    parseArgsAsDisplayedIndex(index),
+                    argsMatcher.group("name"),
+                    argsMatcher.group("phone"),
+                    isPrivatePrefixPresent(argsMatcher.group("isPhonePrivate")),
+                    argsMatcher.group("email"),
+                    isPrivatePrefixPresent(argsMatcher.group("isEmailPrivate")),
+                    argsMatcher.group("address"),
+                    isPrivatePrefixPresent(argsMatcher.group("isAddressPrivate")),
+                    getTagsFromArgs(argsMatcher.group("tagArguments"))
+                );
+        } catch (IllegalValueException ive) {
+            return new IncorrectCommand(ive.getMessage());
+        } catch (NumberFormatException | ParseException e) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
     }
 

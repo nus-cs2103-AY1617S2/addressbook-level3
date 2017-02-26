@@ -133,4 +133,16 @@ public class AddressBook {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(allPersons, allTags);
     }
+    
+    /**
+     * edit the old person to the new person, checking the tag list before doing so
+     * 
+     * @param index index of person to be editted
+     * @param newPerson person to edit to
+     * @throws PersonNotFoundException
+     */
+    public void editPerson(int index, Person newPerson) throws PersonNotFoundException {
+        syncTagsWithMasterList(newPerson);
+        allPersons.change(index, newPerson);
+    }
 }
