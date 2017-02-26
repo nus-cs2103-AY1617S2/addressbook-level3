@@ -56,6 +56,9 @@ public class Parser {
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
         switch (commandWord) {
+        
+            case FavoriteCommand.COMMAND_WORD:
+            	return prepareFavorite(arguments);
 
             case AddCommand.COMMAND_WORD:
                 return prepareAdd(arguments);
@@ -151,6 +154,15 @@ public class Parser {
         try {
             final int targetIndex = parseArgsAsDisplayedIndex(args);
             return new DeleteCommand(targetIndex);
+        } catch (ParseException | NumberFormatException e) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        }
+    }
+    
+    private Command prepareFavorite(String args) {
+        try {
+            final int targetIndex = parseArgsAsDisplayedIndex(args);
+            return new FavoriteCommand(targetIndex);
         } catch (ParseException | NumberFormatException e) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
