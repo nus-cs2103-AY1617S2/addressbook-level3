@@ -15,6 +15,12 @@ public abstract class Command {
     protected AddressBook addressBook;
     protected List<? extends ReadOnlyPerson> relevantPersons;
     private int targetIndex = -1;
+    
+    /**
+     * Returns true for command types that mutate the data.
+     * Example: AddCommand
+     */
+    public abstract boolean isMutating();
 
     /**
      * @param targetIndex last visible listing index of the target person
@@ -38,8 +44,9 @@ public abstract class Command {
 
     /**
      * Executes the command and returns the result.
+     * @throws Exception 
      */
-    public abstract CommandResult execute();
+    public abstract CommandResult execute() throws Exception;
 
     /**
      * Supplies the data the command will operate on.
