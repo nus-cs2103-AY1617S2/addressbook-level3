@@ -35,7 +35,7 @@ public class Person implements ReadOnlyPerson {
      * Copy constructor.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRace(), source.getReligion(), source.getTags());;
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRace(), source.getReligion(), source.getTags());
     }
 
     
