@@ -29,13 +29,13 @@ public class Logic {
         setAddressBook(storage.load());
     }
 
-    Logic(StorageFile storageFile, AddressBook addressBook){
-        setStorage(storageFile);
+    Logic(Storage saveFile, AddressBook addressBook){
+        setStorage(saveFile);
         setAddressBook(addressBook);
     }
 
-    void setStorage(StorageFile storage){
-        this.storage = storage;
+    void setStorage(Storage saveFile){
+        this.storage = saveFile;
     }
 
     void setAddressBook(AddressBook addressBook){
