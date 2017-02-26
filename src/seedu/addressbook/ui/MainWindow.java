@@ -73,10 +73,7 @@ public class MainWindow {
     }
 
     /**
-     * Handle action related to input (in this case specifically only responds to
-     * keyboard event ALT-S).
-     *
-     * @param event Input event.
+     * Handle hot key action (ALT + S) to launch directory chooser
      */
     @FXML
     void handleKeyInput(InputEvent event){
