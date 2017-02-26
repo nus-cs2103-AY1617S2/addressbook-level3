@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 /**
  * Represents the file used to store address book data.
  */
-public class StorageFile {
+public class StorageFile extends Storage {
 
     /** Default file path used if the user doesn't provide the file name. */
     public static final String DEFAULT_STORAGE_FILEPATH = "addressbook.txt";
@@ -24,40 +24,23 @@ public class StorageFile {
      * More info https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html
      */
 
-    /**
-     * Signals that the given file path does not fulfill the storage filepath constraints.
-     */
-    public static class InvalidStorageFilePathException extends IllegalValueException {
-        public InvalidStorageFilePathException(String message) {
-            super(message);
-        }
-    }
 
-    /**
-     * Signals that some error has occured while trying to convert and read/write data between the application
-     * and the storage file.
-     */
-    public static class StorageOperationException extends Exception {
-        public StorageOperationException(String message) {
-            super(message);
-        }
-    }
 
     private final JAXBContext jaxbContext;
 
     public final Path path;
 
-    /**
-     * @throws InvalidStorageFilePathException if the default path is invalid
+    /**the exception is carried from Storage.java
+     * @throws InvalidStoragePathException if the default path is invalid
      */
-    public StorageFile() throws InvalidStorageFilePathException {
+    public StorageFile() throws InvalidStoragePathException {
         this(DEFAULT_STORAGE_FILEPATH);
     }
 
     /**
-     * @throws InvalidStorageFilePathException if the given file path is invalid
+     * @throws InvalidStoragePathException if the given file path is invalid
      */
-    public StorageFile(String filePath) throws InvalidStorageFilePathException {
+    public StorageFile(String filePath) throws InvalidStoragePathException {
         try {
             jaxbContext = JAXBContext.newInstance(AdaptedAddressBook.class);
         } catch (JAXBException jaxbe) {
@@ -66,7 +49,7 @@ public class StorageFile {
 
         path = Paths.get(filePath);
         if (!isValidPath(path)) {
-            throw new InvalidStorageFilePathException("Storage file should end with '.txt'");
+            throw new InvalidStoragePathException("Storage file should end with '.txt'");
         }
     }
 
@@ -83,6 +66,7 @@ public class StorageFile {
      *
      * @throws StorageOperationException if there were errors converting and/or storing data to file.
      */
+    @Override
     public void save(AddressBook addressBook) throws StorageOperationException {
 
         /* Note: Note the 'try with resource' statement below.
@@ -108,6 +92,7 @@ public class StorageFile {
      *
      * @throws StorageOperationException if there were errors reading and/or converting data from file.
      */
+    @Override
     public AddressBook load() throws StorageOperationException {
         try (final Reader fileReader =
                      new BufferedReader(new FileReader(path.toFile()))) {
@@ -140,7 +125,7 @@ public class StorageFile {
             throw new StorageOperationException("File contains illegal data values; data type constraints not met");
         }
     }
-
+    @Override
     public String getPath() {
         return path.toString();
     }
