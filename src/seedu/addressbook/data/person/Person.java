@@ -2,6 +2,7 @@ package seedu.addressbook.data.person;
 
 import seedu.addressbook.data.tag.UniqueTagList;
 
+import java.util.Comparator;
 import java.util.Objects;
 
 /**
@@ -32,6 +33,17 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getTags());
+    }
+    
+    /*
+     * Returns a Comparator for Person Name
+     */
+    public static Comparator<Person> getPersonNameComparator() {
+    	return new Comparator<Person>() {
+    		public int compare(Person first, Person second) {
+    			return first.getName().toString().compareTo(second.getName().toString());
+    		}
+    	};
     }
 
     @Override

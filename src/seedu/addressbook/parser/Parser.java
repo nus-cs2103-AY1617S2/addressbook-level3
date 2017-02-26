@@ -25,7 +25,8 @@ public class Parser {
                     + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
-
+    
+    public static final Pattern EDIT_COMMAND_FORMAT = Pattern.compile("(?<targetIndex>\\d+)(?<arguments>.*)");
 
     /**
      * Signals that the user input could not be parsed.
@@ -65,9 +66,15 @@ public class Parser {
 
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
-
+             
+            case FindByEmailCommand.COMMAND_WORD:
+            	return prepareFindByEmail(arguments);
+                
             case FindCommand.COMMAND_WORD:
                 return prepareFind(arguments);
+            
+            case FindByTagCommand.COMMAND_WORD:
+            	return prepareFindByTag(arguments);
 
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
@@ -80,10 +87,52 @@ public class Parser {
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
+                
+            case SortByNameCommand.COMMAND_WORD:
+            	return new SortByNameCommand();
+          
+            case EditCommand.COMMAND_WORD:
+                return prepareEdit(arguments);
 
             case HelpCommand.COMMAND_WORD: // Fallthrough
             default:
                 return new HelpCommand();
+        }
+    }
+    
+    /**
+     * Parses arguments in the context of the edit person command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareEdit(String args) {
+        final Matcher editMatcher = EDIT_COMMAND_FORMAT.matcher(args.trim());
+        if (!editMatcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+        final String index = editMatcher.group("targetIndex");
+        final String dataArgs = editMatcher.group("arguments");
+        final Matcher argsMatcher = PERSON_DATA_ARGS_FORMAT.matcher(dataArgs.trim());
+        if (!argsMatcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+        try {
+            return new EditCommand(
+                    parseArgsAsDisplayedIndex(index),
+                    argsMatcher.group("name"),
+                    argsMatcher.group("phone"),
+                    isPrivatePrefixPresent(argsMatcher.group("isPhonePrivate")),
+                    argsMatcher.group("email"),
+                    isPrivatePrefixPresent(argsMatcher.group("isEmailPrivate")),
+                    argsMatcher.group("address"),
+                    isPrivatePrefixPresent(argsMatcher.group("isAddressPrivate")),
+                    getTagsFromArgs(argsMatcher.group("tagArguments"))
+                );
+        } catch (IllegalValueException ive) {
+            return new IncorrectCommand(ive.getMessage());
+        } catch (NumberFormatException | ParseException e) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
     }
 
@@ -118,7 +167,7 @@ public class Parser {
             return new IncorrectCommand(ive.getMessage());
         }
     }
-
+    
     /**
      * Checks whether the private prefix of a contact detail in the add command's arguments string is present.
      */
@@ -225,6 +274,43 @@ public class Parser {
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
         return new FindCommand(keywordSet);
     }
+    
+    /**
+     * Parses arguments in the context of find persons by tag.
+     * 
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareFindByTag(String args) {
+    	final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
+    	if(!matcher.matches()) {
+    		return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+    				FindByTagCommand.MESSAGE_USAGE));
+    	}
+    	
+    	//keywords delimited by whitespace
+    	final String[] keywords = matcher.group("keywords").split("\\s+");
+    	final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));    	
+    	return new FindByTagCommand(keywordSet);
+    }
+    
+    /**
+     * Parses arguments in the context of the find person using email command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareFindByEmail(String args) {
+        final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    FindByEmailCommand.MESSAGE_USAGE));
+        }
 
+        // keywords delimited by whitespace
+        final String[] keywords = matcher.group("keywords").split("\\s+");
+        final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
+        return new FindByEmailCommand(keywordSet);
+    }
 
 }
