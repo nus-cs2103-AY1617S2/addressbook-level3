@@ -43,7 +43,7 @@ public class MainWindow {
     }
 
     public void setScene(Scene scene){
-    	this.scene = scene;
+        this.scene = scene;
     }
 
     @FXML
@@ -83,14 +83,14 @@ public class MainWindow {
        if (event instanceof KeyEvent){
           final KeyEvent keyEvent = (KeyEvent) event;
           if (keyEvent.isAltDown() && keyEvent.getCode() == KeyCode.S){
-        	  loadDirectoryChooser();
+              loadDirectoryChooser();
           }
        }
     }
 
     @FXML
     void handleSaveLocation(ActionEvent event){
-    	loadDirectoryChooser();
+        loadDirectoryChooser();
     }
 
     private void loadDirectoryChooser(){

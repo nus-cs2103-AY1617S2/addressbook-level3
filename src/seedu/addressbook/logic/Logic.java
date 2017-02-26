@@ -55,7 +55,7 @@ public class Logic {
     }
 
     public void setStorageFilePath(String filePath){
-    	storage.path = Paths.get(filePath);
+        storage.path = Paths.get(filePath);
     }
 
     /**
