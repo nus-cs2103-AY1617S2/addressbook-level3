@@ -16,7 +16,7 @@ import seedu.addressbook.data.person.ReadOnlyPerson;
 public class FindByTagCommand extends Command{
 	public static final String COMMAND_WORD = "findByTag";
 	
-	public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Finds all persons with the same tag and display them"
+	public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Finds all persons with the same tag and display them "
 			+ "as a list with index numbers.\n\t"
 			+ "Parameters: TAG_NAME [MORE TAG_NAME]...\n\t"
 			+ "Example: " + COMMAND_WORD + " CS2103T CS2101";
