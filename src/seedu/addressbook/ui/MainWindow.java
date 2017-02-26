@@ -3,14 +3,20 @@ package seedu.addressbook.ui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.InputEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.DirectoryChooser;
 import seedu.addressbook.commands.ExitCommand;
 import seedu.addressbook.logic.Logic;
 import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +29,7 @@ public class MainWindow {
 
     private Logic logic;
     private Stoppable mainApp;
+    private Scene scene;
 
     public MainWindow(){
     }
@@ -34,8 +41,12 @@ public class MainWindow {
     public void setMainApp(Stoppable mainApp){
         this.mainApp = mainApp;
     }
-    
-    @FXML  
+
+    public void setScene(Scene scene){
+    	this.scene = scene;
+    }
+
+    @FXML
     private MenuBar menuBar;
 
     @FXML
@@ -60,12 +71,42 @@ public class MainWindow {
             throw new RuntimeException(e);
         }
     }
-    
-    @FXML  
-    void handleSaveLocation(ActionEvent event)  
-    {  
-       System.out.println("Clciked");
-    }  
+
+    /**
+     * Handle action related to input (in this case specifically only responds to
+     * keyboard event ALT-S).
+     *
+     * @param event Input event.
+     */
+    @FXML
+    void handleKeyInput(InputEvent event)
+    {
+       if (event instanceof KeyEvent)
+       {
+          final KeyEvent keyEvent = (KeyEvent) event;
+          if (keyEvent.isAltDown() && keyEvent.getCode() == KeyCode.S)
+          {
+        	  loadDirectoryChooser();
+          }
+       }
+    }
+
+    @FXML
+    void handleSaveLocation(ActionEvent event)
+    {
+    	loadDirectoryChooser();
+    }
+
+    private void loadDirectoryChooser(){
+    	DirectoryChooser directoryChooser = new DirectoryChooser();
+        File selectedDirectory = directoryChooser.showDialog(scene.getWindow());
+        if(selectedDirectory!=null){
+        	String newStorageFilePath = selectedDirectory.getAbsolutePath()+"\\addressbook.txt";
+        	logic.setStorageFilePath(newStorageFilePath);
+        	String storageFileInfo = String.format(MESSAGE_CHANGED_STORAGE_FILE_LOCATION, newStorageFilePath);
+        	display(storageFileInfo);
+        }
+    }
 
     private void exitApp() throws Exception {
         mainApp.stop();
@@ -114,6 +155,6 @@ public class MainWindow {
      */
     private void display(String... messages) {
         outputConsole.setText(outputConsole.getText() + new Formatter().format(messages));
-    } 
+    }
 
 }

@@ -7,12 +7,12 @@
 
 <VBox stylesheets="@/seedu/addressbook/ui/DarkTheme.css" alignment="center" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="seedu.addressbook.ui.MainWindow">
-	<MenuBar fx:id="menuBar" focusTraversable="true">  
+	<MenuBar fx:id="menuBar" focusTraversable="true" onKeyPressed="#handleKeyInput">
 		<menus>
-			<Menu text="File">  
-				<items>  
+			<Menu text="File">
+				<items>
 					<MenuItem text="Change Save Location..." onAction="#handleSaveLocation" />
-				</items>  
+				</items>
 			</Menu>
 		</menus>
 	</MenuBar>
