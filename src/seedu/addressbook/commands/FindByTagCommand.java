@@ -21,7 +21,7 @@ public class FindByTagCommand extends Command{
 			+ "Parameters: TAG_NAME [MORE TAG_NAME]...\n\t"
 			+ "Example: " + COMMAND_WORD + " CS2103T CS2101";
 	
-	//public static final String MESSAGE_SUCCESS = "List of persons with the following tags: ";
+	public static final String MESSAGE_SUCCESS = "List of persons with the following tags: ";
 	public static final String MESSSAGE_NO_SUCH_TAGS = "No persons has this tag.";
 	
 	private final Set<String> keywords;
