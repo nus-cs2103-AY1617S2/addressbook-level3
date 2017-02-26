@@ -79,32 +79,28 @@ public class MainWindow {
      * @param event Input event.
      */
     @FXML
-    void handleKeyInput(InputEvent event)
-    {
-       if (event instanceof KeyEvent)
-       {
+    void handleKeyInput(InputEvent event){
+       if (event instanceof KeyEvent){
           final KeyEvent keyEvent = (KeyEvent) event;
-          if (keyEvent.isAltDown() && keyEvent.getCode() == KeyCode.S)
-          {
+          if (keyEvent.isAltDown() && keyEvent.getCode() == KeyCode.S){
         	  loadDirectoryChooser();
           }
        }
     }
 
     @FXML
-    void handleSaveLocation(ActionEvent event)
-    {
+    void handleSaveLocation(ActionEvent event){
     	loadDirectoryChooser();
     }
 
     private void loadDirectoryChooser(){
-    	DirectoryChooser directoryChooser = new DirectoryChooser();
+        DirectoryChooser directoryChooser = new DirectoryChooser();
         File selectedDirectory = directoryChooser.showDialog(scene.getWindow());
         if(selectedDirectory!=null){
-        	String newStorageFilePath = selectedDirectory.getAbsolutePath()+"\\addressbook.txt";
-        	logic.setStorageFilePath(newStorageFilePath);
-        	String storageFileInfo = String.format(MESSAGE_CHANGED_STORAGE_FILE_LOCATION, newStorageFilePath);
-        	display(storageFileInfo);
+            String newStorageFilePath = selectedDirectory.getAbsolutePath()+"\\addressbook.txt";
+            logic.setStorageFilePath(newStorageFilePath);
+            String storageFileInfo = String.format(MESSAGE_CHANGED_STORAGE_FILE_LOCATION, newStorageFilePath);
+            display(storageFileInfo);
         }
     }
 
