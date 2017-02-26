@@ -23,8 +23,6 @@ public abstract class Storage {
 	
 	public abstract void save(AddressBook addressBook) throws StorageOperationException;
 
-	public static Storage initialiseStorage() throws InvalidStorageFilePathException{
-		return new StorageFile();		
-	}
+	public abstract Storage initializeStorage() throws InvalidStorageFilePathException;
 	
 }

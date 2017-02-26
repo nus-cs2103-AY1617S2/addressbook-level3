@@ -125,4 +125,9 @@ public class StorageFile extends Storage{
         return path.toString();
     }
 
+	@Override
+	public Storage initializeStorage() throws InvalidStorageFilePathException {
+		return new StorageFile();
+	}
+
 }
