@@ -13,6 +13,7 @@ import seedu.addressbook.data.person.*;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
 import seedu.addressbook.storage.StorageFile;
+import seedu.addressbook.storage.StorageStub;
 
 import java.util.*;
 
@@ -28,16 +29,19 @@ public class LogicTest {
     @Rule
     public TemporaryFolder saveFolder = new TemporaryFolder();
 
-    private StorageFile saveFile;
+   // private StorageFile saveFile;
+    private StorageStub storageStub;
     private AddressBook addressBook;
     private Logic logic;
 
     @Before
     public void setup() throws Exception {
-        saveFile = new StorageFile(saveFolder.newFile("testSaveFile.txt").getPath());
+        //saveFile = new StorageFile(saveFolder.newFile("testSaveFile.txt").getPath());
+        storageStub = new StorageStub(saveFolder.newFile("testSaveFile.txt").getPath());
         addressBook = new AddressBook();
-        saveFile.save(addressBook);
-        logic = new Logic(saveFile, addressBook);
+        //saveFile.save(addressBook);
+        storageStub.save(addressBook);
+        logic = new Logic(storageStub, addressBook);
     }
 
     @Test
@@ -90,7 +94,9 @@ public class LogicTest {
         //Confirm the state of data is as expected
         assertEquals(expectedAddressBook, addressBook);
         assertEquals(lastShownList, logic.getLastShownList());
-        assertEquals(addressBook, saveFile.load());
+        //Since the objective is to test Logic only but not addressBook, we can remove this line of test.
+        //assertEquals(addressBook, storageStub.load());
+        
     }
 
 
