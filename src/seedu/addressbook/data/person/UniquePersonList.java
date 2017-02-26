@@ -137,5 +137,15 @@ public class UniquePersonList implements Iterable<Person> {
     public int hashCode() {
         return internalList.hashCode();
     }
-
+    
+    /**
+     * change the person in internalList to the new person
+     * 
+     * @param index person to be changed
+     * @param newPerson person to change into
+     */
+    public void change(int index, Person newPerson) {
+        internalList.remove(index - 1);
+        internalList.add(index - 1, newPerson);
+    }
 }
