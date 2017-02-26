@@ -11,6 +11,8 @@ import seedu.addressbook.ui.Stoppable;
 /**
  * Main entry point to the application.
  */
+
+//Test
 public class Main extends Application implements Stoppable{
 
     /** Version info of the program. */
