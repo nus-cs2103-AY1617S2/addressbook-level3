@@ -19,7 +19,6 @@ public class StorageFile {
 
     /** Default file path used if the user doesn't provide the file name. */
     public static final String DEFAULT_STORAGE_FILEPATH = "addressbook.txt";
-    public static final String DEFAULT_BACKUP_FILEPATH = "addressbook_backup.txt";
 
     /* Note: Note the use of nested classes below.
      * More info https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html
@@ -101,47 +100,6 @@ public class StorageFile {
             throw new StorageOperationException("Error writing to file: " + path + " error: " + ioe.getMessage());
         } catch (JAXBException jaxbe) {
             throw new StorageOperationException("Error converting address book into storage format");
-        }
-    }
-    
-    public void backup(AddressBook addressBook) throws IOException, StorageOperationException {
-        InputStream input = null;
-        OutputStream output = null;
-        File backup = null;
-        try {
-            backup = new File(DEFAULT_BACKUP_FILEPATH);
-            input = new FileInputStream(new File(path.toString()));
-            output = new FileOutputStream(backup);
-            byte[] buf = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = input.read(buf)) > 0) {
-                output.write(buf, 0, bytesRead);
-            }
-        } catch (FileNotFoundException e) {
-            backup.createNewFile();
-        } catch (IOException e) {
-        } finally {
-            input.close();
-            output.close();
-        }
-    }
-    
-    public void restore(AddressBook addressBook) throws IOException, StorageOperationException {
-        InputStream input = null;
-        OutputStream output = null;
-        File backup = null;
-        try {
-            backup = new File(DEFAULT_BACKUP_FILEPATH);
-            output = new FileOutputStream(new File(path.toString()));
-            input = new FileInputStream(backup);
-            byte[] buf = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = input.read(buf)) > 0) {
-                output.write(buf, 0, bytesRead);
-            }
-        } finally {
-            input.close();
-            output.close();
         }
     }
 
