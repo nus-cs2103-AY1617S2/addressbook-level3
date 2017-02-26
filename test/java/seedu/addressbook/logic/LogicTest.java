@@ -14,6 +14,7 @@ import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
 import seedu.addressbook.storage.StorageFile;
 
+import java.io.PrintWriter;
 import java.util.*;
 
 import static junit.framework.TestCase.assertEquals;
@@ -390,7 +391,14 @@ public class LogicTest {
                                 false,
                                 threePersons);
     }
-
+    
+    @Test
+    public void execute_findByTag_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindByTagCommand.MESSAGE_USAGE);
+        assertCommandBehavior("findByTag ", expectedMessage);
+    }
+    
+    
     @Test
     public void execute_find_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
@@ -508,6 +516,18 @@ public class LogicTest {
             }
 
             return cmd.toString();
+        }
+        
+        /** Generates the correct findByTag command based on the person given */
+        String generateFindByTagCommand(Person p) {
+        	StringJoiner cmd = new StringJoiner(" ");
+        	cmd.add("findByTag");
+        	UniqueTagList pTags = p.getTags();
+        	for(Tag tag: pTags) {
+        		cmd.add(tag.tagName);
+        		
+        	}
+        	return cmd.toString();
         }
 
         /**
