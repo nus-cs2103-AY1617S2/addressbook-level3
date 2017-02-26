@@ -26,7 +26,8 @@ public class Parser {
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
 
-
+    public static final Pattern PERSON_EDIT_ARGS_FORMAT =
+            Pattern.compile("p/(?<phone>[^/]+)");
     /**
      * Signals that the user input could not be parsed.
      */
@@ -62,6 +63,9 @@ public class Parser {
 
             case DeleteCommand.COMMAND_WORD:
                 return prepareDelete(arguments);
+                
+            case EditCommand.COMMAND_WORD:
+                return prepareEdit(arguments);
 
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
@@ -118,7 +122,37 @@ public class Parser {
             return new IncorrectCommand(ive.getMessage());
         }
     }
+    
+    /**
+     * Parses arguments in the context of the edit person command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private final int NUMBER_OF_ARGUMENTS_FOR_EDIT = 3;
+    private final int TARGET_INDEX_IN_ARGS = 1;
+    private final int PHONE_IN_ARGS = 2;
 
+    private Command prepareEdit(String args) {
+        String[] argumentParts = args.split(" ");
+        try {
+            if (argumentParts.length!= NUMBER_OF_ARGUMENTS_FOR_EDIT) {
+                return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+            } else {
+                final int targetIndex = parseArgsAsDisplayedIndex(argumentParts[TARGET_INDEX_IN_ARGS]);
+                final Matcher matcher = PERSON_EDIT_ARGS_FORMAT.matcher(argumentParts[PHONE_IN_ARGS]);
+                if (!matcher.matches()) {
+                    return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+                }
+                return new EditCommand(targetIndex, matcher.group("phone"));
+            }
+        } catch (ParseException | NumberFormatException e) {
+
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        } catch (IllegalValueException ive) {
+            return new IncorrectCommand(ive.getMessage());
+        }
+    }
     /**
      * Checks whether the private prefix of a contact detail in the add command's arguments string is present.
      */
@@ -155,7 +189,9 @@ public class Parser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
     }
-
+    
+    
+    
     /**
      * Parses arguments in the context of the view command.
      *
