@@ -17,13 +17,6 @@ import java.util.List;
  */
 public class AdaptedPerson {
 
-    private static class AdaptedContactDetail {
-        @XmlValue
-        public String value;
-        @XmlAttribute(required = true)
-        public boolean isPrivate;
-    }
-
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
@@ -44,7 +37,13 @@ public class AdaptedPerson {
      * No-arg constructor for JAXB use.
      */
     public AdaptedPerson() {}
-
+    
+    private static class AdaptedContactDetail {
+        @XmlValue
+        public String value;
+        @XmlAttribute(required = true)
+        public boolean isPrivate;
+    }
 
     /**
      * Converts a given Person into this class for JAXB use.
