@@ -72,6 +72,9 @@ public class Parser {
                 
             case FindCommand.COMMAND_WORD:
                 return prepareFind(arguments);
+            
+            case FindByTagCommand.COMMAND_WORD:
+            	return prepareFindByTag(arguments);
 
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
@@ -164,7 +167,7 @@ public class Parser {
             return new IncorrectCommand(ive.getMessage());
         }
     }
-
+    
     /**
      * Checks whether the private prefix of a contact detail in the add command's arguments string is present.
      */
@@ -273,6 +276,25 @@ public class Parser {
     }
     
     /**
+     * Parses arguments in the context of find persons by tag.
+     * 
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareFindByTag(String args) {
+    	final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
+    	if(!matcher.matches()) {
+    		return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+    				FindByTagCommand.MESSAGE_USAGE));
+    	}
+    	
+    	//keywords delimited by whitespace
+    	final String[] keywords = matcher.group("keywords").split("\\s+");
+    	final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));    	
+    	return new FindByTagCommand(keywordSet);
+    }
+    
+    /**
      * Parses arguments in the context of the find person using email command.
      *
      * @param args full command args string
@@ -290,7 +312,5 @@ public class Parser {
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
         return new FindByEmailCommand(keywordSet);
     }
-
-
 
 }

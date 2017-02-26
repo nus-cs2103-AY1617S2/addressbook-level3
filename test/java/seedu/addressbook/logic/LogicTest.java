@@ -409,7 +409,31 @@ public class LogicTest {
                                 false,
                                 threePersons);
     }
+    
+    @Test
+    public void execute_findByTag_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindByTagCommand.MESSAGE_USAGE);
+        assertCommandBehavior("findByTag ", expectedMessage);
+    }
+    
+    @Test
+    public void execute_findByTag_isCaseSensitive() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Person p1 = helper.adam();
+        
+        Person p2 = helper.generatePersonWithNameForTagTesting("john", "tag1");
+        Person p3 = helper.generatePersonWithNameForTagTesting("jason", "TAG1");
 
+        List<Person> persons = helper.generatePersonList(p1, p2, p3);
+        AddressBook expectedAB = helper.generateAddressBook(persons);
+        List<Person> expectedList = helper.generatePersonList(p1, p2);
+        helper.addToAddressBook(addressBook, persons);
+        assertCommandBehavior(helper.generateFindByTagCommand(p2),
+                                Command.getMessageForPersonListShownSummary(expectedList),
+                                expectedAB,
+                                true,
+                                expectedList);
+    }
     @Test
     public void execute_find_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
@@ -688,6 +712,17 @@ public class LogicTest {
 
             return cmd.toString();
         }
+        
+        /** Generates the correct findByTag command based on the person given */
+        String generateFindByTagCommand(Person p) {
+        	StringJoiner cmd = new StringJoiner(" ");
+        	cmd.add("findByTag");
+        	UniqueTagList pTags = p.getTags();
+        	for(Tag tag: pTags) {
+        		cmd.add(tag.tagName);
+        	}
+        	return cmd.toString();
+        }
 
         /**
          * Generates an AddressBook with auto-generated persons.
@@ -752,7 +787,16 @@ public class LogicTest {
             }
             return persons;
         }
-
+        Person generatePersonWithNameForTagTesting(String name, String tag) throws Exception {
+            return new Person(
+                    new Name(name),
+                    new Phone("1", false),
+                    new Email("1@email", false),
+                    new Address("House of 1", false),
+                    new UniqueTagList(new Tag(tag))
+            );
+        }
+        
         /**
          * Generates a Person object with given name. Other fields will have some dummy values.
          */

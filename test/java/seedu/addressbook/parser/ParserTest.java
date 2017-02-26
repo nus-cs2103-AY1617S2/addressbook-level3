@@ -175,6 +175,18 @@ public class ParserTest {
         assertEquals(keySet, result.getKeywords());
     }
     
+    @Test
+    public void findByTagCommand_invalidArgs() {
+    	// no keywords
+        final String[] inputs = {
+                "findByTag",
+                "findByTag "
+        };
+        final String resultMessage =
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindByTagCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage, inputs);
+    }
+    
     /**
      * Test find persons by keyword in email command
      */
@@ -191,6 +203,26 @@ public class ParserTest {
     }
     
     @Test
+
+    public void findByTagCommand_validArgs_parsedCorrectly() {
+    	final String[] keywords = { "CS2103T", "CS2101", "CS3245" };
+    	final Set<String> keySet = new HashSet<>(Arrays.asList(keywords));
+    	final String input = "findByTag " + String.join(" ", keySet);
+    	final FindByTagCommand result = parseAndAssertCommandType(input, FindByTagCommand.class);
+    	assertEquals(keySet, result.getKeywords());
+    }
+    
+    @Test
+    public void findByTagCommand_duplicateKeys_parsedCorrectly() {
+        final String[] keywords = { "CS2103T", "CS2101", "CS3245" };
+        final Set<String> keySet = new HashSet<>(Arrays.asList(keywords));
+        // duplicate every keyword
+        final String input = "findByTag " + String.join(" ", keySet) + " " + String.join(" ", keySet);
+        final FindByTagCommand result =
+                parseAndAssertCommandType(input, FindByTagCommand.class);
+        assertEquals(keySet, result.getKeywords());
+    }
+    
     public void findCommandByEmail_validArgs_parsedCorrectly() {
         final String[] keywords = { "alice@gmail.com", "emily@yahoo.com" };
         final Set<String> keySet = new HashSet<>(Arrays.asList(keywords));
@@ -212,9 +244,7 @@ public class ParserTest {
                 parseAndAssertCommandType(input, FindByEmailCommand.class);
         assertEquals(keySet, result.getKeywords());
     }
-
-
-
+    
     /**
      * Test add person command
      */
