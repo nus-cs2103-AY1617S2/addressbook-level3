@@ -409,7 +409,7 @@ public class LogicTest {
         AddressBook expectedAB = helper.generateAddressBook(persons);
         List<Person> expectedList = helper.generatePersonList(p1, p2);
         helper.addToAddressBook(addressBook, persons);
-        assertCommandBehavior(helper.generateFindByTagCommand(p1),
+        assertCommandBehavior(helper.generateFindByTagCommand(p2),
                                 Command.getMessageForPersonListShownSummary(expectedList),
                                 expectedAB,
                                 true,
@@ -541,7 +541,6 @@ public class LogicTest {
         	UniqueTagList pTags = p.getTags();
         	for(Tag tag: pTags) {
         		cmd.add(tag.tagName);
-        		break;
         	}
         	return cmd.toString();
         }
