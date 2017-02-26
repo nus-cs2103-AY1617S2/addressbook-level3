@@ -85,6 +85,9 @@ public class Parser {
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
                 
+            case SortByNameCommand.COMMAND_WORD:
+            	return new SortByNameCommand();
+          
             case EditCommand.COMMAND_WORD:
                 return prepareEdit(arguments);
 

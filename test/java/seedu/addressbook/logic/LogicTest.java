@@ -200,6 +200,25 @@ public class LogicTest {
                               true,
                               expectedList);
     }
+    
+    @Test
+    public void execute_sortbyname_showAllPersonsSorted() throws Exception {
+    	// prepare expectations
+    	TestDataHelper helper = new TestDataHelper();
+    	AddressBook expectedAB = helper.generateAddressBook(false, true);
+    	UniquePersonList expectedUniquePersonList = expectedAB.getAllPersons();
+    	expectedUniquePersonList.sortListByName();
+    	List<? extends ReadOnlyPerson> expectedList = expectedUniquePersonList.immutableListView();
+    	
+    	// prepare address book state
+    	helper.addToAddressBook(addressBook, false, true);
+    	
+    	assertCommandBehavior("sortbyname",
+    						   Command.getMessageForPersonListShownSummary(expectedList),
+    						   expectedAB,
+    						   true,
+    						   expectedList);
+    }
 
     @Test
     public void execute_view_invalidArgsFormat() throws Exception {
