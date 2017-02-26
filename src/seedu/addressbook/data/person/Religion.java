@@ -23,11 +23,11 @@ public class Religion {
      */
     public Religion(String religion, boolean isPrivate) throws IllegalValueException {
         this.isPrivate = isPrivate;
-        religion = religion.trim();
-        if (!isValidReligion(religion)) {
+        String religionTrimmed = religion.trim();
+        if (!isValidReligion(religionTrimmed)) {
             throw new IllegalValueException(MESSAGE_RELIGION_CONSTRAINTS);
         }
-        this.value = religion;
+        this.value = religionTrimmed;
     }
 
     /**
