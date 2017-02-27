@@ -5,6 +5,7 @@ import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.parser.Parser;
+import seedu.addressbook.storage.Session;
 import seedu.addressbook.storage.StorageFile;
 
 import java.util.Collections;
@@ -16,7 +17,7 @@ import java.util.Optional;
  */
 public class Logic {
 
-
+	private Session session;
     private StorageFile storage;
     private AddressBook addressBook;
 
@@ -26,11 +27,17 @@ public class Logic {
     public Logic() throws Exception{
         setStorage(initializeStorage());
         setAddressBook(storage.load());
+        setSession(new Session());
     }
 
     Logic(StorageFile storageFile, AddressBook addressBook){
         setStorage(storageFile);
         setAddressBook(addressBook);
+        setSession(new Session());
+    }
+    
+    void setSession(Session session) {
+    	this.session = session;
     }
 
     void setStorage(StorageFile storage){
@@ -83,10 +90,15 @@ public class Logic {
      * @throws Exception if there was any problem during command execution.
      */
     private CommandResult execute(Command command) throws Exception {
-        command.setData(addressBook, lastShownList);
+        command.setData(addressBook, lastShownList, session);
+        updateHistory(command);
         CommandResult result = command.execute();
         storage.save(addressBook);
         return result;
+    }
+    
+    private void updateHistory(Command command) {
+    	this.session.updateHistorySession(command);
     }
 
     /** Updates the {@link #lastShownList} if the result contains a list of Persons. */

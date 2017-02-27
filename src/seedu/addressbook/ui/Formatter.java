@@ -1,5 +1,6 @@
 package seedu.addressbook.ui;
 
+import seedu.addressbook.commands.Command;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
 import java.util.ArrayList;
@@ -41,6 +42,14 @@ public class Formatter {
             formattedPersons.add(person.getAsTextHidePrivate());
         }
         return format(asIndexedList(formattedPersons));
+    }
+    
+    public String format(ArrayList<Command> history) {
+    	final List<String> formattedHistory = new ArrayList<>();
+    	for (Command command : history) {
+    		formattedHistory.add(command.toString());
+    	}
+    	return asIndexedList(formattedHistory);
     }
 
     /** Formats a list of strings as an indexed list. */

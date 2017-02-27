@@ -77,6 +77,9 @@ public class Parser {
 
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
+                
+            case HistoryCommand.COMMAND_WORD:
+            	return new HistoryCommand();
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
