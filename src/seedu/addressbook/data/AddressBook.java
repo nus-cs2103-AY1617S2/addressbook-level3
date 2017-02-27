@@ -89,10 +89,9 @@ public class AddressBook {
         return allPersons.contains(key);
     }
     
-    public void editPerson(int targetIndex, Person updatedPerson, ReadOnlyPerson originalPerson) throws DuplicatePersonException, PersonNotFoundException {
+    public void editPerson(int targetIndex, Person updatedPerson) throws PersonNotFoundException {
     	syncTagsWithMasterList(updatedPerson);
-    	removePerson(originalPerson);
-        allPersons.add(targetIndex - 1, updatedPerson);
+        allPersons.change(targetIndex, updatedPerson);
     }
 
     /**

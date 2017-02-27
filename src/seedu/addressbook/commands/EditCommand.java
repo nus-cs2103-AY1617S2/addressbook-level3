@@ -29,7 +29,6 @@ public class EditCommand extends Command {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Address book updated: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "Doubt that this message will ever be shown.";
     
-    private final ReadOnlyPerson originalPerson;
     private Person updatedPerson;
     
     public EditCommand(int targetVisibleIndex,
@@ -46,7 +45,6 @@ public class EditCommand extends Command {
 		for (String tagName : tags) {
 		  tagSet.add(new Tag(tagName));
 		}
-		this.originalPerson = getTargetPerson();
 		this.updatedPerson = new Person(
 		      new Name(name),
 		      new Phone(phone, isPhonePrivate),
@@ -62,15 +60,13 @@ public class EditCommand extends Command {
     public CommandResult execute() {
         try {
         	final int targetIndex = getTargetIndex();
-            addressBook.editPerson(targetIndex, updatedPerson, originalPerson);
-            return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, originalPerson));
+            addressBook.editPerson(targetIndex, updatedPerson);
+            return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, updatedPerson));
 
         } catch (IndexOutOfBoundsException ie) {
             return new CommandResult(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         } catch (PersonNotFoundException pnfe) {
             return new CommandResult(Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK);
-        } catch (DuplicatePersonException dpe) {
-        	return new CommandResult(MESSAGE_DUPLICATE_PERSON);
         }
     }
 }

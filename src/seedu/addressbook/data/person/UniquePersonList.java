@@ -99,11 +99,9 @@ public class UniquePersonList implements Iterable<Person> {
      *
      * @throws DuplicatePersonException if the person to add is a duplicate of an existing person in the list.
      */
-    public void add(int index, Person toAdd) throws DuplicatePersonException {
-        if (contains(toAdd)) {
-            throw new DuplicatePersonException();
-        }
-        internalList.add(index, toAdd);
+    public void change(int index, Person toAdd) {
+    	internalList.remove(index - 1);
+    	internalList.add(index - 1, toAdd);
     }
 
     /**

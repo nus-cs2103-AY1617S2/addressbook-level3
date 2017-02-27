@@ -57,16 +57,16 @@ public interface ReadOnlyPerson {
         if (getAddress().isPrivate()) {
             builder.append(detailIsPrivate);
         }
-        builder.append(getRace())
-        		.append(" Race: ");
-        if (getRace().isPrivate()) {
-        	builder.append(detailIsPrivate);
-        }
         builder.append(getAddress())
                 .append(" Religion: ");
         if (getReligion().isPrivate()) {
             builder.append(detailIsPrivate);
         }
+        builder.append(getRace())
+				.append(" Race: ");
+		if (getRace().isPrivate()) {
+			builder.append(detailIsPrivate);
+		}
         builder.append(getReligion())
                 .append(" Tags: ");
         for (Tag tag : getTags()) {

@@ -30,7 +30,7 @@ public class Parser {
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
     
     public static final Pattern PERSON_EDIT_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
-            Pattern.compile("(?<targetIndex>\\s+)(?<arguments>.*)");        		
+            Pattern.compile("(?<targetIndex>\\d+)(?<arguments>.*)");        		
 
     /**
      * Signals that the user input could not be parsed.
