@@ -99,6 +99,21 @@ Examples:
 Clears all entries from the address book.<br>
 Format: `clear`  
 
+
+## Editing an entry : `edit`
+Edits the specified person from the address book. <br>
+Format: `edit INDEX <EDIT_FIELD>/<desired new information>`
+
+> Edits the person at the specified `INDEX`. 
+  The index refers to the index number shown in the most recent listing.
+  Edit fields are: p/ n/ e/ a/
+  NOTE! Can only edit 1 field at a time.
+
+Examples: 
+* `list`<br>
+  `edit 2 p/1234`<br>
+  Edits the 2nd person in the address book to have an updated phone number of 1234.
+
 ## Exiting the program : `exit`
 Exits the program.<br>
 Format: `exit`  
