@@ -83,6 +83,7 @@ public class Parser {
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
+                
             case EditCommand.COMMAND_WORD:
                 return prepareEdit(arguments);
                 
@@ -252,7 +253,7 @@ public class Parser {
             }
             return new EditCommand(targetIndex, editField, newInfo);
         } catch (NumberFormatException e) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
         
     }
