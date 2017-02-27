@@ -183,6 +183,58 @@ public class LogicTest {
                 Collections.emptyList());
 
     }
+    
+    @Test
+    public void execute_undo_successful() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Person toBeAdded = helper.adam();
+        AddressBook expectedAB = new AddressBook();
+        expectedAB.addPerson(toBeAdded);
+
+        // execute command and verify result
+        assertCommandBehavior(helper.generateAddCommand(toBeAdded),
+                              String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                              expectedAB,
+                              false,
+                              Collections.emptyList());
+        
+        assertEquals(logic.undo(), true);
+
+
+        assertEquals(Collections.emptyList(), logic.getLastShownList());
+    }
+    
+    @Test
+    public void execute_undo_emptyStack() throws Exception {               
+        assertEquals(false, logic.undo());
+    }
+    
+    @Test
+    public void execute_undoInvalidLastCommand_notAllowed() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Person toBeAdded = helper.adam();
+        AddressBook expectedAB = new AddressBook();
+        expectedAB.addPerson(toBeAdded);
+
+        // execute command and verify result
+        assertCommandBehavior(helper.generateAddCommand(toBeAdded),
+                              String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                              expectedAB,
+                              false,
+                              Collections.emptyList());
+        
+        assertCommandBehavior("add Valid Name p/12345 e/valid@e.mail a/valid, address t/invalid_-[.tag",
+                Tag.MESSAGE_TAG_CONSTRAINTS,
+                expectedAB,
+                false,
+                Collections.emptyList());
+        
+        assertEquals(logic.undo(), true);
+
+        assertEquals(Collections.emptyList(), logic.getLastShownList());
+    }
 
     @Test
     public void execute_list_showsAllPersons() throws Exception {

@@ -109,16 +109,11 @@ public class Logic {
         return result;
     }
     
-    public boolean undo() {
+    public boolean undo() throws Exception{
         if(!undoStack.isEmpty()){
-            UndoableCommand cmd = undoStack.pop();
-            try {
-                cmd.undo();
-                return true;
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                return false;
-            }
+            UndoableCommand cmd = undoStack.pop();           
+            cmd.undo();  
+            return true;
         }
         
         return false;
