@@ -41,7 +41,9 @@ public abstract class Command {
      * @param previousCommand 
      */
     public abstract CommandResult execute(ReadOnlyCommand previousCommand);
-
+    
+    public abstract String getCommandWord();
+    
     /**
      * Supplies the data the command will operate on.
      */

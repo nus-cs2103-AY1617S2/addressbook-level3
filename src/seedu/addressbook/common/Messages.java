@@ -13,4 +13,6 @@ public class Messages {
             "java seedu.addressbook.Main [STORAGE_FILE_PATH]";
     public static final String MESSAGE_WELCOME = "Welcome to your Address Book!";
     public static final String MESSAGE_USING_STORAGE_FILE = "Using storage file : %1$s";
+    public static final String MESSAGE_NOT_DELETE_COMMAND = "Previous command is not delete.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 }

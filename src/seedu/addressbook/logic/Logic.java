@@ -75,6 +75,7 @@ public class Logic {
         Command command = new Parser().parseCommand(userCommandText);
         CommandResult result = execute(command,previousCommand);
         recordResult(result);
+        previousCommand = new ReadOnlyCommand(command.getCommandWord(),lastShownList);
         return result;
     }
 

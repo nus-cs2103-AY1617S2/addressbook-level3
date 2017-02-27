@@ -38,4 +38,10 @@ public class ViewCommand extends Command {
         }
     }
 
+
+    @Override
+    public String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
 }

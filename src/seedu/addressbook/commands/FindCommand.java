@@ -53,4 +53,9 @@ public class FindCommand extends Command {
         return matchedPersons;
     }
 
+    @Override
+    public String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
 }
