@@ -108,7 +108,7 @@ public class StorageFileTest {
                                 new Email("betsycrowe@gmail.com", false),
                                 new Address("Newgate Prison", true),
                                 new Race("Malay", false),
-                                new Religion("Muslim", false),
+                                new Religion("Muslim", true),
                                 new UniqueTagList(new Tag("friend"), new Tag("criminal"))));
         return ab;
     }
