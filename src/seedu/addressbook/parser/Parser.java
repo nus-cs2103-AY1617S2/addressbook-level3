@@ -30,14 +30,7 @@ public class Parser {
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
     
     public static final Pattern PERSON_EDIT_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
-            Pattern.compile("(?<targetIndex>.+)" 
-            		+ " ?<name>[^/]+"
-                    + " (?<isPhonePrivate>p?)p/(?<phone>[^/]+)"
-                    + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
-                    + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
-                    + " (?<isRacePrivate>p?)b/(?<race>[^/]+)"
-                    + " (?<isReligionPrivate>p?)r/(?<religion>[^/]+)"
-                    + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
+            Pattern.compile("(?<targetIndex>\\s+)(?<arguments>.*)");        		
 
     /**
      * Signals that the user input could not be parsed.
@@ -189,38 +182,37 @@ public class Parser {
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
-        try {
-        	HashMap<String, String> editData = new HashMap<String, String>();
-        	if (matcher.group("name") != null) {
-        		editData.put("name", matcher.group("name"));
-        	}
-        	if (matcher.group("phone") != null) {
-        		editData.put("phone", matcher.group("phone"));
-        		editData.put("phoneIsPrivate", String.valueOf(isPrivatePrefixPresent(matcher.group("phone"))));
-        	}
-        	if (matcher.group("email") != null) {
-        		editData.put("email", matcher.group("email"));
-        		editData.put("emailIsPrivate", String.valueOf(isPrivatePrefixPresent(matcher.group("email"))));
-        	}
-        	if (matcher.group("address") != null) {
-        		editData.put("address", matcher.group("address"));
-        		editData.put("addressIsPrivate", String.valueOf(isPrivatePrefixPresent(matcher.group("address"))));
-        	}
-        	if (matcher.group("race") != null) {
-        		editData.put("race", matcher.group("race"));
-        		editData.put("raceIsPrivate", String.valueOf(isPrivatePrefixPresent(matcher.group("race"))));
-        	}
-        	if (matcher.group("religion") != null) {
-        		editData.put("religion", matcher.group("religion"));
-        		editData.put("religionIsPrivate", String.valueOf(isPrivatePrefixPresent(matcher.group("religion"))));
-        	}
-            return new EditCommand(
-            	parseArgsAsDisplayedIndex(matcher.group("targetIndex")),
-            	editData
-            );
-        } catch (NumberFormatException | ParseException ive) {
-            return new IncorrectCommand(ive.getMessage());
+        final Matcher personDataMatcher = PERSON_DATA_ARGS_FORMAT.matcher(matcher.group("arguments").trim());
+        if (!personDataMatcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
+        try {
+        	int targetIndex = parseArgsAsDisplayedIndex(matcher.group("targetIndex"));
+        	return new EditCommand(targetIndex,
+                    personDataMatcher.group("name"),
+
+                    personDataMatcher.group("phone"),
+                    isPrivatePrefixPresent(personDataMatcher.group("isPhonePrivate")),
+
+                    personDataMatcher.group("email"),
+                    isPrivatePrefixPresent(personDataMatcher.group("isEmailPrivate")),
+
+                    personDataMatcher.group("address"),
+                    isPrivatePrefixPresent(personDataMatcher.group("isAddressPrivate")),
+                    
+                    personDataMatcher.group("race"),
+                    isPrivatePrefixPresent(personDataMatcher.group("isRacePrivate")),
+              
+                    personDataMatcher.group("religion"),
+                    isPrivatePrefixPresent(personDataMatcher.group("isReligionPrivate")),
+
+                    getTagsFromArgs(personDataMatcher.group("tagArguments"))
+            );
+        } catch (ParseException | NumberFormatException e) {
+            return new IncorrectCommand(e.getMessage());
+        } catch (IllegalValueException ive) {
+        	return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+		}
     }
 
     /**

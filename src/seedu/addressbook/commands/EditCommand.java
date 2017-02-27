@@ -9,6 +9,8 @@ import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 
@@ -21,59 +23,40 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Edits an entry of the address book. "
             + "An entry is specified by the index number given by the list command"
-            + "Parameters: INDEX\n\t"
-            + "Example: " + COMMAND_WORD + " 42";
+            + "Parameters: INDEX\n"
+            + "Example: " + COMMAND_WORD + " 42 John Doe p/98765432 e/johnd@gmail.com a/311, Clementi Ave 2, #02-25 b/Malay r/Buddhism t/friends t/owesMoney";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Address book updated: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book but I doubt you will ever see this message";
+    public static final String MESSAGE_DUPLICATE_PERSON = "Doubt that this message will ever be shown.";
     
     private final ReadOnlyPerson originalPerson;
     private Person updatedPerson;
-    private Name name = null;
-    private Email email = null;
-    private Phone phone = null;
-    private Address address = null;
-    private Race race = null;
-    private Religion religion = null;
     
-    public EditCommand(int targetVisibleIndex, HashMap<String, String> editData) {
+    public EditCommand(int targetVisibleIndex,
+					String name,
+		            String phone, boolean isPhonePrivate,
+		            String email, boolean isEmailPrivate,
+		            String address, boolean isAddressPrivate,
+		            String race, boolean isRacePrivate,
+		            String religion, boolean isReligionPrivate,
+		            Set<String> tags) throws IllegalValueException {
     	super(targetVisibleIndex);
-    	originalPerson = getTargetPerson();
-    	try {
-			if (editData.containsKey("name")) {
-				name = new Name(editData.get("name"));
-			}
-			if (editData.containsKey("email")) {
-				email = new Email(editData.get("email"), Boolean.valueOf(editData.get("emailIsPrivate")));
-			}
-			if (editData.containsKey("phone")) {
-				phone = new Phone(editData.get("phone"), Boolean.valueOf(editData.get("phoneIsPrivate")));
-			}
-			if (editData.containsKey("address")) {
-				address = new Address(editData.get("address"), Boolean.valueOf(editData.get("addressIsPrivate")));
-			}
-			if (editData.containsKey("race")) {
-				race = new Race(editData.get("race"), Boolean.valueOf(editData.get("raceIsPrivate")));
-			}
-			if (editData.containsKey("religion")) {
-				religion = new Religion(editData.get("religion"), Boolean.valueOf(editData.get("religionIsPrivate")));
-			}
-		} catch (IllegalValueException e) {
-			e.printStackTrace();
+    	
+		final Set<Tag> tagSet = new HashSet<>();
+		for (String tagName : tags) {
+		  tagSet.add(new Tag(tagName));
 		}
-    }
-    
-    private void buildUpdatedPerson() {
-    	updatedPerson = new Person(
-    		name != null ? name : originalPerson.getName(),
-    		phone != null ? phone : originalPerson.getPhone(),
-    		email != null ? email : originalPerson.getEmail(),
-    		address != null ? address : originalPerson.getAddress(),
-    		race != null ? race : originalPerson.getRace(),
-    		religion != null ? religion : originalPerson.getReligion(),
-    		originalPerson.getTags()
-    	);
-    }
+		this.originalPerson = getTargetPerson();
+		this.updatedPerson = new Person(
+		      new Name(name),
+		      new Phone(phone, isPhonePrivate),
+		      new Email(email, isEmailPrivate),
+		      new Address(address, isAddressPrivate),
+		      new Race(race, isRacePrivate),
+		      new Religion(religion, isReligionPrivate),
+		      new UniqueTagList(tagSet)
+		);
+	}
 	
     @Override
     public CommandResult execute() {
