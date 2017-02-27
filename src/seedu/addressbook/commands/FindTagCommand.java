@@ -18,6 +18,8 @@ public class FindTagCommand extends Command {
             + "Parameters: TAG\n\t"
             + "Example: " + COMMAND_WORD + " classmate";
 
+    public static final String SQAURE_BRACKETS_REGEX = "[\\]";
+
     private final String tagName;
 
     public FindTagCommand(String tagName) {
@@ -49,7 +51,8 @@ public class FindTagCommand extends Command {
     private boolean personHasTag(String tagName, ReadOnlyPerson person) {
         Iterable<Tag> personsTags = person.getTags();
         for(Tag currTag : personsTags) {
-            if(currTag.equals(tagName)) {
+            String currTagName = currTag.getRawName();
+            if(currTagName.equals(tagName)) {
                 return true;
             }
         }
