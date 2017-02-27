@@ -19,7 +19,8 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n"
             + "Edit fields of a person identified by the index number used in the last person listing. \n\t"
-            + "Parameters: INDEX EDITFIELD/NEWINFO \n\t" + "Example: " + COMMAND_WORD + " 3 n/Meowr";
+            + "Parameters: INDEX EDITFIELD/NEWINFO \n\t" + "Example: " + COMMAND_WORD + " 3 n/Meowr"
+            + "\n\tNOTE: Can only edit one field at a time!";
 
     private static final String PERSON_EDIT_FIELD_NAME = "n";
     private static final String PERSON_EDIT_FIELD_PHONE = "p";
