@@ -50,6 +50,16 @@ Examples:
 * `find Betsy Tim John`<br>
   Returns Any person having names `Betsy`, `Tim`, or `John`
 
+## Finding all persons with a tag: `findtag`
+Finds persons who are tagged with the given tag.<br>
+Format: `findtag KEYWORD`
+
+> The search is case sensitive, and all persons matching with the tag will be returned.
+
+Examples: 
+* `findtag classmate`<br>
+  Returns all persons with tag [classmate]
+  
 ## Deleting a person : `delete`
 Deletes the specified person from the address book. Irreversible.<br>
 Format: `delete INDEX`
