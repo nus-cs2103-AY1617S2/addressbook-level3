@@ -243,7 +243,7 @@ public class Parser {
         final Matcher matcher = KEYWORD_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    FindCommand.MESSAGE_USAGE));
+                    FindTagCommand.MESSAGE_USAGE));
         }
 
         // keywords delimited by whitespace
