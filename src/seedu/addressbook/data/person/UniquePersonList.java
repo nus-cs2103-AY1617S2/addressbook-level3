@@ -73,6 +73,18 @@ public class UniquePersonList implements Iterable<Person> {
     public List<ReadOnlyPerson> immutableListView() {
         return Collections.unmodifiableList(internalList);
     }
+    
+    public List<ReadOnlyPerson> immutableSortedListView() {
+    	Comparator<Person> nameComparator = new Comparator<Person>() {
+			public int compare(Person personA, Person personB) {
+				String nameA = personA.getName().toString();
+				String nameB = personB.getName().toString();
+				return nameA.compareTo(nameB);
+			}
+		};
+		Collections.sort(internalList, nameComparator);
+        return Collections.unmodifiableList(internalList);
+    }
 
 
     /**
