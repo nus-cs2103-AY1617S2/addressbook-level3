@@ -45,7 +45,7 @@ public class StorageFileTest {
     public void load_invalidFormat_exceptionThrown() throws Exception {
         // The file contains valid xml data, but does not match the AddressBook class
         StorageFile storage = getStorage("InvalidData.txt");
-        thrown.expect(StorageOperationException.class);
+        thrown.expectCause(StorageOperationException.class);
         storage.load();
     }
 
