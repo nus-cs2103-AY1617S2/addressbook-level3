@@ -101,6 +101,42 @@ public class LogicTest {
     }
 
     @Test
+    public void execute_view_history() throws Exception {
+        List<String> commandList = Arrays.asList(
+            "     ",
+            "uicfhmowqewca",
+            "help",
+            "add Valid Name 12345 e/valid@email.butNoPhonePrefix a/valid, address",
+            "list",
+            "view arg not number",
+            "viewall arg not number",
+            "delete 2",
+            "find "
+        );
+        for(String command : commandList) {
+            logic.execute(command);
+        }
+
+        StringBuilder expectedMessage = new StringBuilder();
+        // ViewHistoryCommand is also shown in expected message
+        int displayIndex = 1;
+        expectedMessage.append(
+                String.format(ViewHistoryCommand.COMMAND_HISTORY_LINE_FORMAT, displayIndex, "history"));
+        displayIndex++;
+
+        // Command history is displayed in reverse order from execution
+        Collections.reverse(commandList);
+
+        for(String command : commandList) {
+            expectedMessage.append(
+                    String.format(ViewHistoryCommand.COMMAND_HISTORY_LINE_FORMAT, displayIndex, command));
+            displayIndex++;
+        }
+
+        assertCommandBehavior("history", expectedMessage.toString());
+    }
+
+    @Test
     public void execute_help() throws Exception {
         assertCommandBehavior("help", HelpCommand.MESSAGE_ALL_USAGES);
     }
