@@ -4,10 +4,15 @@ import seedu.addressbook.data.exception.IllegalValueException;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Represents a Person's name in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
+ */
+/**
+ * @author user
+ *
  */
 public class Name {
 
@@ -42,6 +47,18 @@ public class Name {
      */
     public List<String> getWordsInName() {
         return Arrays.asList(fullName.split("\\s+"));
+    }
+    
+    /**
+     * Retrieves a listing of every word in the name, in order, in lowercase.
+     */
+    public List<String> getWordsInNameLowercase(){
+        String[] temp = fullName.split("\\s+");
+        List<String> temp2 = new ArrayList<String>();
+        for (String each: temp){
+            temp2.add(each.toLowerCase());
+        }
+        return temp2;
     }
 
     @Override
