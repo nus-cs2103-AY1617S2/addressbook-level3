@@ -28,8 +28,11 @@ public class Parser {
                     + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
-
-
+    
+    public static final Pattern EDIT_PERSON_DATA_ARGS_FORMAT = 
+            Pattern.compile("(?<targetIndex>.+)" 
+                    + " (?<editField>[^/]+)"
+                    + "/(?<newInfo>[^/]+)");
     /**
      * Signals that the user input could not be parsed.
      */
@@ -86,7 +89,10 @@ public class Parser {
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
-
+                
+            case EditCommand.COMMAND_WORD:
+                return prepareEdit(arguments);
+                
             case HelpCommand.COMMAND_WORD: // Fallthrough
             default:
                 return new HelpCommand();
@@ -232,7 +238,6 @@ public class Parser {
         return new FindCommand(keywordSet);
     }
 
-
     /**
      * Parses arguments in the context of the find tag command.
      *
@@ -251,7 +256,34 @@ public class Parser {
         return new FindTagCommand(keyword);
     }
 
-
-
-
+    /**
+     * Parses arguments in the context of the edit person command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareEdit(String args) {
+        final Matcher matcher = EDIT_PERSON_DATA_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    EditCommand.MESSAGE_USAGE));
+        }
+        try {
+            final int targetIndex = Integer.parseInt(matcher.group("targetIndex"));
+            final String editField = matcher.group("editField");
+            final String newInfo = matcher.group("newInfo");
+            if (!isValidField(editField)) {
+                return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+            }
+            return new EditCommand(targetIndex, editField, newInfo);
+        } catch (NumberFormatException e) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+        
+    }
+    
+    private static boolean isValidField(String editField) {
+        return editField.equals("n") || editField.equals("e") || editField.equals("p") || editField.equals("a");
+    }
+  
 }

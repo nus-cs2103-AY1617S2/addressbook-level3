@@ -132,6 +132,19 @@ public class LogicTest {
         assertCommandBehavior(
                 "add Valid Name p/12345 e/valid@email.butNoAddressPrefix valid, address", expectedMessage);
     }
+    
+    @Test
+    public void execute_edit_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
+        assertCommandBehavior(
+                "edit wrong args wrong args", expectedMessage);
+        assertCommandBehavior(
+                "edit 1", expectedMessage);
+        assertCommandBehavior(
+                "edit 1 no_edit_field", expectedMessage);
+        assertCommandBehavior(
+                "edit 1 p/12345 e/twofields@gmail.com", expectedMessage);
+    }
 
     @Test
     public void execute_add_invalidPersonData() throws Exception {
