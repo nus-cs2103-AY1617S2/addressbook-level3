@@ -2,6 +2,7 @@ package seedu.addressbook.commands;
 
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.*;
+import seedu.addressbook.data.person.UniquePersonList.PersonNotFoundException;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
 
@@ -11,7 +12,7 @@ import java.util.Set;
 /**
  * Adds a person to the address book.
  */
-public class AddCommand extends Command {
+public class AddCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "add";
 
@@ -67,4 +68,13 @@ public class AddCommand extends Command {
         }
     }
 
+    @Override
+    public void undo() throws Exception {
+        try {
+            addressBook.removePerson(toAdd);
+        } catch (PersonNotFoundException e) {
+            // TODO Auto-generated catch block
+            throw new Exception("UndoException");
+        }
+    }
 }
