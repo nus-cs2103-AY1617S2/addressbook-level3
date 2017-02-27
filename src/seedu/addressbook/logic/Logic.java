@@ -7,6 +7,7 @@ import java.util.Stack;
 
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandResult;
+import seedu.addressbook.commands.RedoableCommand;
 import seedu.addressbook.commands.UndoableCommand;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
@@ -23,6 +24,7 @@ public class Logic {
     private AddressBook addressBook;
     
     private Stack<UndoableCommand> undoStack;
+    private Stack<UndoableCommand> redoStack;
 
     /** The list of person shown to the user most recently.  */
     private List<? extends ReadOnlyPerson> lastShownList = Collections.emptyList();
@@ -32,6 +34,7 @@ public class Logic {
         setAddressBook(storage.load());
         
         undoStack = new Stack<UndoableCommand>();
+        redoStack = new Stack<UndoableCommand>();
     }
 
     Logic(StorageFile storageFile, AddressBook addressBook){
@@ -113,11 +116,27 @@ public class Logic {
         if(!undoStack.isEmpty()){
             UndoableCommand cmd = undoStack.pop();           
             cmd.undo();  
+           
+            redoStack.push(cmd); //Code Smells!!!
             return true;
         }
         
         return false;
     }
+    
+    public boolean redo() throws Exception{
+        if(!redoStack.isEmpty()){
+            //Code Smells!!!
+            RedoableCommand cmd = (RedoableCommand)redoStack.pop();           
+            cmd.redo();  
+            return true;
+        }
+        
+        return false;
+    }
+    
+    
+    
     
 
     /** Updates the {@link #lastShownList} if the result contains a list of Persons. */

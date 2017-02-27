@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * Adds a person to the address book.
  */
-public class AddCommand extends UndoableCommand {
+public class AddCommand extends RedoableCommand {
 
     public static final String COMMAND_WORD = "add";
 
@@ -75,6 +75,16 @@ public class AddCommand extends UndoableCommand {
         } catch (PersonNotFoundException e) {
             // TODO Auto-generated catch block
             throw new Exception("UndoException");
+        }
+    }
+
+    @Override
+    public void redo() throws Exception{
+        try {
+            addressBook.addPerson(toAdd);
+        } catch (UniquePersonList.DuplicatePersonException e) {
+            // TODO Auto-generated catch block
+            throw new Exception("RedoException");
         }
     }
 }
