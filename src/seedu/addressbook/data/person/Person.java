@@ -1,5 +1,6 @@
 package seedu.addressbook.data.person;
 
+import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.tag.UniqueTagList;
 
 import java.util.Objects;
@@ -14,6 +15,7 @@ public class Person implements ReadOnlyPerson {
     private Phone phone;
     private Email email;
     private Address address;
+    private Priority priority;
 
     private final UniqueTagList tags;
     /**
@@ -24,6 +26,15 @@ public class Person implements ReadOnlyPerson {
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
+    }
+    
+    public Person(Name name, Phone phone, Email email, Address address, UniqueTagList tags, Priority prioritylevel) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.priority = prioritylevel;
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
 
@@ -53,12 +64,20 @@ public class Person implements ReadOnlyPerson {
     public Address getAddress() {
         return address;
     }
-
+    
+    public Priority getPriority() {
+        return priority;
+    }
+    
     @Override
     public UniqueTagList getTags() {
         return new UniqueTagList(tags);
     }
-
+    
+    public Priority setPriority(String prioritylevel) throws IllegalValueException  {
+        return new Priority(prioritylevel);
+    }
+   
     /**
      * Replaces this person's tags with the tags in the argument tag list.
      */
