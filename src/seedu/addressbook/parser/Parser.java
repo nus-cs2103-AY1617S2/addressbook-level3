@@ -6,6 +6,7 @@ import seedu.addressbook.data.exception.IllegalValueException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.HashMap;
 
 import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
@@ -27,7 +28,16 @@ public class Parser {
                     + " (?<isRacePrivate>p?)b/(?<race>[^/]+)"
                     + " (?<isReligionPrivate>p?)r/(?<religion>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
-
+    
+    public static final Pattern PERSON_EDIT_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
+            Pattern.compile("(?<targetIndex>.+)" 
+            		+ " ?<name>[^/]+"
+                    + " (?<isPhonePrivate>p?)p/(?<phone>[^/]+)"
+                    + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
+                    + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
+                    + " (?<isRacePrivate>p?)b/(?<race>[^/]+)"
+                    + " (?<isReligionPrivate>p?)r/(?<religion>[^/]+)"
+                    + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
 
     /**
      * Signals that the user input could not be parsed.
@@ -73,6 +83,9 @@ public class Parser {
 
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
+                
+            case EditCommand.COMMAND_WORD:
+            	return prepareEdit(arguments);
 
             case ViewCommand.COMMAND_WORD:
                 return prepareView(arguments);
@@ -161,6 +174,52 @@ public class Parser {
             return new DeleteCommand(targetIndex);
         } catch (ParseException | NumberFormatException e) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        }
+    }
+    
+    /**
+     * Parses arguments in the context of the edit person command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareEdit(String args) {
+    	final Matcher matcher = PERSON_EDIT_ARGS_FORMAT.matcher(args.trim());
+        // Validate arg string format
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+        try {
+        	HashMap<String, String> editData = new HashMap<String, String>();
+        	if (matcher.group("name") != null) {
+        		editData.put("name", matcher.group("name"));
+        	}
+        	if (matcher.group("phone") != null) {
+        		editData.put("phone", matcher.group("phone"));
+        		editData.put("phoneIsPrivate", String.valueOf(isPrivatePrefixPresent(matcher.group("phone"))));
+        	}
+        	if (matcher.group("email") != null) {
+        		editData.put("email", matcher.group("email"));
+        		editData.put("emailIsPrivate", String.valueOf(isPrivatePrefixPresent(matcher.group("email"))));
+        	}
+        	if (matcher.group("address") != null) {
+        		editData.put("address", matcher.group("address"));
+        		editData.put("addressIsPrivate", String.valueOf(isPrivatePrefixPresent(matcher.group("address"))));
+        	}
+        	if (matcher.group("race") != null) {
+        		editData.put("race", matcher.group("race"));
+        		editData.put("raceIsPrivate", String.valueOf(isPrivatePrefixPresent(matcher.group("race"))));
+        	}
+        	if (matcher.group("religion") != null) {
+        		editData.put("religion", matcher.group("religion"));
+        		editData.put("religionIsPrivate", String.valueOf(isPrivatePrefixPresent(matcher.group("religion"))));
+        	}
+            return new EditCommand(
+            	parseArgsAsDisplayedIndex(matcher.group("targetIndex")),
+            	editData
+            );
+        } catch (NumberFormatException | ParseException ive) {
+            return new IncorrectCommand(ive.getMessage());
         }
     }
 
