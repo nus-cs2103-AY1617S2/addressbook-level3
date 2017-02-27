@@ -145,4 +145,8 @@ public class StorageFile extends Storage {
         return path.toString();
     }
 
+    public String getStorageLocation() {
+        return path.toString();
+    }
+
 }
