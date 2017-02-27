@@ -19,6 +19,9 @@ public class Parser {
     public static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
 
+    public static final Pattern KEYWORD_ARGS_FORMAT =
+            Pattern.compile("^(?<keyword>\\S+)$"); // exactly one keyword
+
     public static final Pattern PERSON_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
             Pattern.compile("(?<name>[^/]+)"
                     + " (?<isPhonePrivate>p?)p/(?<phone>[^/]+)"
@@ -68,6 +71,9 @@ public class Parser {
 
             case FindCommand.COMMAND_WORD:
                 return prepareFind(arguments);
+
+            case FindTagCommand.COMMAND_WORD:
+                return prepareFindTag(arguments);
 
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
@@ -225,6 +231,27 @@ public class Parser {
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
         return new FindCommand(keywordSet);
     }
+
+
+    /**
+     * Parses arguments in the context of the find tag command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareFindTag(String args) {
+        final Matcher matcher = KEYWORD_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    FindCommand.MESSAGE_USAGE));
+        }
+
+        // keywords delimited by whitespace
+        final String keyword = matcher.group("keyword");
+        return new FindTagCommand(keyword);
+    }
+
+
 
 
 }
