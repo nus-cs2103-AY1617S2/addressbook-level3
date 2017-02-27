@@ -40,9 +40,9 @@ public class ListByTagCommand extends Command {
 	private List<ReadOnlyPerson> getPersonsWithGivenTag(String tag) {
 		// TODO Auto-generated method stub
 		Tag targetTag;
+		final List<ReadOnlyPerson> matchedPersons = new ArrayList<>();
 		try {
 			targetTag = new Tag(tag);
-			final List<ReadOnlyPerson> matchedPersons = new ArrayList<>();
 			for (ReadOnlyPerson person : addressBook.getAllPersons()) {
 				final UniqueTagList tags = person.getTags();
 				if (tags.contains(targetTag)) {
@@ -54,6 +54,6 @@ public class ListByTagCommand extends Command {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return matchedPersons;
 	}
 }
