@@ -38,9 +38,12 @@ public abstract class Command {
 
     /**
      * Executes the command and returns the result.
+     * @param previousCommand 
      */
-    public abstract CommandResult execute();
-
+    public abstract CommandResult execute(ReadOnlyCommand previousCommand);
+    
+    public abstract String getCommandWord();
+    
     /**
      * Supplies the data the command will operate on.
      */

@@ -12,8 +12,13 @@ public class ExitCommand extends Command {
     public static final String MESSAGE_EXIT_ACKNOWEDGEMENT = "Exiting Address Book as requested ...";
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute(ReadOnlyCommand previousCommand) {
         return new CommandResult(MESSAGE_EXIT_ACKNOWEDGEMENT);
+    }
+
+    @Override
+    public String getCommandWord() {
+        return COMMAND_WORD;
     }
 
 }

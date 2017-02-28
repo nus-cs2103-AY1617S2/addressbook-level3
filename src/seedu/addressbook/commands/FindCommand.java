@@ -42,7 +42,7 @@ public class FindCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute(ReadOnlyCommand previousCommand) {
         final List<ReadOnlyPerson> personsFound = getPersonsWithNameContainingAnyKeywordAndTag(keywords);
         final String personString = getMessageForPersonListShownSummary(personsFound);
         final String findMessage = tags.isEmpty() ? personString : personString + MESSAGE_TAGS_LABEL + tags.toString();
@@ -66,6 +66,11 @@ public class FindCommand extends Command {
             }
         }
         return matchedPersons;
+    }
+
+    @Override
+    public String getCommandWord() {
+        return COMMAND_WORD;
     }
 
     /**

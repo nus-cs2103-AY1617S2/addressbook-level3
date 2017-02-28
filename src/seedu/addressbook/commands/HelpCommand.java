@@ -13,6 +13,7 @@ public class HelpCommand extends Command {
 
     public static final String MESSAGE_ALL_USAGES = AddCommand.MESSAGE_USAGE
             + "\n" + DeleteCommand.MESSAGE_USAGE
+            + "\n" + UndoDeleteCommand.MESSAGE_USAGE
             + "\n" + DeleteHasTagCommand.MESSAGE_USAGE
             + "\n" + ClearCommand.MESSAGE_USAGE
             + "\n" + FindCommand.MESSAGE_USAGE
@@ -23,7 +24,12 @@ public class HelpCommand extends Command {
             + "\n" + ExitCommand.MESSAGE_USAGE;
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute(ReadOnlyCommand previousCommand) {
         return new CommandResult(MESSAGE_ALL_USAGES);
+    }
+
+    @Override
+    public String getCommandWord() {
+        return COMMAND_WORD;
     }
 }
