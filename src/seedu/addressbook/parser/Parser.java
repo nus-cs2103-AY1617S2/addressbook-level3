@@ -9,11 +9,14 @@ import java.util.regex.Pattern;
 
 import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+
 /**
  * Parses user input.
  */
 public class Parser {
-
+    
+    public static final int MAX_EDIT_DISTANCE = 2; // TODO: figure out where to place this
+    
     public static final Pattern PERSON_INDEX_ARGS_FORMAT = Pattern.compile("(?<targetIndex>.+)");
 
     public static final Pattern KEYWORDS_ARGS_FORMAT =
@@ -77,6 +80,15 @@ public class Parser {
 
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
+                
+            case HistoryCommand.COMMAND_WORD:
+            	return new HistoryCommand();
+            	
+            case UndoCommand.COMMAND_WORD:
+            	return new UndoCommand();
+            	
+            case RedoCommand.COMMAND_WORD:
+            	return new RedoCommand();
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
@@ -224,6 +236,55 @@ public class Parser {
         final String[] keywords = matcher.group("keywords").split("\\s+");
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
         return new FindCommand(keywordSet);
+    }
+    
+    /**
+     * Checks if minimum edit distance between the specified strings are less than 2. 
+     */
+    public static boolean isMinEditDistanceAcceptable(String str1, String str2) {
+        return computeMinEditDistance(str1, str2) <= MAX_EDIT_DISTANCE;
+    }
+    
+    /**
+     * Computes the minimum edit distance between the specified strings.
+     */
+    private static int computeMinEditDistance(String str1, String str2) {
+        int lenStr1 = str1.length();
+        int lenStr2 = str2.length();
+        int[][] editDistance = new int[lenStr1+1][lenStr2+1];
+        initEditDistance(editDistance, lenStr1, lenStr2);
+        for (int i = 1; i < lenStr1+1; i++) {
+            for (int j = 1; j < lenStr2+1; j++) {
+                boolean isSameChar = str1.charAt(i-1) == str2.charAt(j-1);
+                editDistance[i][j] = computeLevenshtein(editDistance, i, j, isSameChar);
+            }
+        }
+        return editDistance[lenStr1][lenStr2];
+    }
+
+    /**
+     * Initializes the minimum edit distance table.
+     */
+    private static void initEditDistance(int[][] editDistance, int lenStr1, int lenStr2) {
+        for (int c = 0; c < lenStr2+1; c++) { // initialize first row
+            editDistance[0][c] = c;
+        }
+        for (int r = 0; r < lenStr1+1; r++) {
+            editDistance[r][0] = r; // initialize first column
+        }
+    }
+    
+    /**
+     * Computes the edit distance of given indices using Levenshtein's operations. 
+     */
+    private static int computeLevenshtein(int[][] editDistance, int i, int j, boolean isSameChar) {
+        int a = editDistance[i-1][j] + 1;
+        int b = editDistance[i][j-1] + 1;
+        int c = editDistance[i-1][j-1];
+        if (!isSameChar) {
+            c += 1;
+        }
+        return Math.min(a, Math.min(b, c));
     }
 
 

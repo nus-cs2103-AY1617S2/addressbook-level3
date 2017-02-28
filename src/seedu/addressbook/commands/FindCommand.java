@@ -1,6 +1,7 @@
 package seedu.addressbook.commands;
 
 import seedu.addressbook.data.person.ReadOnlyPerson;
+import seedu.addressbook.parser.Parser;
 
 import java.util.*;
 
@@ -45,12 +46,30 @@ public class FindCommand extends Command {
     private List<ReadOnlyPerson> getPersonsWithNameContainingAnyKeyword(Set<String> keywords) {
         final List<ReadOnlyPerson> matchedPersons = new ArrayList<>();
         for (ReadOnlyPerson person : addressBook.getAllPersons()) {
-            final Set<String> wordsInName = new HashSet<>(person.getName().getWordsInName());
-            if (!Collections.disjoint(wordsInName, keywords)) {
+            Set<String> wordsInName = new HashSet<>(person.getName().getWordsInName());
+            boolean foundFuzzyMatch = isNameContainsFuzzyKeyword(keywords, wordsInName);
+            if (!Collections.disjoint(wordsInName, keywords) || foundFuzzyMatch) {
                 matchedPersons.add(person);
             }
         }
         return matchedPersons;
+    }
+
+    /**
+     * Checks if words in specified person's name are a fuzzy match to any of the search keywords.
+     * 
+     * @param keywords for searching
+     * @param wordsInName words in specified person's name
+     * @return true if name is a fuzzy match to any search keyword //TODO: figure out how to write this
+     */
+    private boolean isNameContainsFuzzyKeyword(Set<String> keywords, Set<String> wordsInName) {
+        boolean isFuzzyMatch = false;
+        for (String word : wordsInName) {
+            for (String keyword : keywords) {
+                isFuzzyMatch = isFuzzyMatch || Parser.isMinEditDistanceAcceptable(word, keyword);
+            }
+        }
+        return isFuzzyMatch;
     }
 
 }
