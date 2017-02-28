@@ -1,7 +1,5 @@
 package seedu.addressbook.storage;
 
-import java.nio.file.Path;
-
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.storage.StorageFile.StorageOperationException;
 
