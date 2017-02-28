@@ -5,14 +5,14 @@
         <phone isPrivate="false">98765432</phone>
         <email isPrivate="false">johnd@gmail.com</email>
         <address isPrivate="false">John street, block 123, #01-01</address>
-        <birthday isPrivate="false">01-01-1993</birthday>
+        <birthday isPrivate="false">12-12-1992</birthday>
     </persons>
     <persons>
         <name>Betsy Crowe</name>
         <phone isPrivate="true">1234567</phone>
         <email isPrivate="false">betsycrowe@gmail.com</email>
         <address isPrivate="true">Newgate Prison</address>
-        <birthday isPrivate="false">01-01-1995</birthday>
+        <birthday isPrivate="false">11-11-1991</birthday>
         <tagged>friend</tagged>
         <tagged>criminal</tagged>
     </persons>

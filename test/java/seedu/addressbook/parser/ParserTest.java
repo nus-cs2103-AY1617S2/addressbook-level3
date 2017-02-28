@@ -267,7 +267,9 @@ public class ParserTest {
                 + person.getName().fullName
                 + (person.getPhone().isPrivate() ? " pp/" : " p/") + person.getPhone().value
                 + (person.getEmail().isPrivate() ? " pe/" : " e/") + person.getEmail().value
-                + (person.getAddress().isPrivate() ? " pa/" : " a/") + person.getAddress().value;
+                + (person.getAddress().isPrivate() ? " pa/" : " a/") + person.getAddress().value
+        		+(person.getBirthday().isPrivate() ? " pb/" : " b/") + person.getBirthday().value;
+
         for (Tag tag : person.getTags()) {
             addCommand += " t/" + tag.tagName;
         }

@@ -503,6 +503,7 @@ public class LogicTest {
             cmd.add((p.getPhone().isPrivate() ? "pp/" : "p/") + p.getPhone());
             cmd.add((p.getEmail().isPrivate() ? "pe/" : "e/") + p.getEmail());
             cmd.add((p.getAddress().isPrivate() ? "pa/" : "a/") + p.getAddress());
+            cmd.add((p.getBirthday().isPrivate() ? "pb/" : "b/") + p.getBirthday());
 
             UniqueTagList tags = p.getTags();
             for(Tag t: tags){
