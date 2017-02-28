@@ -27,6 +27,7 @@ public class Parser {
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + " (?<isRacePrivate>p?)b/(?<race>[^/]+)"
                     + " (?<isReligionPrivate>p?)r/(?<religion>[^/]+)"
+                    + " (?<isNationalityPrivate>p?)n/(?<nationality>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
     
     public static final Pattern PERSON_EDIT_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
@@ -125,7 +126,10 @@ public class Parser {
               
                     matcher.group("religion"),
                     isPrivatePrefixPresent(matcher.group("isReligionPrivate")),
-
+                       
+                    matcher.group("nationality"),
+                    isPrivatePrefixPresent(matcher.group("isNationalityPrivate")),
+                    
                     getTagsFromArgs(matcher.group("tagArguments"))
             );
         } catch (IllegalValueException ive) {

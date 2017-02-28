@@ -17,9 +17,9 @@ public class AddCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Adds a person to the address book. "
             + "Contact details can be marked private by prepending 'p' to the prefix.\n\t"
-            + "Parameters: NAME [p]p/PHONE [p]e/EMAIL [p]a/ADDRESS [p]r/RELIGION [p]b/RACE [t/TAG]...\n\t"
+            + "Parameters: NAME [p]p/PHONE [p]e/EMAIL [p]a/ADDRESS [p]r/RELIGION [p]b/RACE [p]n/NATIONALITY [t/TAG]...\n\t"
             + "Example: " + COMMAND_WORD
-            + " John Doe p/98765432 e/johnd@gmail.com a/311, Clementi Ave 2, #02-25 b/Malay r/Buddhism t/friends t/owesMoney";
+            + " John Doe p/98765432 e/johnd@gmail.com a/311, Clementi Ave 2, #02-25 r/Buddhism b/Malay n/Singaporean t/friends t/owesMoney";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
@@ -37,6 +37,7 @@ public class AddCommand extends Command {
                       String address, boolean isAddressPrivate,
                       String race, boolean isRacePrivate,
                       String religion, boolean isReligionPrivate,
+                      String nationality, boolean isNationalityPrivate,
                       Set<String> tags) throws IllegalValueException {
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
@@ -49,6 +50,7 @@ public class AddCommand extends Command {
                 new Address(address, isAddressPrivate),
                 new Race(race, isRacePrivate),
                 new Religion(religion, isReligionPrivate),
+                new Nationality(nationality, isNationalityPrivate),
                 new UniqueTagList(tagSet)
         );
     }

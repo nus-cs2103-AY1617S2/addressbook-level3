@@ -29,7 +29,8 @@ public class AdaptedPerson {
     private AdaptedContactDetail race;
     @XmlElement(required = true)
     private AdaptedContactDetail religion;
-
+    @XmlElement(required = true)
+    private AdaptedContactDetail nationality;
     @XmlElement
     private List<AdaptedTag> tagged = new ArrayList<>();
 
@@ -73,6 +74,10 @@ public class AdaptedPerson {
         religion.isPrivate = source.getReligion().isPrivate();
         religion.value = source.getReligion().value;
         
+        nationality = new AdaptedContactDetail();
+        nationality.isPrivate = source.getNationality().isPrivate();
+        nationality.value = source.getNationality().value;
+        
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new AdaptedTag(tag));
@@ -94,8 +99,8 @@ public class AdaptedPerson {
             }
         }
         // second call only happens if phone/email/address are all not null
-        return Utils.isAnyNull(name, phone, email, address, race, religion)
-                || Utils.isAnyNull(phone.value, email.value, address.value, race.value, religion.value);
+        return Utils.isAnyNull(name, phone, email, address, race, religion, nationality)
+                || Utils.isAnyNull(phone.value, email.value, address.value, race.value, religion.value, nationality.value);
     }
 
     /**
@@ -113,8 +118,9 @@ public class AdaptedPerson {
         final Email email = new Email(this.email.value, this.email.isPrivate);
         final Address address = new Address(this.address.value, this.address.isPrivate);
         final Race race = new Race(this.race.value, this.race.isPrivate);
-        final UniqueTagList tags = new UniqueTagList(personTags);
         final Religion religion = new Religion(this.religion.value, this.religion.isPrivate);
-        return new Person(name, phone, email, address, race, religion, tags);
+        final Nationality nationality = new Nationality(this.nationality.value, this.nationality.isPrivate);
+        final UniqueTagList tags = new UniqueTagList(personTags);
+        return new Person(name, phone, email, address, race, religion, nationality, tags);
     }
 }

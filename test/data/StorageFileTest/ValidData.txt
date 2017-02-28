@@ -7,6 +7,7 @@
         <address isPrivate="false">John street, block 123, #01-01</address>
         <race isPrivate="false">Malay</race>
         <religion isPrivate="false">Christian</religion>
+        <nationality isPrivate="false">Singaporean</nationality>
     </persons>
     <persons>
         <name>Betsy Crowe</name>
@@ -15,6 +16,7 @@
         <address isPrivate="true">Newgate Prison</address>
         <race isPrivate="false">Malay</race>
         <religion isPrivate="true">Muslim</religion>
+        <nationality isPrivate="false">Chinese</nationality>
         <tagged>friend</tagged>
         <tagged>criminal</tagged>
     </persons>
