@@ -10,10 +10,10 @@ public abstract class Storage {
         return new StorageFile();
     }
     
-    public abstract AddressBook load() throws StorageOperationException;
+    public abstract AddressBook load() throws StorageOperationException, seedu.addressbook.storage.StorageStub.StorageOperationException;
 
     public abstract String getPath();
 
-    public abstract void save(AddressBook addressBook) throws StorageOperationException;
+    public abstract void save(AddressBook addressBook) throws StorageOperationException, seedu.addressbook.storage.StorageStub.StorageOperationException;
     
 }
