@@ -88,6 +88,11 @@ public class AddressBook {
     public boolean containsPerson(ReadOnlyPerson key) {
         return allPersons.contains(key);
     }
+    
+    public void editPerson(int targetIndex, Person updatedPerson) throws PersonNotFoundException {
+    	syncTagsWithMasterList(updatedPerson);
+        allPersons.change(targetIndex, updatedPerson);
+    }
 
     /**
      * Removes the equivalent person from the address book.
@@ -133,4 +138,9 @@ public class AddressBook {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(allPersons, allTags);
     }
+
+	public void editPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+		// TODO Auto-generated method stub
+		
+	}
 }

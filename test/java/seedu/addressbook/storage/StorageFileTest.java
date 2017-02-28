@@ -14,10 +14,13 @@ import seedu.addressbook.data.person.Address;
 import seedu.addressbook.data.person.Email;
 import seedu.addressbook.data.person.Name;
 import seedu.addressbook.data.person.Person;
+import seedu.addressbook.data.person.Race;
 import seedu.addressbook.data.person.Phone;
+import seedu.addressbook.data.person.Religion;
+import seedu.addressbook.data.person.Nationality;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
-import seedu.addressbook.storage.StorageFile.StorageOperationException;
+import seedu.addressbook.storage.Storage.StorageOperationException;
 import static seedu.addressbook.util.TestUtil.assertTextFilesEqual;
 
 public class StorageFileTest {
@@ -44,7 +47,7 @@ public class StorageFileTest {
     @Test
     public void load_invalidFormat_exceptionThrown() throws Exception {
         // The file contains valid xml data, but does not match the AddressBook class
-        StorageFile storage = getStorage("InvalidData.txt");
+        Storage storage = getStorage("InvalidData.txt");
         thrown.expect(StorageOperationException.class);
         storage.load();
     }
@@ -61,7 +64,7 @@ public class StorageFileTest {
 
     @Test
     public void save_nullAddressBook_exceptionThrown() throws Exception {
-        StorageFile storage = getTempStorage();
+        Storage storage = getTempStorage();
         thrown.expect(NullPointerException.class);
         storage.save(null);
     }
@@ -69,10 +72,10 @@ public class StorageFileTest {
     @Test
     public void save_validAddressBook() throws Exception {
         AddressBook ab = getTestAddressBook();
-        StorageFile storage = getTempStorage();
+        Storage storage = getTempStorage();
         storage.save(ab);
 
-        assertStorageFilesEqual(storage, getStorage("ValidData.txt"));
+        assertStorageEqual(storage, getStorage("ValidData.txt"));
     }
 
     // getPath() method in StorageFile class is trivial so it is not tested
@@ -80,15 +83,15 @@ public class StorageFileTest {
     /**
      * Asserts that the contents of two storage files are the same.
      */
-    private void assertStorageFilesEqual(StorageFile sf1, StorageFile sf2) throws Exception {
+    private void assertStorageEqual(Storage sf1, Storage sf2) throws Exception {
         assertTextFilesEqual(Paths.get(sf1.getPath()), Paths.get(sf2.getPath()));
     }
 
-    private StorageFile getStorage(String fileName) throws Exception {
+    private Storage getStorage(String fileName) throws Exception {
         return new StorageFile(TEST_DATA_FOLDER + "/" + fileName);
     }
 
-    private StorageFile getTempStorage() throws Exception {
+    private Storage getTempStorage() throws Exception {
         return new StorageFile(testFolder.getRoot().getPath() + "/" + "temp.txt");
     }
 
@@ -98,11 +101,17 @@ public class StorageFileTest {
                                 new Phone("98765432", false),
                                 new Email("johnd@gmail.com", false),
                                 new Address("John street, block 123, #01-01", false),
+                                new Race("Malay", false),
+                                new Religion("Christian", false),
+                                new Nationality("Singaporean", false),
                                 new UniqueTagList(Collections.emptySet())));
         ab.addPerson(new Person(new Name("Betsy Crowe"),
                                 new Phone("1234567", true),
                                 new Email("betsycrowe@gmail.com", false),
                                 new Address("Newgate Prison", true),
+                                new Race("Malay", false),
+                                new Religion("Muslim", true),
+                                new Nationality("Chinese", false),
                                 new UniqueTagList(new Tag("friend"), new Tag("criminal"))));
         return ab;
     }

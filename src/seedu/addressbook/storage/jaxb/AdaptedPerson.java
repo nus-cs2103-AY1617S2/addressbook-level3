@@ -17,13 +17,6 @@ import java.util.List;
  */
 public class AdaptedPerson {
 
-    private static class AdaptedContactDetail {
-        @XmlValue
-        public String value;
-        @XmlAttribute(required = true)
-        public boolean isPrivate;
-    }
-
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
@@ -32,7 +25,12 @@ public class AdaptedPerson {
     private AdaptedContactDetail email;
     @XmlElement(required = true)
     private AdaptedContactDetail address;
-
+    @XmlElement(required = true)
+    private AdaptedContactDetail race;
+    @XmlElement(required = true)
+    private AdaptedContactDetail religion;
+    @XmlElement(required = true)
+    private AdaptedContactDetail nationality;
     @XmlElement
     private List<AdaptedTag> tagged = new ArrayList<>();
 
@@ -40,7 +38,13 @@ public class AdaptedPerson {
      * No-arg constructor for JAXB use.
      */
     public AdaptedPerson() {}
-
+    
+    private static class AdaptedContactDetail {
+        @XmlValue
+        public String value;
+        @XmlAttribute(required = true)
+        public boolean isPrivate;
+    }
 
     /**
      * Converts a given Person into this class for JAXB use.
@@ -61,7 +65,19 @@ public class AdaptedPerson {
         address = new AdaptedContactDetail();
         address.isPrivate = source.getAddress().isPrivate();
         address.value = source.getAddress().value;
+        
+        race = new AdaptedContactDetail();
+        race.isPrivate = source.getRace().isPrivate();
+        race.value = source.getRace().value;
 
+        religion = new AdaptedContactDetail();
+        religion.isPrivate = source.getReligion().isPrivate();
+        religion.value = source.getReligion().value;
+        
+        nationality = new AdaptedContactDetail();
+        nationality.isPrivate = source.getNationality().isPrivate();
+        nationality.value = source.getNationality().value;
+        
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new AdaptedTag(tag));
@@ -83,8 +99,8 @@ public class AdaptedPerson {
             }
         }
         // second call only happens if phone/email/address are all not null
-        return Utils.isAnyNull(name, phone, email, address)
-                || Utils.isAnyNull(phone.value, email.value, address.value);
+        return Utils.isAnyNull(name, phone, email, address, race, religion, nationality)
+                || Utils.isAnyNull(phone.value, email.value, address.value, race.value, religion.value, nationality.value);
     }
 
     /**
@@ -101,7 +117,10 @@ public class AdaptedPerson {
         final Phone phone = new Phone(this.phone.value, this.phone.isPrivate);
         final Email email = new Email(this.email.value, this.email.isPrivate);
         final Address address = new Address(this.address.value, this.address.isPrivate);
+        final Race race = new Race(this.race.value, this.race.isPrivate);
+        final Religion religion = new Religion(this.religion.value, this.religion.isPrivate);
+        final Nationality nationality = new Nationality(this.nationality.value, this.nationality.isPrivate);
         final UniqueTagList tags = new UniqueTagList(personTags);
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, email, address, race, religion, nationality, tags);
     }
 }

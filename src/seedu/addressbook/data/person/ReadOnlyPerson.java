@@ -13,7 +13,10 @@ public interface ReadOnlyPerson {
     Phone getPhone();
     Email getEmail();
     Address getAddress();
-
+    Race getRace();
+    Religion getReligion();
+    Nationality getNationality();
+    
     /**
      * The returned TagList is a deep copy of the internal TagList,
      * changes on the returned list will not affect the person's internal tags.
@@ -29,7 +32,10 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress())
+                && other.getRace().equals(this.getRace())
+                && other.getReligion().equals(this.getReligion())
+                && other.getNationality().equals(this.getNationality()));
     }
 
     /**
@@ -54,6 +60,26 @@ public interface ReadOnlyPerson {
             builder.append(detailIsPrivate);
         }
         builder.append(getAddress())
+        		.append(" Race: ");
+        if (getRace().isPrivate()) {
+        	builder.append(detailIsPrivate);
+        }
+        builder.append(getRace())
+                .append(" Religion: ");
+        if (getReligion().isPrivate()) {
+            builder.append(detailIsPrivate);
+        }
+        builder.append(getRace())
+				.append(" Race: ");
+		if (getRace().isPrivate()) {
+			builder.append(detailIsPrivate);
+		}
+        builder.append(getReligion())
+                .append(" Nationality: ");
+        if (getNationality().isPrivate()) {
+            builder.append(detailIsPrivate);
+        }
+        builder.append(getNationality())
                 .append(" Tags: ");
         for (Tag tag : getTags()) {
             builder.append(tag);
@@ -75,6 +101,15 @@ public interface ReadOnlyPerson {
         }
         if (!getAddress().isPrivate()) {
             builder.append(" Address: ").append(getAddress());
+        }
+        if (!getRace().isPrivate()) {
+            builder.append(" Race: ").append(getRace());
+        }
+        if (!getReligion().isPrivate()) {
+            builder.append(" Religion: ").append(getReligion());
+        }
+        if (!getNationality().isPrivate()) {
+            builder.append(" Nationality: ").append(getNationality());
         }
         builder.append(" Tags: ");
         for (Tag tag : getTags()) {
