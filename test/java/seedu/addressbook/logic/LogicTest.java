@@ -1,23 +1,41 @@
 package seedu.addressbook.logic;
 
 
+import static junit.framework.TestCase.assertEquals;
+import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.StringJoiner;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+
+import seedu.addressbook.commands.AddCommand;
+import seedu.addressbook.commands.ClearCommand;
+import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandResult;
-import seedu.addressbook.commands.*;
+import seedu.addressbook.commands.DeleteCommand;
+import seedu.addressbook.commands.ExitCommand;
+import seedu.addressbook.commands.FindCommand;
+import seedu.addressbook.commands.HelpCommand;
+import seedu.addressbook.commands.ViewAllCommand;
+import seedu.addressbook.commands.ViewCommand;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
-import seedu.addressbook.data.person.*;
+import seedu.addressbook.data.person.Address;
+import seedu.addressbook.data.person.Email;
+import seedu.addressbook.data.person.Name;
+import seedu.addressbook.data.person.Person;
+import seedu.addressbook.data.person.Phone;
+import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
-import seedu.addressbook.storage.StorageFile;
-
-import java.util.*;
-
-import static junit.framework.TestCase.assertEquals;
-import static seedu.addressbook.common.Messages.*;
+import seedu.addressbook.storage.Storage;
+import seedu.addressbook.storage.StorageStub;
 
 
 public class LogicTest {
@@ -28,13 +46,13 @@ public class LogicTest {
     @Rule
     public TemporaryFolder saveFolder = new TemporaryFolder();
 
-    private StorageFile saveFile;
+    private Storage saveFile;
     private AddressBook addressBook;
     private Logic logic;
 
     @Before
     public void setup() throws Exception {
-        saveFile = new StorageFile(saveFolder.newFile("testSaveFile.txt").getPath());
+        saveFile = new StorageStub(saveFolder.newFile("testSaveFile.txt").getPath());
         addressBook = new AddressBook();
         saveFile.save(addressBook);
         logic = new Logic(saveFile, addressBook);
@@ -146,7 +164,7 @@ public class LogicTest {
 
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_add_successful() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
@@ -163,7 +181,7 @@ public class LogicTest {
 
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_addDuplicate_notAllowed() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
@@ -184,7 +202,7 @@ public class LogicTest {
 
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_list_showsAllPersons() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
@@ -231,7 +249,7 @@ public class LogicTest {
 
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_view_onlyShowsNonPrivate() throws Exception {
 
         TestDataHelper helper = new TestDataHelper();
@@ -256,7 +274,7 @@ public class LogicTest {
                               lastShownList);
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_tryToViewMissingPerson_errorMessage() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person p1 = helper.generatePerson(1, false);
@@ -288,7 +306,7 @@ public class LogicTest {
         assertInvalidIndexBehaviorForCommand("viewall");
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_viewAll_alsoShowsPrivate() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person p1 = helper.generatePerson(1, true);
@@ -312,7 +330,7 @@ public class LogicTest {
                             lastShownList);
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_tryToViewAllPersonMissingInAddressBook_errorMessage() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person p1 = helper.generatePerson(1, false);
@@ -344,7 +362,7 @@ public class LogicTest {
         assertInvalidIndexBehaviorForCommand("delete");
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_delete_removesCorrectPerson() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person p1 = helper.generatePerson(1, false);
@@ -367,7 +385,7 @@ public class LogicTest {
                                 threePersons);
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_delete_missingInAddressBook() throws Exception {
 
         TestDataHelper helper = new TestDataHelper();
@@ -397,7 +415,7 @@ public class LogicTest {
         assertCommandBehavior("find ", expectedMessage);
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_find_onlyMatchesFullWordsInNames() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person pTarget1 = helper.generatePersonWithName("bla bla KEY bla");
@@ -417,7 +435,7 @@ public class LogicTest {
                                 expectedList);
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_find_isCaseSensitive() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person pTarget1 = helper.generatePersonWithName("bla bla KEY bla");
@@ -437,7 +455,7 @@ public class LogicTest {
                                 expectedList);
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_find_matchesIfAnyKeywordPresent() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person pTarget1 = helper.generatePersonWithName("bla bla KEY bla");
