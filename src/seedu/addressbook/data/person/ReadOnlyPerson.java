@@ -69,6 +69,11 @@ public interface ReadOnlyPerson {
         if (getReligion().isPrivate()) {
             builder.append(detailIsPrivate);
         }
+        builder.append(getRace())
+				.append(" Race: ");
+		if (getRace().isPrivate()) {
+			builder.append(detailIsPrivate);
+		}
         builder.append(getReligion())
                 .append(" Nationality: ");
         if (getNationality().isPrivate()) {

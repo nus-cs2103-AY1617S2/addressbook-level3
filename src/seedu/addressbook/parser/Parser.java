@@ -6,6 +6,7 @@ import seedu.addressbook.data.exception.IllegalValueException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.HashMap;
 
 import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
@@ -28,7 +29,9 @@ public class Parser {
                     + " (?<isReligionPrivate>p?)r/(?<religion>[^/]+)"
                     + " (?<isNationalityPrivate>p?)n/(?<nationality>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
-
+    
+    public static final Pattern PERSON_EDIT_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
+            Pattern.compile("(?<targetIndex>\\d+)(?<arguments>.*)");        		
 
     /**
      * Signals that the user input could not be parsed.
@@ -74,6 +77,9 @@ public class Parser {
 
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
+                
+            case EditCommand.COMMAND_WORD:
+            	return prepareEdit(arguments);
 
             case ViewCommand.COMMAND_WORD:
                 return prepareView(arguments);
@@ -166,6 +172,51 @@ public class Parser {
         } catch (ParseException | NumberFormatException e) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
+    }
+    
+    /**
+     * Parses arguments in the context of the edit person command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareEdit(String args) {
+    	final Matcher matcher = PERSON_EDIT_ARGS_FORMAT.matcher(args.trim());
+        // Validate arg string format
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+        final Matcher personDataMatcher = PERSON_DATA_ARGS_FORMAT.matcher(matcher.group("arguments").trim());
+        if (!personDataMatcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+        try {
+        	int targetIndex = parseArgsAsDisplayedIndex(matcher.group("targetIndex"));
+        	return new EditCommand(targetIndex,
+                    personDataMatcher.group("name"),
+
+                    personDataMatcher.group("phone"),
+                    isPrivatePrefixPresent(personDataMatcher.group("isPhonePrivate")),
+
+                    personDataMatcher.group("email"),
+                    isPrivatePrefixPresent(personDataMatcher.group("isEmailPrivate")),
+
+                    personDataMatcher.group("address"),
+                    isPrivatePrefixPresent(personDataMatcher.group("isAddressPrivate")),
+                    
+                    personDataMatcher.group("race"),
+                    isPrivatePrefixPresent(personDataMatcher.group("isRacePrivate")),
+              
+                    personDataMatcher.group("religion"),
+                    isPrivatePrefixPresent(personDataMatcher.group("isReligionPrivate")),
+
+                    getTagsFromArgs(personDataMatcher.group("tagArguments"))
+            );
+        } catch (ParseException | NumberFormatException e) {
+            return new IncorrectCommand(e.getMessage());
+        } catch (IllegalValueException ive) {
+        	return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+		}
     }
 
     /**
