@@ -4,84 +4,33 @@ import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.storage.jaxb.AdaptedAddressBook;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * Represents the file used to store address book data.
  */
-public class StorageFile {
-
-    /** Default file path used if the user doesn't provide the file name. */
-    public static final String DEFAULT_STORAGE_FILEPATH = "addressbook.txt";
-
-    /* Note: Note the use of nested classes below.
-     * More info https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html
-     */
-
-    /**
-     * Signals that the given file path does not fulfill the storage filepath constraints.
-     */
-    public static class InvalidStorageFilePathException extends IllegalValueException {
-        public InvalidStorageFilePathException(String message) {
-            super(message);
-        }
-    }
-
-    /**
-     * Signals that some error has occured while trying to convert and read/write data between the application
-     * and the storage file.
-     */
-    public static class StorageOperationException extends Exception {
-        public StorageOperationException(String message) {
-            super(message);
-        }
-    }
-
-    private final JAXBContext jaxbContext;
-
-    public final Path path;
+public class StorageFile extends Storage {
 
     /**
      * @throws InvalidStorageFilePathException if the default path is invalid
      */
     public StorageFile() throws InvalidStorageFilePathException {
-        this(DEFAULT_STORAGE_FILEPATH);
+        super();
     }
 
     /**
      * @throws InvalidStorageFilePathException if the given file path is invalid
      */
     public StorageFile(String filePath) throws InvalidStorageFilePathException {
-        try {
-            jaxbContext = JAXBContext.newInstance(AdaptedAddressBook.class);
-        } catch (JAXBException jaxbe) {
-            throw new RuntimeException("jaxb initialisation error");
-        }
-
-        path = Paths.get(filePath);
-        if (!isValidPath(path)) {
-            throw new InvalidStorageFilePathException("Storage file should end with '.txt'");
-        }
-    }
-
-    /**
-     * Returns true if the given path is acceptable as a storage file.
-     * The file path is considered acceptable if it ends with '.txt'
-     */
-    private static boolean isValidPath(Path filePath) {
-        return filePath.toString().endsWith(".txt");
+        super(filePath);
     }
 
     /**
      * Saves all data to this storage file.
-     *
-     * @throws StorageOperationException if there were errors converting and/or storing data to file.
+     * * @throws StorageOperationException if there were errors converting and/or storing data to file.
      */
     public void save(AddressBook addressBook) throws StorageOperationException {
 
@@ -139,10 +88,6 @@ public class StorageFile {
         } catch (IllegalValueException ive) {
             throw new StorageOperationException("File contains illegal data values; data type constraints not met");
         }
-    }
-
-    public String getPath() {
-        return path.toString();
     }
 
 }
