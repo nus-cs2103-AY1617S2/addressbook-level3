@@ -60,7 +60,7 @@ public class FindCommand extends Command {
         for (ReadOnlyPerson person : addressBook.getAllPersons()) {
             final Set<String> wordsInName = new HashSet<>(person.getName().getWordsInName());
             boolean isTagMatched = tags.toSet().isEmpty() || !Collections.disjoint(person.getTags().toSet(), tags.toSet());
-            boolean isNameMatched = !Collections.disjoint(wordsInName, keywords);
+            boolean isNameMatched = keyMatchName(keywords, wordsInName);
             if (isNameMatched && isTagMatched) {
                 matchedPersons.add(person);
             }
@@ -71,6 +71,25 @@ public class FindCommand extends Command {
     @Override
     public String getCommandWord() {
         return COMMAND_WORD;
+    }
+
+    /**
+     * Matches names ignoring case sensitivity
+     * 
+     * @param keywords for searching
+     * @param wordsInName 
+     * @return
+     */
+   private static boolean keyMatchName(Collection<String> keywords, Set<String> wordsInName) {
+        for(String keyword: keywords){
+            for(String word: wordsInName){
+                if(keyword.equalsIgnoreCase(word)){
+                    return true;
+                }
+            }
+        }
+        
+        return false;
     }
 
 }
