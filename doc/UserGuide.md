@@ -95,8 +95,12 @@ Examples:
   `viewall 1`<br>
   Views all details of the 1st person in the results of the `find` command.
 
+## Undoing your latest change: `undo`
+Undoes your latest change to the address book. Clear and Undo commands cannot be undone<br>
+Format: `undo` 
+
 ## Clearing all entries : `clear`
-Clears all entries from the address book.<br>
+Clears all entries from the address book and the undo history.<br>
 Format: `clear`  
 
 ## Exiting the program : `exit`
