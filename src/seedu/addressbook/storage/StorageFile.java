@@ -142,4 +142,8 @@ public class StorageFile extends Storage {
             throw new StorageOperationException("File contains illegal data values; data type constraints not met");
         }
     }
+    
+    public String getIdentifier() {
+    	return path.toString();
+    }
 }
