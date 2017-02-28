@@ -43,14 +43,14 @@ public class Logic {
     }
 
     /**
-     * Creates the StorageFile object based on the user specified path (if any) or the default storage path.
+     * Creates the Storage object based on the user specified path (if any) or the default storage path.
      * @throws StorageFile.InvalidStorageFilePathException if the target file path is incorrect.
      */
     private Storage initializeStorage() throws StorageFile.InvalidStorageFilePathException {
         return new StorageFile();
     }
 
-    public String getStorageFilePath() {
+    public String getStoragePath() {
         return storage.getPath();
     }
 
