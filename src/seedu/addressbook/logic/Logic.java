@@ -7,6 +7,7 @@ import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.parser.Parser;
 import seedu.addressbook.storage.StorageFile;
 
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -51,6 +52,10 @@ public class Logic {
 
     public String getStorageFilePath() {
         return storage.getPath();
+    }
+
+    public void setStorageFilePath(String filePath){
+        storage.path = Paths.get(filePath);
     }
 
     /**
