@@ -8,6 +8,7 @@ import seedu.addressbook.parser.Parser;
 import seedu.addressbook.storage.Storage;
 import seedu.addressbook.storage.StorageFile;
 import seedu.addressbook.storage.StorageFile.InvalidStorageFilePathException;
+import seedu.addressbook.storage.StorageStub;
 
 import java.util.Collections;
 import java.util.List;
@@ -47,12 +48,7 @@ public class Logic {
      * @throws Storage.InvalidStorageFilePathException if the target file path is incorrect.
      */
     private Storage initializeStorage() throws Storage.InvalidStorageFilePathException {
-        Storage temp = null;
-        try {
-            temp = new StorageFile();
-        } catch (InvalidStorageFilePathException e) {
-            e.printStackTrace();
-        }
+        Storage temp = new StorageStub();
         return temp;
     }
 
