@@ -42,6 +42,7 @@ public class Logic {
         setAddressBook(addressBook);
         
         undoStack = new Stack<UndoableCommand>();
+        redoStack = new Stack<UndoableCommand>();
     }
 
     void setStorage(StorageFile storage){
