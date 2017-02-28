@@ -15,11 +15,11 @@ import java.nio.file.Paths;
 /**
  * Represents the file used to store address book data.
  */
-public class StorageFile {
+public class StorageFile extends Storage{
 
     /** Default file path used if the user doesn't provide the file name. */
     public static final String DEFAULT_STORAGE_FILEPATH = "addressbook.txt";
-
+    
     /* Note: Note the use of nested classes below.
      * More info https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html
      */
@@ -42,7 +42,7 @@ public class StorageFile {
             super(message);
         }
     }
-
+    
     private final JAXBContext jaxbContext;
 
     public final Path path;
