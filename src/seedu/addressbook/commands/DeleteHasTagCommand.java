@@ -33,7 +33,7 @@ public class DeleteHasTagCommand extends Command{
        }
        
        @Override
-       public CommandResult execute() {
+       public CommandResult execute(ReadOnlyCommand previousCommand) {
            try{
                UniquePersonList allPerson = addressBook.getAllPersons();
                Iterator<Person> i = allPerson.iterator();
@@ -49,5 +49,10 @@ public class DeleteHasTagCommand extends Command{
                return new CommandResult(Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK);
            }
        }
+
+	@Override
+	public String getCommandWord() {
+		return COMMAND_WORD;
+	}
 
 }
