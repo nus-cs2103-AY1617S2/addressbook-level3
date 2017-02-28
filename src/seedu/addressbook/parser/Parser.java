@@ -64,6 +64,9 @@ public class Parser {
             case DeleteCommand.COMMAND_WORD:
                 return prepareDelete(arguments);
 
+            case DeleteHasTagCommand.COMMAND_WORD:
+                return prepareDeleteHasTag(arguments);
+                
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
 
@@ -157,6 +160,21 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses argument in the context of the delete has tag command.
+     * 
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareDeleteHasTag(String args) {
+       try {
+           final String tagName = args.substring(1).trim();
+           return new DeleteHasTagCommand(tagName);
+       } catch (IllegalValueException | IndexOutOfBoundsException e) {
+           return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteHasTagCommand.MESSAGE_USAGE));
+       }
+    }
+    
     /**
      * Parses arguments in the context of the view command.
      *
