@@ -82,7 +82,7 @@ public class Parser {
                 return new ExitCommand();
                 
             case SortCommand.COMMAND_WORD:
-                return new SortCommand();
+                return prepareSort(arguments);
 
             case HelpCommand.COMMAND_WORD: // Fallthrough
             default:
@@ -229,5 +229,22 @@ public class Parser {
         return new FindCommand(keywordSet);
     }
 
+    /**
+     * Parses arguments in the context of the sort person command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareSort(String args) {
+        final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    SortCommand.MESSAGE_USAGE));
+        }
 
+        // keywords delimited by whitespace and changed to uppercase
+        final String[] keywords = matcher.group("keywords").toUpperCase().split("\\s+");
+        final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
+        return new SortCommand(keywordSet);
+    }
 }
