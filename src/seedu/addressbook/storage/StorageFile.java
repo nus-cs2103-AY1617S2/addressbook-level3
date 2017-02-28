@@ -45,7 +45,7 @@ public class StorageFile {
 
     private final JAXBContext jaxbContext;
 
-    public final Path path;
+    public Path path;
 
     /**
      * @throws InvalidStorageFilePathException if the default path is invalid
