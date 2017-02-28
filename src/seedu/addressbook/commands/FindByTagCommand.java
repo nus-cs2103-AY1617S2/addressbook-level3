@@ -17,7 +17,7 @@ public class FindByTagCommand extends Command{
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Finds all persons whose contain the entered tag.\n\t"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n\t"
-            + "Example: " + COMMAND_WORD + "owesMoney";
+            + "Example: " + COMMAND_WORD + " owesMoney";
     
     private final Set<String> keywords;
 
