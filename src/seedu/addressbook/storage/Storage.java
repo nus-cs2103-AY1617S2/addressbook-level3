@@ -11,7 +11,7 @@ public abstract class Storage {
      * Creates a new StorageFile and returns it
      * @throws InvalidStorageFilePathException if the default path is invalid
      */
-    public StorageFile setStorage() throws InvalidStorageFilePathException{
+    public StorageFile initializeStorage() throws InvalidStorageFilePathException{
         return new StorageFile();
     }
     
