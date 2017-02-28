@@ -2,6 +2,7 @@ package seedu.addressbook.storage;
 
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.exception.IllegalValueException;
+import seedu.addressbook.storage.Storage.InvalidStoragePathException;
 import seedu.addressbook.storage.jaxb.AdaptedAddressBook;
 
 import javax.xml.bind.JAXBContext;
@@ -25,16 +26,7 @@ public class StorageFile {
      */
 
     /**
-     * Signals that the given file path does not fulfill the storage filepath constraints.
-     */
-    public static class InvalidStorageFilePathException extends IllegalValueException {
-        public InvalidStorageFilePathException(String message) {
-            super(message);
-        }
-    }
-
-    /**
-     * Signals that some error has occured while trying to convert and read/write data between the application
+     * Signals that some error has occurred while trying to convert and read/write data between the application
      * and the storage file.
      */
     public static class StorageOperationException extends Exception {
@@ -48,16 +40,16 @@ public class StorageFile {
     public final Path path;
 
     /**
-     * @throws InvalidStorageFilePathException if the default path is invalid
+     * @throws InvalidStoragePathException if the default path is invalid
      */
-    public StorageFile() throws InvalidStorageFilePathException {
+    public StorageFile() throws InvalidStoragePathException {
         this(DEFAULT_STORAGE_FILEPATH);
     }
 
     /**
-     * @throws InvalidStorageFilePathException if the given file path is invalid
+     * @throws InvalidStoragePathException if the given file path is invalid
      */
-    public StorageFile(String filePath) throws InvalidStorageFilePathException {
+    public StorageFile(String filePath) throws InvalidStoragePathException {
         try {
             jaxbContext = JAXBContext.newInstance(AdaptedAddressBook.class);
         } catch (JAXBException jaxbe) {
@@ -66,7 +58,7 @@ public class StorageFile {
 
         path = Paths.get(filePath);
         if (!isValidPath(path)) {
-            throw new InvalidStorageFilePathException("Storage file should end with '.txt'");
+            throw new InvalidStoragePathException("Storage file should end with '.txt'");
         }
     }
 
