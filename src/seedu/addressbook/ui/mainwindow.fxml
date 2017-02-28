@@ -20,7 +20,7 @@
 
 	<children>
 
-        <TextField fx:id="commandInput" onAction="#onCommand" VBox.vgrow="NEVER">
+        <TextField fx:id="commandInput" onAction="#onCommand" onKeyTyped="#OnTextChanged" VBox.vgrow="NEVER">
         </TextField>
 
         <TextArea fx:id="outputConsole" editable="false" wrapText="true" VBox.vgrow="ALWAYS">
