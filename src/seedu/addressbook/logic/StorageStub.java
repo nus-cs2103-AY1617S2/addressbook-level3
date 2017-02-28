@@ -4,12 +4,12 @@ import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.storage.Storage;
 import seedu.addressbook.storage.StorageFile.StorageOperationException;
 
-public class StorageStub extends Storage{
-    
+public class StorageStub extends Storage {
+
     private String path;
     private AddressBook addressBook;
-    
-    public StorageStub(String path){
+
+    public StorageStub(String path) {
         this.path = path;
     }
 
