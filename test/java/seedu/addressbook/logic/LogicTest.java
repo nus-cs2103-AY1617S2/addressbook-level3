@@ -480,7 +480,7 @@ public class LogicTest {
      */
     class TestDataHelper{
 
-        Person adam() throws Exception {
+        public Person adam() throws Exception {
             Name name = new Name("Adam Brown");
             Phone privatePhone = new Phone("111111", true);
             Email email = new Email("adam@gmail.com", false);
@@ -499,7 +499,7 @@ public class LogicTest {
          * @param seed used to generate the person data field values
          * @param isAllFieldsPrivate determines if private-able fields (phone, email, address) will be private
          */
-        Person generatePerson(int seed, boolean isAllFieldsPrivate) throws Exception {
+        public Person generatePerson(int seed, boolean isAllFieldsPrivate) throws Exception {
             return new Person(
                     new Name("Person " + seed),
                     new Phone("" + Math.abs(seed), isAllFieldsPrivate),
@@ -510,7 +510,7 @@ public class LogicTest {
         }
 
         /** Generates the correct add command based on the person given */
-        String generateAddCommand(Person p) {
+        public String generateAddCommand(Person p) {
             StringJoiner cmd = new StringJoiner(" ");
 
             cmd.add("add");
@@ -533,7 +533,7 @@ public class LogicTest {
          * @param isPrivateStatuses flags to indicate if all contact details of respective persons should be set to
          *                          private.
          */
-        AddressBook generateAddressBook(Boolean... isPrivateStatuses) throws Exception{
+        public AddressBook generateAddressBook(Boolean... isPrivateStatuses) throws Exception{
             AddressBook addressBook = new AddressBook();
             addToAddressBook(addressBook, isPrivateStatuses);
             return addressBook;
@@ -542,7 +542,7 @@ public class LogicTest {
         /**
          * Generates an AddressBook based on the list of Persons given.
          */
-        AddressBook generateAddressBook(List<Person> persons) throws Exception{
+        public AddressBook generateAddressBook(List<Person> persons) throws Exception{
             AddressBook addressBook = new AddressBook();
             addToAddressBook(addressBook, persons);
             return addressBook;
@@ -554,14 +554,14 @@ public class LogicTest {
          * @param isPrivateStatuses flags to indicate if all contact details of generated persons should be set to
          *                          private.
          */
-        void addToAddressBook(AddressBook addressBook, Boolean... isPrivateStatuses) throws Exception{
+        public void addToAddressBook(AddressBook addressBook, Boolean... isPrivateStatuses) throws Exception{
             addToAddressBook(addressBook, generatePersonList(isPrivateStatuses));
         }
 
         /**
          * Adds the given list of Persons to the given AddressBook
          */
-        void addToAddressBook(AddressBook addressBook, List<Person> personsToAdd) throws Exception{
+        public void addToAddressBook(AddressBook addressBook, List<Person> personsToAdd) throws Exception{
             for(Person p: personsToAdd){
                 addressBook.addPerson(p);
             }
@@ -570,7 +570,7 @@ public class LogicTest {
         /**
          * Creates a list of Persons based on the give Person objects.
          */
-        List<Person> generatePersonList(Person... persons) throws Exception{
+        public List<Person> generatePersonList(Person... persons) throws Exception{
             List<Person> personList = new ArrayList<>();
             for(Person p: persons){
                 personList.add(p);
@@ -583,7 +583,7 @@ public class LogicTest {
          * @param isPrivateStatuses flags to indicate if all contact details of respective persons should be set to
          *                          private.
          */
-        List<Person> generatePersonList(Boolean... isPrivateStatuses) throws Exception{
+        public List<Person> generatePersonList(Boolean... isPrivateStatuses) throws Exception{
             List<Person> persons = new ArrayList<>();
             int i = 1;
             for(Boolean p: isPrivateStatuses){
@@ -595,7 +595,7 @@ public class LogicTest {
         /**
          * Generates a Person object with given name. Other fields will have some dummy values.
          */
-         Person generatePersonWithName(String name) throws Exception {
+        public Person generatePersonWithName(String name) throws Exception {
             return new Person(
                     new Name(name),
                     new Phone("1", false),
