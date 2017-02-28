@@ -1,6 +1,9 @@
 package seedu.addressbook.commands;
 
+import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.ReadOnlyPerson;
+import seedu.addressbook.data.tag.Tag;
+import seedu.addressbook.data.tag.UniqueTagList;
 
 import java.util.*;
 
@@ -11,16 +14,24 @@ import java.util.*;
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
+    public static final String MESSAGE_TAGS_LABEL = "\nTags: ";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Finds all persons whose names contain any of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n\t"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n\t"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+            + "the specified keywords (case-sensitive) or whose tags contain any of the specified tags "
+    		+ "and displays them as a list with index numbers.\n\t"
+            + "Parameters: KEYWORD [MORE_KEYWORDS] [t/TAG]...\n\t"
+            + "Example: " + COMMAND_WORD + " alice bob charlie t/owesMoney";
 
     private final Set<String> keywords;
+    private final UniqueTagList tags;
 
-    public FindCommand(Set<String> keywords) {
+    public FindCommand(Set<String> keywords, Set<String> tags) throws IllegalValueException {
         this.keywords = keywords;
+        final Set<Tag> tagSet = new HashSet<>();
+        for (String tagName : tags) {
+            tagSet.add(new Tag(tagName));
+        }
+        this.tags = new UniqueTagList(tagSet);
     }
 
     /**
@@ -32,8 +43,10 @@ public class FindCommand extends Command {
 
     @Override
     public CommandResult execute(ReadOnlyCommand previousCommand) {
-        final List<ReadOnlyPerson> personsFound = getPersonsWithNameContainingAnyKeyword(keywords);
-        return new CommandResult(getMessageForPersonListShownSummary(personsFound), personsFound);
+        final List<ReadOnlyPerson> personsFound = getPersonsWithNameContainingAnyKeywordAndTag(keywords);
+        final String personString = getMessageForPersonListShownSummary(personsFound);
+        final String findMessage = tags.isEmpty() ? personString : personString + MESSAGE_TAGS_LABEL + tags.toString();
+        return new CommandResult(findMessage, personsFound);
     }
 
     /**
@@ -42,11 +55,13 @@ public class FindCommand extends Command {
      * @param keywords for searching
      * @return list of persons found
      */
-    private List<ReadOnlyPerson> getPersonsWithNameContainingAnyKeyword(Set<String> keywords) {
+    private List<ReadOnlyPerson> getPersonsWithNameContainingAnyKeywordAndTag(Set<String> keywords) {
         final List<ReadOnlyPerson> matchedPersons = new ArrayList<>();
         for (ReadOnlyPerson person : addressBook.getAllPersons()) {
             final Set<String> wordsInName = new HashSet<>(person.getName().getWordsInName());
-            if (!Collections.disjoint(wordsInName, keywords)) {
+            boolean isTagMatched = tags.toSet().isEmpty() || !Collections.disjoint(person.getTags().toSet(), tags.toSet());
+            boolean isNameMatched = !Collections.disjoint(wordsInName, keywords);
+            if (isNameMatched && isTagMatched) {
                 matchedPersons.add(person);
             }
         }

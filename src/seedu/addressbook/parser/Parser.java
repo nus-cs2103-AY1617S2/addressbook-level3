@@ -17,7 +17,8 @@ public class Parser {
     public static final Pattern PERSON_INDEX_ARGS_FORMAT = Pattern.compile("(?<targetIndex>.+)");
 
     public static final Pattern KEYWORDS_ARGS_FORMAT =
-            Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
+            Pattern.compile("(?<keywords>[^/]+)" // one or more keywords separated by whitespace
+            		+ "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
 
     public static final Pattern PERSON_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
             Pattern.compile("(?<name>[^/]+)"
@@ -222,11 +223,15 @@ public class Parser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     FindCommand.MESSAGE_USAGE));
         }
-
-        // keywords delimited by whitespace
-        final String[] keywords = matcher.group("keywords").split("\\s+");
-        final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
-        return new FindCommand(keywordSet);
+		try {			
+			// keywords delimited by whitespace
+			final String[] keywords = matcher.group("keywords").trim().split("\\s+");
+			final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
+			final Set<String> tagSet = getTagsFromArgs(matcher.group("tagArguments"));
+			return new FindCommand(keywordSet, tagSet);
+		} catch (IllegalValueException ive) {
+            return new IncorrectCommand(ive.getMessage());
+        }
     }
 
 
