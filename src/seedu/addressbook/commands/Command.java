@@ -1,5 +1,6 @@
 package seedu.addressbook.commands;
 
+import seedu.addressbook.commands.exception.*;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
@@ -54,9 +55,12 @@ public abstract class Command {
     public abstract boolean isUndoable();
     
     /**
-     * Undo this command
+     * Attempts to undo the command.
+     * Returns the CommandResult of the original command if successful
+     * @throws UndoFailedException if the undo operation fails
+     * @throws IllegalUndoOperationException if called on an Command that cannot be undone
      */
-    public abstract CommandResult undo();
+    public abstract CommandResult undo() throws UndoFailedException;
 
     /**
      * Supplies the data the command will operate on.
