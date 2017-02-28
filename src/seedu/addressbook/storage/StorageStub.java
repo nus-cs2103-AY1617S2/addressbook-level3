@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 /**
  * Represents the file used to store address book data.
  */
-public class StorageFile extends Storage {
+public class StorageStub extends Storage {
 
     /** Default file path used if the user doesn't provide the file name. */
     public static final String DEFAULT_STORAGE_FILEPATH = "addressbook.txt";
@@ -31,14 +31,14 @@ public class StorageFile extends Storage {
     /**
      * @throws InvalidStorageFilePathException if the default path is invalid
      */
-    public StorageFile() throws InvalidStoragePathException {
+    public StorageStub() throws InvalidStoragePathException {
         this(DEFAULT_STORAGE_FILEPATH);
     }
 
     /**
      * @throws InvalidStorageFilePathException if the given file path is invalid
      */
-    public StorageFile(String filePath) throws InvalidStoragePathException {
+    public StorageStub(String filePath) throws InvalidStoragePathException {
         try {
             jaxbContext = JAXBContext.newInstance(AdaptedAddressBook.class);
         } catch (JAXBException jaxbe) {
