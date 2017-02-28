@@ -25,6 +25,10 @@ public class Parser {
                     + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
+    
+    public static final Pattern NEW_PHONE_NUMBER_ARGS_FORMAT =
+    		Pattern.compile("(?<targetIndex>.+)"
+                    + " (?<isPhonePrivate>p?)p/(?<newPhone>[^/]+)");
 
 
     /**
@@ -53,8 +57,14 @@ public class Parser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        final String commandWord = matcher.group("commandWord");
+        String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
+        
+        AlternativeCommand ac = new AlternativeCommand();
+        if (ac.isAlternative(commandWord)) {
+            commandWord = ac.getStandardCommandWord(commandWord);
+        }
+        
         switch (commandWord) {
 
             case AddCommand.COMMAND_WORD:
@@ -80,8 +90,12 @@ public class Parser {
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
+                
+            case EditPhoneCommand.COMMAND_WORD:
+            	return prepareEditP(arguments);
 
             case HelpCommand.COMMAND_WORD: // Fallthrough
+            	
             default:
                 return new HelpCommand();
         }
@@ -93,7 +107,7 @@ public class Parser {
      * @param args full command args string
      * @return the prepared command
      */
-    private Command prepareAdd(String args){
+    private Command prepareAdd(String args) {
         final Matcher matcher = PERSON_DATA_ARGS_FORMAT.matcher(args.trim());
         // Validate arg string format
         if (!matcher.matches()) {
@@ -153,6 +167,23 @@ public class Parser {
             return new DeleteCommand(targetIndex);
         } catch (ParseException | NumberFormatException e) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        }
+    }
+    
+    private Command prepareEditP(String args) {
+    	final Matcher matcher = NEW_PHONE_NUMBER_ARGS_FORMAT.matcher(args.trim());
+        // Validate arg string format
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditPhoneCommand.MESSAGE_USAGE));
+        }
+        try {
+            return new EditPhoneCommand(
+                    Integer.parseInt(matcher.group("targetIndex")),
+                    matcher.group("newPhone"),
+                    isPrivatePrefixPresent(matcher.group("isPhonePrivate"))
+            );
+        } catch (IllegalValueException ive) {
+            return new IncorrectCommand(ive.getMessage());
         }
     }
 

@@ -58,6 +58,12 @@ public class ParserTest {
         final String input = "list";
         parseAndAssertCommandType(input, ListCommand.class);
     }
+    
+    @Test
+    public void ShowCommand_parsedCorrectly() {
+        final String input = "show";
+        parseAndAssertCommandType(input, ListCommand.class);
+    }
 
     @Test
     public void exitCommand_parsedCorrectly() {
@@ -66,7 +72,7 @@ public class ParserTest {
     }
 
     /**
-     * Test ingle index argument commands
+     * Test single index argument commands
      */
     
     @Test
@@ -90,7 +96,14 @@ public class ParserTest {
         final DeleteCommand result = parseAndAssertCommandType(input, DeleteCommand.class);
         assertEquals(result.getTargetIndex(), testIndex);
     }
-
+   
+    @Test
+    public void removeCommand_numericArg_indexParsedCorrectly() {
+        final int testIndex = 1;
+        final String input = "remove " + testIndex;
+        final DeleteCommand result = parseAndAssertCommandType(input, DeleteCommand.class);
+        assertEquals(result.getTargetIndex(), testIndex);
+    }
     @Test
     public void viewCommand_noArgs() {
         final String[] inputs = { "view", "view " };
@@ -113,6 +126,14 @@ public class ParserTest {
         assertEquals(result.getTargetIndex(), testIndex);
     }
 
+    @Test
+    public void lookupCommand_numericArg_indexParsedCorrectly() {
+        final int testIndex = 2;
+        final String input = "lookup " + testIndex;
+        final ViewCommand result = parseAndAssertCommandType(input, ViewCommand.class);
+        assertEquals(result.getTargetIndex(), testIndex);
+    }
+    
     @Test
     public void viewAllCommand_noArgs() {
         final String[] inputs = { "viewall", "viewall " };
@@ -175,6 +196,18 @@ public class ParserTest {
         assertEquals(keySet, result.getKeywords());
     }
 
+    @Test
+    public void searchCommand_duplicateKeys_parsedCorrectly() {
+        final String[] keywords = { "key1", "key2", "key3" };
+        final Set<String> keySet = new HashSet<>(Arrays.asList(keywords));
+
+        // duplicate every keyword
+        final String input = "search " + String.join(" ", keySet) + " " + String.join(" ", keySet);
+        final FindCommand result =
+                parseAndAssertCommandType(input, FindCommand.class);
+        assertEquals(keySet, result.getKeywords());
+    }
+    
     /**
      * Test add person command
      */
@@ -234,6 +267,14 @@ public class ParserTest {
     }
 
     @Test
+    public void createCommand_validPersonData_parsedCorrectly() {
+        final Person testPerson = generateTestPerson();
+        final String input = convertPersonToCreateCommandString(testPerson);
+        final AddCommand result = parseAndAssertCommandType(input, AddCommand.class);
+        assertEquals(result.getPerson(), testPerson);
+    }
+    
+    @Test
     public void addCommand_duplicateTags_merged() throws IllegalValueException {
         final Person testPerson = generateTestPerson();
         String input = convertPersonToAddCommandString(testPerson);
@@ -272,6 +313,18 @@ public class ParserTest {
         return addCommand;
     }
 
+    private static String convertPersonToCreateCommandString(ReadOnlyPerson person) {
+        String addCommand = "create "
+                + person.getName().fullName
+                + (person.getPhone().isPrivate() ? " pp/" : " p/") + person.getPhone().value
+                + (person.getEmail().isPrivate() ? " pe/" : " e/") + person.getEmail().value
+                + (person.getAddress().isPrivate() ? " pa/" : " a/") + person.getAddress().value;
+        for (Tag tag : person.getTags()) {
+            addCommand += " t/" + tag.tagName;
+        }
+        return addCommand;
+    }
+    
     /**
      * Utility methods
      */
