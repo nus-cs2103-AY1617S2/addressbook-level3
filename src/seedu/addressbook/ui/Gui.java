@@ -40,35 +40,14 @@ public class Gui {
     }
 
     private MainWindow createMainWindow(Stage stage, Stoppable mainApp) throws IOException{
-        String darkTheme = Main.class.getResource("ui/DarkTheme.css").toExternalForm();
-        String brightTheme = Main.class.getResource("ui/BrightTheme.css").toExternalForm();
         FXMLLoader loader = new FXMLLoader();
         
         /* Note: When calling getResource(), use '/', instead of File.separator or '\\'
          * More info: http://docs.oracle.com/javase/8/docs/technotes/guides/lang/resources.html#res_name_context
          */
-        
         loader.setLocation(Main.class.getResource("ui/mainwindow.fxml"));
-        VBox vBox = loader.load();
-        MenuBar menuBar = (MenuBar) vBox.getChildren().get(0);
-        Menu menu = menuBar.getMenus().get(0);
-        CheckMenuItem dark = (CheckMenuItem) menu.getItems().get(0);
-        CheckMenuItem bright = (CheckMenuItem) menu.getItems().get(1);
-        dark.setOnAction((event) -> {
-            dark.setSelected(true);
-            bright.setSelected(false);
-            vBox.getStylesheets().remove(brightTheme);
-            if(!vBox.getStylesheets().contains(darkTheme)) {
-                vBox.getStylesheets().add(darkTheme);
-            }
-        });
-        bright.setOnAction((event) -> {
-            dark.setSelected(false);
-            bright.setSelected(true);
-            if(!vBox.getStylesheets().contains(brightTheme)) {
-                vBox.getStylesheets().add(brightTheme);
-            }
-        });
+        
+        VBox vBox = addMenuToVBox(loader);
         stage.getIcons().add(new Image("seedu/addressbook/ui/icon.png"));
         stage.setTitle(version);
         stage.setScene(new Scene(vBox, INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT));
@@ -77,6 +56,42 @@ public class Gui {
         mainWindow.setLogic(logic);
         mainWindow.setMainApp(mainApp);
         return mainWindow;
+    }
+    
+    /**
+     * Add the theme menu which allows switching between dark and bright themes
+     * @param loader which is a VBox
+     * @return a VBox
+     * @throws IOException
+     */
+    VBox addMenuToVBox(FXMLLoader loader) throws IOException {
+        String darkTheme = Main.class.getResource("ui/DarkTheme.css").toExternalForm();
+        String brightTheme = Main.class.getResource("ui/BrightTheme.css").toExternalForm();
+        
+        VBox vBox = loader.load();
+        MenuBar menuBar = (MenuBar) vBox.getChildren().get(0);
+        Menu menu = menuBar.getMenus().get(0);
+        CheckMenuItem dark = (CheckMenuItem) menu.getItems().get(0);
+        CheckMenuItem bright = (CheckMenuItem) menu.getItems().get(1);
+        
+        dark.setOnAction((event) -> {
+            dark.setSelected(true);
+            bright.setSelected(false);
+            vBox.getStylesheets().remove(brightTheme);
+            if(!vBox.getStylesheets().contains(darkTheme)) {
+                vBox.getStylesheets().add(darkTheme);
+            }
+        });
+        
+        bright.setOnAction((event) -> {
+            dark.setSelected(false);
+            bright.setSelected(true);
+            if(!vBox.getStylesheets().contains(brightTheme)) {
+                vBox.getStylesheets().add(brightTheme);
+            }
+        });
+        
+        return vBox;
     }
 
 }
