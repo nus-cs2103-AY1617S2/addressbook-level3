@@ -1,6 +1,9 @@
 package seedu.addressbook.commands;
 
+import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.ReadOnlyPerson;
+import seedu.addressbook.data.tag.Tag;
+import seedu.addressbook.data.tag.UniqueTagList;
 
 import java.util.*;
 
@@ -18,9 +21,15 @@ public class FindCommand extends Command {
             + "Example: " + COMMAND_WORD + " alice bob charlie";
 
     private final Set<String> keywords;
+    private final UniqueTagList tags;
 
-    public FindCommand(Set<String> keywords) {
+    public FindCommand(Set<String> keywords, Set<String> tags) throws IllegalValueException {
         this.keywords = keywords;
+        final Set<Tag> tagSet = new HashSet<>();
+        for (String tagName : tags) {
+            tagSet.add(new Tag(tagName));
+        }
+        this.tags = new UniqueTagList(tagSet);
     }
 
     /**
@@ -32,7 +41,7 @@ public class FindCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        final List<ReadOnlyPerson> personsFound = getPersonsWithNameContainingAnyKeyword(keywords);
+        final List<ReadOnlyPerson> personsFound = getPersonsWithNameContainingAnyKeywordAndTag(keywords);
         return new CommandResult(getMessageForPersonListShownSummary(personsFound), personsFound);
     }
 
@@ -42,11 +51,13 @@ public class FindCommand extends Command {
      * @param keywords for searching
      * @return list of persons found
      */
-    private List<ReadOnlyPerson> getPersonsWithNameContainingAnyKeyword(Set<String> keywords) {
+    private List<ReadOnlyPerson> getPersonsWithNameContainingAnyKeywordAndTag(Set<String> keywords) {
         final List<ReadOnlyPerson> matchedPersons = new ArrayList<>();
         for (ReadOnlyPerson person : addressBook.getAllPersons()) {
             final Set<String> wordsInName = new HashSet<>(person.getName().getWordsInName());
-            if (!Collections.disjoint(wordsInName, keywords)) {
+            boolean isTagMatched = tags.toSet().isEmpty() || !Collections.disjoint(person.getTags().toSet(), tags.toSet());
+            boolean isNameMatched = !Collections.disjoint(wordsInName, keywords);
+            if (isNameMatched && isTagMatched) {
                 matchedPersons.add(person);
             }
         }
