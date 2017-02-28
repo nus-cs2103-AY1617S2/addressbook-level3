@@ -57,7 +57,7 @@ public abstract class Command {
     protected ReadOnlyPerson getTargetPerson() throws IndexOutOfBoundsException {
         return relevantPersons.get(getTargetIndex() - DISPLAYED_INDEX_OFFSET);
     }
-
+    
     public int getTargetIndex() {
         return targetIndex;
     }
