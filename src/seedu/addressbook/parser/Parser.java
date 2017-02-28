@@ -1,13 +1,24 @@
 package seedu.addressbook.parser;
 
-import seedu.addressbook.commands.*;
-import seedu.addressbook.data.exception.IllegalValueException;
+import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import seedu.addressbook.commands.AddCommand;
+import seedu.addressbook.commands.ClearCommand;
+import seedu.addressbook.commands.Command;
+import seedu.addressbook.commands.DeleteCommand;
+import seedu.addressbook.commands.ExitCommand;
+import seedu.addressbook.commands.FindCommand;
+import seedu.addressbook.commands.HelpCommand;
+import seedu.addressbook.commands.IncorrectCommand;
+import seedu.addressbook.commands.ListCommand;
+import seedu.addressbook.commands.ViewAllCommand;
+import seedu.addressbook.commands.ViewCommand;
 
 /**
  * Parses user input.
@@ -18,13 +29,6 @@ public class Parser {
 
     public static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
-
-    public static final Pattern PERSON_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
-            Pattern.compile("(?<name>[^/]+)"
-                    + " (?<isPhonePrivate>p?)p/(?<phone>[^/]+)"
-                    + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
-                    + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
-                    + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
 
 
     /**
@@ -58,7 +62,7 @@ public class Parser {
         switch (commandWord) {
 
             case AddCommand.COMMAND_WORD:
-                return prepareAdd(arguments);
+                return AddPreparer.prepare(arguments);
 
             case DeleteCommand.COMMAND_WORD:
                 return prepareDelete(arguments);
@@ -86,60 +90,6 @@ public class Parser {
                 return new HelpCommand();
         }
     }
-
-    /**
-     * Parses arguments in the context of the add person command.
-     *
-     * @param args full command args string
-     * @return the prepared command
-     */
-    private Command prepareAdd(String args){
-        final Matcher matcher = PERSON_DATA_ARGS_FORMAT.matcher(args.trim());
-        // Validate arg string format
-        if (!matcher.matches()) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-        }
-        try {
-            return new AddCommand(
-                    matcher.group("name"),
-
-                    matcher.group("phone"),
-                    isPrivatePrefixPresent(matcher.group("isPhonePrivate")),
-
-                    matcher.group("email"),
-                    isPrivatePrefixPresent(matcher.group("isEmailPrivate")),
-
-                    matcher.group("address"),
-                    isPrivatePrefixPresent(matcher.group("isAddressPrivate")),
-
-                    getTagsFromArgs(matcher.group("tagArguments"))
-            );
-        } catch (IllegalValueException ive) {
-            return new IncorrectCommand(ive.getMessage());
-        }
-    }
-
-    /**
-     * Checks whether the private prefix of a contact detail in the add command's arguments string is present.
-     */
-    private static boolean isPrivatePrefixPresent(String matchedPrefix) {
-        return matchedPrefix.equals("p");
-    }
-
-    /**
-     * Extracts the new person's tags from the add command's tag arguments string.
-     * Merges duplicate tag strings.
-     */
-    private static Set<String> getTagsFromArgs(String tagArguments) throws IllegalValueException {
-        // no tags
-        if (tagArguments.isEmpty()) {
-            return Collections.emptySet();
-        }
-        // replace first delimiter prefix, then split
-        final Collection<String> tagStrings = Arrays.asList(tagArguments.replaceFirst(" t/", "").split(" t/"));
-        return new HashSet<>(tagStrings);
-    }
-
 
     /**
      * Parses arguments in the context of the delete person command.
