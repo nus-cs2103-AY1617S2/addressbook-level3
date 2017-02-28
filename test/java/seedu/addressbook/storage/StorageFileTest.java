@@ -17,6 +17,7 @@ import seedu.addressbook.data.person.Person;
 import seedu.addressbook.data.person.Race;
 import seedu.addressbook.data.person.Phone;
 import seedu.addressbook.data.person.Religion;
+import seedu.addressbook.data.person.Nationality;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
 import seedu.addressbook.storage.StorageFile.StorageOperationException;
@@ -102,6 +103,7 @@ public class StorageFileTest {
                                 new Address("John street, block 123, #01-01", false),
                                 new Race("Malay", false),
                                 new Religion("Christian", false),
+                                new Nationality("Singaporean", false),
                                 new UniqueTagList(Collections.emptySet())));
         ab.addPerson(new Person(new Name("Betsy Crowe"),
                                 new Phone("1234567", true),
@@ -109,6 +111,7 @@ public class StorageFileTest {
                                 new Address("Newgate Prison", true),
                                 new Race("Malay", false),
                                 new Religion("Muslim", true),
+                                new Nationality("Chinese", false),
                                 new UniqueTagList(new Tag("friend"), new Tag("criminal"))));
         return ab;
     }
