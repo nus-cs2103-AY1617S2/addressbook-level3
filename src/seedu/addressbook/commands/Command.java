@@ -43,24 +43,6 @@ public abstract class Command {
      * Executes the command and returns the result.
      */
     public abstract CommandResult execute();
-    
-    /**
-     * Returns true if the command will mutate the data.
-     */
-    public abstract boolean isMutating();
-    
-    /**
-     * Returns true if the command can be undone.
-     */
-    public abstract boolean isUndoable();
-    
-    /**
-     * Attempts to undo the command.
-     * Returns the CommandResult of the original command if successful
-     * @throws UndoFailedException if the undo operation fails
-     * @throws IllegalUndoOperationException if called on an Command that cannot be undone
-     */
-    public abstract CommandResult undo() throws UndoFailedException;
 
     /**
      * Supplies the data the command will operate on.
@@ -85,5 +67,30 @@ public abstract class Command {
 
     public void setTargetIndex(int targetIndex) {
         this.targetIndex = targetIndex;
+    }
+    
+    /**
+     * Returns true if the command will mutate the data.
+     */
+    public abstract boolean isMutating();
+    
+    /**
+     * Returns true if the command can be undone.
+     */
+    public abstract boolean isUndoable();
+    
+    /**
+     * Attempts to undo the command.
+     * Returns the CommandResult of the original command if successful
+     * @throws UndoFailedException if the undo operation fails
+     * @throws IllegalUndoOperationException if called on an Command that cannot be undone
+     */
+    public abstract CommandResult undo() throws UndoFailedException;
+    
+    /**
+     * Clears the command history
+     */
+    protected static void clearCommandHistory(){
+        commandHistory = new Stack<Command>();
     }
 }
