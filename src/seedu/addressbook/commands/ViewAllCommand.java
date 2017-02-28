@@ -1,5 +1,6 @@
 package seedu.addressbook.commands;
 
+import seedu.addressbook.commands.exception.*;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
@@ -42,5 +43,17 @@ public class ViewAllCommand extends Command {
     @Override
     public boolean isMutating() {
         return false;
+    }
+
+
+    @Override
+    public boolean isUndoable() {
+        return false;
+    }
+
+
+    @Override
+    public CommandResult undo() throws UndoFailedException {
+        throw new IllegalUndoOperationException(COMMAND_WORD);
     }
 }

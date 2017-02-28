@@ -1,5 +1,6 @@
 package seedu.addressbook.commands;
 
+import seedu.addressbook.commands.exception.*;
 
 /**
  * Shows help instructions.
@@ -29,5 +30,15 @@ public class HelpCommand extends Command {
     @Override
     public boolean isMutating() {
         return false;
+    }
+
+    @Override
+    public boolean isUndoable() {
+        return false;
+    }
+
+    @Override
+    public CommandResult undo() throws UndoFailedException {
+        throw new IllegalUndoOperationException(COMMAND_WORD);
     }
 }
