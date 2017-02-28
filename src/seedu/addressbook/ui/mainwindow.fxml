@@ -8,7 +8,18 @@
       fx:controller="seedu.addressbook.ui.MainWindow">
 
     <children>
-
+      
+        <MenuBar>
+            <menus>
+                <Menu mnemonicParsing="false" style="-fx-padding: 4 0;" text="Theme">
+                    <items>
+                        <CheckMenuItem mnemonicParsing="false" text="Dark" selected="true"/>
+                        <CheckMenuItem mnemonicParsing="false" text="Bright" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+      
         <TextField fx:id="commandInput" onAction="#onCommand" VBox.vgrow="NEVER">
         </TextField>
 
