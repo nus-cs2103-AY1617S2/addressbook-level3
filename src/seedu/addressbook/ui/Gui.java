@@ -2,7 +2,11 @@ package seedu.addressbook.ui;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.addressbook.logic.Logic;
 import seedu.addressbook.Main;
@@ -36,16 +40,38 @@ public class Gui {
     }
 
     private MainWindow createMainWindow(Stage stage, Stoppable mainApp) throws IOException{
+        String darkTheme = Main.class.getResource("ui/DarkTheme.css").toExternalForm();
+        String brightTheme = Main.class.getResource("ui/BrightTheme.css").toExternalForm();
         FXMLLoader loader = new FXMLLoader();
-
+        
         /* Note: When calling getResource(), use '/', instead of File.separator or '\\'
          * More info: http://docs.oracle.com/javase/8/docs/technotes/guides/lang/resources.html#res_name_context
          */
-        loader.setLocation(Main.class.getResource("ui/mainwindow.fxml"));
         
+        loader.setLocation(Main.class.getResource("ui/mainwindow.fxml"));
+        VBox vBox = loader.load();
+        MenuBar menuBar = (MenuBar) vBox.getChildren().get(0);
+        Menu menu = menuBar.getMenus().get(0);
+        CheckMenuItem dark = (CheckMenuItem) menu.getItems().get(0);
+        CheckMenuItem bright = (CheckMenuItem) menu.getItems().get(1);
+        dark.setOnAction((event) -> {
+            dark.setSelected(true);
+            bright.setSelected(false);
+            vBox.getStylesheets().remove(brightTheme);
+            if(!vBox.getStylesheets().contains(darkTheme)) {
+                vBox.getStylesheets().add(darkTheme);
+            }
+        });
+        bright.setOnAction((event) -> {
+            dark.setSelected(false);
+            bright.setSelected(true);
+            if(!vBox.getStylesheets().contains(brightTheme)) {
+                vBox.getStylesheets().add(brightTheme);
+            }
+        });
         stage.getIcons().add(new Image("seedu/addressbook/ui/icon.png"));
         stage.setTitle(version);
-        stage.setScene(new Scene(loader.load(), INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT));
+        stage.setScene(new Scene(vBox, INITIAL_WINDOW_WIDTH, INITIAL_WINDOW_HEIGHT));
         stage.show();
         MainWindow mainWindow = loader.getController();
         mainWindow.setLogic(logic);
