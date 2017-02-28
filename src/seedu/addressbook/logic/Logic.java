@@ -34,11 +34,11 @@ public class Logic {
         setAddressBook(addressBook);
     }
 
-    void setStorage(Storage storage2){
+    private void setStorage(Storage storage2){
         this.storage = storage2;
     }
 
-    void setAddressBook(AddressBook addressBook){
+    private void setAddressBook(AddressBook addressBook){
         this.addressBook = addressBook;
     }
 
