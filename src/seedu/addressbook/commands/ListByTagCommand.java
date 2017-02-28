@@ -10,7 +10,7 @@ import seedu.addressbook.data.tag.UniqueTagList;
 
 public class ListByTagCommand extends Command {
 
-	public static final String COMMAND_WORD = "list by tag";
+	public static final String COMMAND_WORD = "listbytag";
 
 	public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Finds all persons whose tags contain "
 			+ "the specified tag (case-sensitive) and displays them as a list with index numbers.\n\t"
@@ -48,8 +48,8 @@ public class ListByTagCommand extends Command {
 				if (tags.contains(targetTag)) {
 					matchedPersons.add(person);
 				}
-				return matchedPersons;
 			}
+			return matchedPersons;
 		} catch (IllegalValueException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
