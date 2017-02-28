@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 
 public class Birthday {
 
-	public static final String EXAMPLE = "DD-MM-YYY";
+	public static final String EXAMPLE = "01-01-1993";
 	public static final String MESSAGE_BIRTHDAY_CONSTRAINTS = "Date should be in format DD-MM-YYYY";
 	
 	public String value;

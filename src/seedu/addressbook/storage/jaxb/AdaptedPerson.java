@@ -65,6 +65,10 @@ public class AdaptedPerson {
         address = new AdaptedContactDetail();
         address.isPrivate = source.getAddress().isPrivate();
         address.value = source.getAddress().value;
+        
+        birthday = new AdaptedContactDetail();
+        birthday.isPrivate = source.getBirthday().isPrivate();
+        birthday.value = source.getBirthday().value;
 
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {

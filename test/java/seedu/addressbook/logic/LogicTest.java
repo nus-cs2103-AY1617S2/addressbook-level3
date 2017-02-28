@@ -488,7 +488,7 @@ public class LogicTest {
                     new Phone("" + Math.abs(seed), isAllFieldsPrivate),
                     new Email(seed + "@email", isAllFieldsPrivate),
                     new Address("House of " + seed, isAllFieldsPrivate),
-                    new Birthday("" + Math.abs(seed), isAllFieldsPrivate),
+                    new Birthday("01-01-1993", isAllFieldsPrivate),
                     new UniqueTagList(new Tag("tag" + Math.abs(seed)), new Tag("tag" + Math.abs(seed + 1)))
             );
         }
