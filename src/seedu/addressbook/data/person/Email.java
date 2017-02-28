@@ -31,6 +31,19 @@ public class Email {
     }
 
     /**
+     * Validates given email.
+     *
+     * @throws IllegalValueException if given email address string is invalid.
+     */
+    public Email(String email) throws IllegalValueException {
+        email = email.trim();
+        if (!isValidEmail(email)) {
+            throw new IllegalValueException(MESSAGE_EMAIL_CONSTRAINTS);
+        }
+        this.value = email;
+    }
+
+    /**
      * Checks if a given string is a valid person email.
      */
     public static boolean isValidEmail(String test) {
