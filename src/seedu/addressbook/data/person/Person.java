@@ -58,7 +58,22 @@ public class Person implements ReadOnlyPerson {
     public UniqueTagList getTags() {
         return new UniqueTagList(tags);
     }
+    
+    //@Override
+    public void setPhone(String phone) {
+        this.phone.value = phone;
+    }
 
+    //@Override
+    public void setEmail(String email) {
+        this.email.value = email;;
+    }
+
+    //@Override
+    public void setAddress(String address) {
+        this.address.value = address;
+    }
+    
     /**
      * Replaces this person's tags with the tags in the argument tag list.
      */
