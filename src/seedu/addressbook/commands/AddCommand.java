@@ -1,12 +1,19 @@
 package seedu.addressbook.commands;
 
-import seedu.addressbook.data.exception.IllegalValueException;
-import seedu.addressbook.data.person.*;
-import seedu.addressbook.data.tag.Tag;
-import seedu.addressbook.data.tag.UniqueTagList;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import seedu.addressbook.data.exception.IllegalValueException;
+import seedu.addressbook.data.person.Address;
+import seedu.addressbook.data.person.Email;
+import seedu.addressbook.data.person.Name;
+import seedu.addressbook.data.person.Person;
+import seedu.addressbook.data.person.Phone;
+import seedu.addressbook.data.person.Priority;
+import seedu.addressbook.data.person.ReadOnlyPerson;
+import seedu.addressbook.data.person.UniquePersonList;
+import seedu.addressbook.data.tag.Tag;
+import seedu.addressbook.data.tag.UniqueTagList;
 
 /**
  * Adds a person to the address book.
@@ -17,9 +24,9 @@ public class AddCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Adds a person to the address book. "
             + "Contact details can be marked private by prepending 'p' to the prefix.\n\t"
-            + "Parameters: NAME [p]p/PHONE [p]e/EMAIL [p]a/ADDRESS  [t/TAG]...\n\t"
+            + "Parameters: NAME [p]p/PHONE [p]e/EMAIL [p]a/ADDRESS  [priority/PRIORITY] [t/TAG]...\n\t"
             + "Example: " + COMMAND_WORD
-            + " John Doe p/98765432 e/johnd@gmail.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney";
+            + " John Doe p/98765432 e/johnd@gmail.com a/311, Clementi Ave 2, #02-25 priority/MEDIUM t/friends t/owesMoney";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
@@ -35,6 +42,7 @@ public class AddCommand extends Command {
                       String phone, boolean isPhonePrivate,
                       String email, boolean isEmailPrivate,
                       String address, boolean isAddressPrivate,
+                      String priority,
                       Set<String> tags) throws IllegalValueException {
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
@@ -45,6 +53,7 @@ public class AddCommand extends Command {
                 new Phone(phone, isPhonePrivate),
                 new Email(email, isEmailPrivate),
                 new Address(address, isAddressPrivate),
+                new Priority(priority),
                 new UniqueTagList(tagSet)
         );
     }
