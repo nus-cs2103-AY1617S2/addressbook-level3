@@ -209,6 +209,9 @@ public class Parser {
               
                     personDataMatcher.group("religion"),
                     isPrivatePrefixPresent(personDataMatcher.group("isReligionPrivate")),
+                    
+                    personDataMatcher.group("nationality"),
+                    isPrivatePrefixPresent(personDataMatcher.group("isNationalityPrivate")),
 
                     getTagsFromArgs(personDataMatcher.group("tagArguments"))
             );
