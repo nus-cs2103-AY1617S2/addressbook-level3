@@ -2,7 +2,9 @@ package seedu.addressbook.common;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * Utility methods
@@ -19,6 +21,13 @@ public class Utils {
             }
         }
         return false;
+    }
+
+    /**
+     * Returns true is any of the given items are present.
+     */
+    public static boolean isAnyPresent(Optional<?>... items) {
+        return Stream.of(items).anyMatch(Optional::isPresent);
     }
 
     /**
