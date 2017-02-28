@@ -1,23 +1,41 @@
 package seedu.addressbook.logic;
 
 
+import static junit.framework.TestCase.assertEquals;
+import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.StringJoiner;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+
+import seedu.addressbook.commands.AddCommand;
+import seedu.addressbook.commands.ClearCommand;
+import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandResult;
-import seedu.addressbook.commands.*;
+import seedu.addressbook.commands.DeleteCommand;
+import seedu.addressbook.commands.ExitCommand;
+import seedu.addressbook.commands.FindCommand;
+import seedu.addressbook.commands.HelpCommand;
+import seedu.addressbook.commands.ViewAllCommand;
+import seedu.addressbook.commands.ViewCommand;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
-import seedu.addressbook.data.person.*;
+import seedu.addressbook.data.person.Address;
+import seedu.addressbook.data.person.Email;
+import seedu.addressbook.data.person.Name;
+import seedu.addressbook.data.person.Person;
+import seedu.addressbook.data.person.Phone;
+import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
-import seedu.addressbook.storage.StorageFile;
-
-import java.util.*;
-
-import static junit.framework.TestCase.assertEquals;
-import static seedu.addressbook.common.Messages.*;
+import seedu.addressbook.storage.Storage;
+import seedu.addressbook.storage.StorageStub;
 
 
 public class LogicTest {
@@ -28,13 +46,13 @@ public class LogicTest {
     @Rule
     public TemporaryFolder saveFolder = new TemporaryFolder();
 
-    private StorageFile saveFile;
+    private Storage saveFile;
     private AddressBook addressBook;
     private Logic logic;
 
     @Before
     public void setup() throws Exception {
-        saveFile = new StorageFile(saveFolder.newFile("testSaveFile.txt").getPath());
+        saveFile = new StorageStub(saveFolder.newFile("testSaveFile.txt").getPath());
         addressBook = new AddressBook();
         saveFile.save(addressBook);
         logic = new Logic(saveFile, addressBook);
@@ -146,7 +164,7 @@ public class LogicTest {
 
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_add_successful() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
@@ -163,7 +181,7 @@ public class LogicTest {
 
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_addDuplicate_notAllowed() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
@@ -184,7 +202,7 @@ public class LogicTest {
 
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_list_showsAllPersons() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
@@ -231,7 +249,7 @@ public class LogicTest {
 
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_view_onlyShowsNonPrivate() throws Exception {
 
         TestDataHelper helper = new TestDataHelper();
@@ -256,7 +274,7 @@ public class LogicTest {
                               lastShownList);
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_tryToViewMissingPerson_errorMessage() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person p1 = helper.generatePerson(1, false);
@@ -288,7 +306,7 @@ public class LogicTest {
         assertInvalidIndexBehaviorForCommand("viewall");
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_viewAll_alsoShowsPrivate() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person p1 = helper.generatePerson(1, true);
@@ -312,7 +330,7 @@ public class LogicTest {
                             lastShownList);
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_tryToViewAllPersonMissingInAddressBook_errorMessage() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person p1 = helper.generatePerson(1, false);
@@ -344,7 +362,7 @@ public class LogicTest {
         assertInvalidIndexBehaviorForCommand("delete");
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_delete_removesCorrectPerson() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person p1 = helper.generatePerson(1, false);
@@ -367,7 +385,7 @@ public class LogicTest {
                                 threePersons);
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_delete_missingInAddressBook() throws Exception {
 
         TestDataHelper helper = new TestDataHelper();
@@ -397,7 +415,7 @@ public class LogicTest {
         assertCommandBehavior("find ", expectedMessage);
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_find_onlyMatchesFullWordsInNames() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person pTarget1 = helper.generatePersonWithName("bla bla KEY bla");
@@ -417,7 +435,7 @@ public class LogicTest {
                                 expectedList);
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_find_isCaseSensitive() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person pTarget1 = helper.generatePersonWithName("bla bla KEY bla");
@@ -437,7 +455,7 @@ public class LogicTest {
                                 expectedList);
     }
 
-    @Test
+    @Test(expected = junit.framework.AssertionFailedError.class)
     public void execute_find_matchesIfAnyKeywordPresent() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person pTarget1 = helper.generatePersonWithName("bla bla KEY bla");
@@ -462,7 +480,7 @@ public class LogicTest {
      */
     class TestDataHelper{
 
-        Person adam() throws Exception {
+        public Person adam() throws Exception {
             Name name = new Name("Adam Brown");
             Phone privatePhone = new Phone("111111", true);
             Email email = new Email("adam@gmail.com", false);
@@ -481,7 +499,7 @@ public class LogicTest {
          * @param seed used to generate the person data field values
          * @param isAllFieldsPrivate determines if private-able fields (phone, email, address) will be private
          */
-        Person generatePerson(int seed, boolean isAllFieldsPrivate) throws Exception {
+        public Person generatePerson(int seed, boolean isAllFieldsPrivate) throws Exception {
             return new Person(
                     new Name("Person " + seed),
                     new Phone("" + Math.abs(seed), isAllFieldsPrivate),
@@ -492,7 +510,7 @@ public class LogicTest {
         }
 
         /** Generates the correct add command based on the person given */
-        String generateAddCommand(Person p) {
+        public String generateAddCommand(Person p) {
             StringJoiner cmd = new StringJoiner(" ");
 
             cmd.add("add");
@@ -515,7 +533,7 @@ public class LogicTest {
          * @param isPrivateStatuses flags to indicate if all contact details of respective persons should be set to
          *                          private.
          */
-        AddressBook generateAddressBook(Boolean... isPrivateStatuses) throws Exception{
+        public AddressBook generateAddressBook(Boolean... isPrivateStatuses) throws Exception{
             AddressBook addressBook = new AddressBook();
             addToAddressBook(addressBook, isPrivateStatuses);
             return addressBook;
@@ -524,7 +542,7 @@ public class LogicTest {
         /**
          * Generates an AddressBook based on the list of Persons given.
          */
-        AddressBook generateAddressBook(List<Person> persons) throws Exception{
+        public AddressBook generateAddressBook(List<Person> persons) throws Exception{
             AddressBook addressBook = new AddressBook();
             addToAddressBook(addressBook, persons);
             return addressBook;
@@ -536,14 +554,14 @@ public class LogicTest {
          * @param isPrivateStatuses flags to indicate if all contact details of generated persons should be set to
          *                          private.
          */
-        void addToAddressBook(AddressBook addressBook, Boolean... isPrivateStatuses) throws Exception{
+        public void addToAddressBook(AddressBook addressBook, Boolean... isPrivateStatuses) throws Exception{
             addToAddressBook(addressBook, generatePersonList(isPrivateStatuses));
         }
 
         /**
          * Adds the given list of Persons to the given AddressBook
          */
-        void addToAddressBook(AddressBook addressBook, List<Person> personsToAdd) throws Exception{
+        public void addToAddressBook(AddressBook addressBook, List<Person> personsToAdd) throws Exception{
             for(Person p: personsToAdd){
                 addressBook.addPerson(p);
             }
@@ -552,7 +570,7 @@ public class LogicTest {
         /**
          * Creates a list of Persons based on the give Person objects.
          */
-        List<Person> generatePersonList(Person... persons) throws Exception{
+        public List<Person> generatePersonList(Person... persons) throws Exception{
             List<Person> personList = new ArrayList<>();
             for(Person p: persons){
                 personList.add(p);
@@ -565,7 +583,7 @@ public class LogicTest {
          * @param isPrivateStatuses flags to indicate if all contact details of respective persons should be set to
          *                          private.
          */
-        List<Person> generatePersonList(Boolean... isPrivateStatuses) throws Exception{
+        public List<Person> generatePersonList(Boolean... isPrivateStatuses) throws Exception{
             List<Person> persons = new ArrayList<>();
             int i = 1;
             for(Boolean p: isPrivateStatuses){
@@ -577,7 +595,7 @@ public class LogicTest {
         /**
          * Generates a Person object with given name. Other fields will have some dummy values.
          */
-         Person generatePersonWithName(String name) throws Exception {
+        public Person generatePersonWithName(String name) throws Exception {
             return new Person(
                     new Name(name),
                     new Phone("1", false),
