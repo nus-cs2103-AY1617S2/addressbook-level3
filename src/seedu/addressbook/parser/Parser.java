@@ -1,5 +1,6 @@
 package seedu.addressbook.parser;
 
+import seedu.addressbook.parser.EditCommandParser;
 import seedu.addressbook.commands.*;
 import seedu.addressbook.data.exception.IllegalValueException;
 
@@ -77,6 +78,9 @@ public class Parser {
 
             case ListTagCommand.COMMAND_WORD:
                 return new ListTagCommand();
+                
+            case EditCommand.COMMAND_WORD:
+                return new EditCommandParser().parse(arguments);
                 
             case ViewCommand.COMMAND_WORD:
                 return prepareView(arguments);
