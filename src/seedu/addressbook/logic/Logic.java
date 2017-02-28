@@ -5,6 +5,7 @@ import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.parser.Parser;
+import seedu.addressbook.storage.Storage;
 import seedu.addressbook.storage.StorageFile;
 
 import java.util.Collections;
@@ -17,7 +18,7 @@ import java.util.Optional;
 public class Logic {
 
 
-    private StorageFile storage;
+    private Storage storage;
     private AddressBook addressBook;
 
     /** The list of person shown to the user most recently.  */
@@ -28,13 +29,13 @@ public class Logic {
         setAddressBook(storage.load());
     }
 
-    Logic(StorageFile storageFile, AddressBook addressBook){
-        setStorage(storageFile);
+    Logic(Storage storage, AddressBook addressBook){
+        setStorage(storage);
         setAddressBook(addressBook);
     }
 
-    void setStorage(StorageFile storage){
-        this.storage = storage;
+    void setStorage(Storage storage2){
+        this.storage = storage2;
     }
 
     void setAddressBook(AddressBook addressBook){
@@ -42,14 +43,14 @@ public class Logic {
     }
 
     /**
-     * Creates the StorageFile object based on the user specified path (if any) or the default storage path.
-     * @throws StorageFile.InvalidStorageFilePathException if the target file path is incorrect.
+     * Creates the Storage object based on the user specified path (if any) or the default storage path.
+     * @throws Storage.InvalidStorageFilePathException if the target file path is incorrect.
      */
-    private StorageFile initializeStorage() throws StorageFile.InvalidStorageFilePathException {
+    private Storage initializeStorage() throws StorageFile.InvalidStorageFilePathException {
         return new StorageFile();
     }
 
-    public String getStorageFilePath() {
+    public String getStoragePath() {
         return storage.getPath();
     }
 
