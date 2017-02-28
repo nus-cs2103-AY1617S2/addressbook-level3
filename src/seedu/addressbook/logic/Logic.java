@@ -29,8 +29,8 @@ public class Logic {
         setAddressBook(storage.load());
     }
 
-    Logic(Storage storageFile, AddressBook addressBook) {
-        setStorage(storageFile);
+    Logic(Storage storage, AddressBook addressBook) {
+        setStorage(storage);
         setAddressBook(addressBook);	
     }
 
@@ -50,7 +50,7 @@ public class Logic {
         return new StorageFile();
     }
 
-    public String getStorageFilePath() {
+    public String getStorageIdentifier() {
         return storage.getIdentifier();
     }
 
