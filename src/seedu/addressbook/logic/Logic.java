@@ -49,7 +49,7 @@ public class Logic {
         return new StorageFile();
     }
 
-    public String getStorageFilePath() {
+    public String getStoragePath() {
         return storage.getPath();
     }
 
