@@ -84,14 +84,14 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public CommandResult undo() throws UndoFailedException {
+    public String undo() throws UndoFailedException {
         final ReadOnlyPerson target = getPerson();
         if (!isUndoable()) {
             throw new IllegalUndoOperationException(COMMAND_WORD + target);
         } else {
             try {
                 addressBook.removePerson(target);
-                return new CommandResult(String.format(MESSAGE_SUCCESS, target));
+                return String.format(MESSAGE_SUCCESS, target);
             } catch (PersonNotFoundException e) {
                 throw new UndoFailedException(String.format(MESSAGE_PERSON_NOT_FOUND, target));
             }

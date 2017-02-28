@@ -31,7 +31,7 @@ public class ClearCommand extends Command {
     }
 
     @Override
-    public CommandResult undo() throws UndoFailedException {
+    public String undo() throws UndoFailedException {
         throw new IllegalUndoOperationException(COMMAND_WORD);
     }
 }

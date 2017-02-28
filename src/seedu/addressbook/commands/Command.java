@@ -81,11 +81,11 @@ public abstract class Command {
     
     /**
      * Attempts to undo the command.
-     * Returns the CommandResult of the original command if successful
+     * Returns the CommandResult feedback string of the original command if successful
      * @throws UndoFailedException if the undo operation fails
      * @throws IllegalUndoOperationException if called on an Command that cannot be undone
      */
-    public abstract CommandResult undo() throws UndoFailedException;
+    public abstract String undo() throws UndoFailedException;
     
     /**
      * Clears the command history

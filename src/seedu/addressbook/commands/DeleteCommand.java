@@ -61,7 +61,7 @@ public class DeleteCommand extends Command {
 
 
     @Override
-    public CommandResult undo() throws UndoFailedException {
+    public String undo() throws UndoFailedException {
         final ReadOnlyPerson target = getTargetPerson();
         if (!isUndoable()) {
             throw new IllegalUndoOperationException(String.format("%s %s", COMMAND_WORD, target));
@@ -71,7 +71,7 @@ public class DeleteCommand extends Command {
             } catch (DuplicatePersonException e) {
                 throw new UndoFailedException(String.format(MESSAGE_DUPLICATE_PERSON, target));
             }
-            return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, target));
+            return String.format(MESSAGE_DELETE_PERSON_SUCCESS, target);
         }
     }
 
