@@ -14,11 +14,13 @@ import java.util.*;
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
+    public static final String MESSAGE_TAGS_LABEL = "\nTags: ";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Finds all persons whose names contain any of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n\t"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n\t"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+            + "the specified keywords (case-sensitive) or whose tags contain any of the specified tags "
+    		+ "and displays them as a list with index numbers.\n\t"
+            + "Parameters: KEYWORD [MORE_KEYWORDS] [t/TAG]...\n\t"
+            + "Example: " + COMMAND_WORD + " alice bob charlie t/owesMoney";
 
     private final Set<String> keywords;
     private final UniqueTagList tags;
@@ -42,7 +44,9 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() {
         final List<ReadOnlyPerson> personsFound = getPersonsWithNameContainingAnyKeywordAndTag(keywords);
-        return new CommandResult(getMessageForPersonListShownSummary(personsFound), personsFound);
+        final String personString = getMessageForPersonListShownSummary(personsFound);
+        final String findMessage = tags.isEmpty() ? personString : personString + MESSAGE_TAGS_LABEL + tags.toString();
+        return new CommandResult(findMessage, personsFound);
     }
 
     /**
