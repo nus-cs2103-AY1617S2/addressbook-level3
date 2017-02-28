@@ -24,7 +24,7 @@ public class EditCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Edits an entry of the address book. "
             + "An entry is specified by the index number given by the list command"
             + "Parameters: INDEX\n"
-            + "Example: " + COMMAND_WORD + " 42 John Doe p/98765432 e/johnd@gmail.com a/311, Clementi Ave 2, #02-25 b/Malay r/Buddhism t/friends t/owesMoney";
+            + "Example: " + COMMAND_WORD + " 42 John Doe p/98765432 e/johnd@gmail.com a/311, Clementi Ave 2, #02-25 b/Malay r/Buddhism n/Singaporean t/friends t/owesMoney";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Address book updated: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "Doubt that this message will ever be shown.";
@@ -38,6 +38,7 @@ public class EditCommand extends Command {
 		            String address, boolean isAddressPrivate,
 		            String race, boolean isRacePrivate,
 		            String religion, boolean isReligionPrivate,
+		            String nationality, boolean isNationalityPrivate,
 		            Set<String> tags) throws IllegalValueException {
     	super(targetVisibleIndex);
     	
@@ -52,6 +53,7 @@ public class EditCommand extends Command {
 		      new Address(address, isAddressPrivate),
 		      new Race(race, isRacePrivate),
 		      new Religion(religion, isReligionPrivate),
+		      new Nationality(nationality, isNationalityPrivate),
 		      new UniqueTagList(tagSet)
 		);
 	}
