@@ -15,43 +15,16 @@ import java.nio.file.Paths;
 /**
  * Represents the file used to store address book data.
  */
-public class StorageFile {
-
-    /** Default file path used if the user doesn't provide the file name. */
-    public static final String DEFAULT_STORAGE_FILEPATH = "addressbook.txt";
-
-    /* Note: Note the use of nested classes below.
-     * More info https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html
-     */
-
-    /**
-     * Signals that the given file path does not fulfill the storage filepath constraints.
-     */
-    public static class InvalidStorageFilePathException extends IllegalValueException {
-        public InvalidStorageFilePathException(String message) {
-            super(message);
-        }
-    }
-
-    /**
-     * Signals that some error has occured while trying to convert and read/write data between the application
-     * and the storage file.
-     */
-    public static class StorageOperationException extends Exception {
-        public StorageOperationException(String message) {
-            super(message);
-        }
-    }
-
-    private final JAXBContext jaxbContext;
+public class StorageFile extends Storage {
 
     public final Path path;
+    private final JAXBContext jaxbContext;
 
     /**
      * @throws InvalidStorageFilePathException if the default path is invalid
      */
     public StorageFile() throws InvalidStorageFilePathException {
-        this(DEFAULT_STORAGE_FILEPATH);
+        this(getDefaultStorageFilepath());
     }
 
     /**
@@ -65,17 +38,9 @@ public class StorageFile {
         }
 
         path = Paths.get(filePath);
-        if (!isValidPath(path)) {
+        if (!Storage.isValidPath(path)) {
             throw new InvalidStorageFilePathException("Storage file should end with '.txt'");
         }
-    }
-
-    /**
-     * Returns true if the given path is acceptable as a storage file.
-     * The file path is considered acceptable if it ends with '.txt'
-     */
-    private static boolean isValidPath(Path filePath) {
-        return filePath.toString().endsWith(".txt");
     }
 
     /**
@@ -83,6 +48,7 @@ public class StorageFile {
      *
      * @throws StorageOperationException if there were errors converting and/or storing data to file.
      */
+    @Override
     public void save(AddressBook addressBook) throws StorageOperationException {
 
         /* Note: Note the 'try with resource' statement below.
@@ -108,6 +74,7 @@ public class StorageFile {
      *
      * @throws StorageOperationException if there were errors reading and/or converting data from file.
      */
+    @Override
     public AddressBook load() throws StorageOperationException {
         try (final Reader fileReader =
                      new BufferedReader(new FileReader(path.toFile()))) {
@@ -125,13 +92,13 @@ public class StorageFile {
          * situation (i.e. not truly exceptional) we should not use an exception to handle it.
          */
 
-        // create empty file if not found
+            // create empty file if not found
         } catch (FileNotFoundException fnfe) {
             final AddressBook empty = new AddressBook();
             save(empty);
             return empty;
 
-        // other errors
+            // other errors
         } catch (IOException ioe) {
             throw new StorageOperationException("Error writing to file: " + path);
         } catch (JAXBException jaxbe) {
@@ -141,8 +108,10 @@ public class StorageFile {
         }
     }
 
+    @Override
     public String getPath() {
         return path.toString();
     }
+
 
 }
