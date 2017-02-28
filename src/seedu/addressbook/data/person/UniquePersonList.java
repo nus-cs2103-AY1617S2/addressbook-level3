@@ -28,6 +28,10 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public static class PersonNotFoundException extends Exception {}
 
+    protected static final String KEYWORD_EMAIL = "EMAIL";
+    protected static final String KEYWORD_PHONE = "PHONE";
+    protected static final String KEYWORD_ADDRESS = "ADDRESS";
+
     private final List<Person> internalList = new ArrayList<>();
 
     /**
@@ -114,16 +118,31 @@ public class UniquePersonList implements Iterable<Person> {
     }
     
     /**
-     * Sorts all persons in list in alphabetical order.
+     * Sorts all persons in list according to keywords in alphabetical order.
+     * With multiple keywords, sorting is done starting from the 1st keyword from the left.
      */
-    public List<Person> sort() {
+    public List<Person> sort(Set<String> keywordsList) {
         List<Person> sortedList = internalList;
-        Collections.sort(sortedList, new Comparator<Person>() {
-            @Override
-            public int compare(Person p1, Person p2) {
-                return p1.getName().toString().compareToIgnoreCase(p2.getName().toString());
-            }
-        });
+        
+        for (String keyword : keywordsList) {
+            
+            Collections.sort(sortedList, new Comparator<Person>() {
+                @Override
+                public int compare(Person p1, Person p2) {
+                    switch (keyword.trim()) {
+                        case KEYWORD_EMAIL:
+                            return p1.getEmail().toString().compareToIgnoreCase(p2.getEmail().toString());
+                        case KEYWORD_PHONE:
+                            return p1.getPhone().toString().compareToIgnoreCase(p2.getPhone().toString());
+                        case KEYWORD_ADDRESS:
+                            return p1.getAddress().toString().compareToIgnoreCase(p2.getAddress().toString());
+                        default:    // sort by name in alphabetical order by default
+                            return p1.getName().toString().compareToIgnoreCase(p2.getName().toString());
+                    }
+                }
+            });
+        }
+        
         return sortedList;
     }
 
