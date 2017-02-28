@@ -26,6 +26,11 @@ public class Parser {
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
 
+    public static final Pattern PERSON_EDIT_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
+            Pattern.compile("(?<targetIndex>.+)"
+                    + " (?<isPhonePrivate>p?)p/(?<phone>[^/]+)"
+                    + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
+                    + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)");
 
     /**
      * Signals that the user input could not be parsed.
@@ -83,6 +88,9 @@ public class Parser {
 
             case ViewHistoryCommand.COMMAND_WORD:
                 return new ViewHistoryCommand();
+                
+            case EditCommand.COMMAND_WORD:
+                return prepareEdit(arguments);
 
             case HelpCommand.COMMAND_WORD: // Fallthrough
             default:
@@ -121,7 +129,30 @@ public class Parser {
             return new IncorrectCommand(ive.getMessage());
         }
     }
+    
+    /**
+     * Parses arguments in the context of the edit person command.
+     *
+     * @param args full command args string
+     * @return the prepared command PERSON_EDIT_DATA_ARGS_FORMAT
+     */
+    private Command prepareEdit(String args)  {
+        final Matcher matcher = PERSON_EDIT_DATA_ARGS_FORMAT.matcher(args.trim());
+        // Validate arg string format
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+        return new EditCommand(
+				matcher.group("targetIndex"),
 
+		        matcher.group("phone"),
+
+		        matcher.group("email"),
+		        matcher.group("address"));
+        
+    }
+
+    
     /**
      * Checks whether the private prefix of a contact detail in the add command's arguments string is present.
      */
@@ -159,6 +190,7 @@ public class Parser {
         }
     }
 
+    
     /**
      * Parses arguments in the context of the view command.
      *
