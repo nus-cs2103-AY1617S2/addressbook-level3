@@ -6,6 +6,16 @@ import seedu.addressbook.data.exception.IllegalValueException;
 public abstract class Storage {
 	
     /**
+     * Signals that some error has occurred while trying to convert and read/write data between the application
+     * and the storage.
+     */
+    public static class StorageOperationException extends Exception {
+        public StorageOperationException(String message) {
+            super(message);
+        }
+    }
+	
+    /**
      * Creates the Storage object based on the user specified path (if any) or the default storage path.
      * @throws Storage.InvalidStoragePathException if the target file path is incorrect.
      */
@@ -18,7 +28,7 @@ public abstract class Storage {
      *
      * @throws StorageOperationException if there were errors reading and/or converting data from file.
      */
-    public abstract AddressBook load();
+    public abstract AddressBook load() throws StorageOperationException;
     
     /**
      * Signals that the given path does not fulfill the storage path constraints.
@@ -39,5 +49,5 @@ public abstract class Storage {
      *
      * @throws StorageOperationException if there were errors converting and/or storing data to file.
      */
-    public abstract void save(AddressBook addressBook);
+    public abstract void save(AddressBook addressBook) throws StorageOperationException;
 }
