@@ -14,7 +14,7 @@ import seedu.addressbook.data.tag.UniqueTagList;
 
 
 /**
- * Deletes a person identified using it's last displayed index from the address book.
+ * Changes the phone number of a person identified using it's last displayed index from the address book.
  */
 public class EditPhoneCommand extends Command {
 
@@ -25,7 +25,7 @@ public class EditPhoneCommand extends Command {
             + "Parameters: INDEX [p]p/NEWPHONE\n\t"
             + "Example: " + COMMAND_WORD + " 1" + " pp/98765432";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Changed Phone Number for Person: %1$s";
+    public static final String MESSAGE_EDITP_PERSON_SUCCESS = "Changed Phone Number for Person: %1$s";
     
     private Phone newPhone;
 
@@ -42,7 +42,7 @@ public class EditPhoneCommand extends Command {
             final ReadOnlyPerson target = getTargetPerson();
             addressBook.removePerson(target);
             addressBook.addPerson(new Person(target.getName(), this.newPhone, target.getEmail(), target.getAddress(), target.getTags()));
-            return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, target));
+            return new CommandResult(String.format(MESSAGE_EDITP_PERSON_SUCCESS, target));
 
         } catch (IndexOutOfBoundsException ie) {
             return new CommandResult(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
