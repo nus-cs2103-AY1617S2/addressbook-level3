@@ -418,7 +418,7 @@ public class LogicTest {
     }
 
     @Test
-    public void execute_find_isCaseInsensitive() throws Exception {
+    public void execute_find_isCaseSensitive() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person pTarget1 = helper.generatePersonWithName("bla bla KEY bla");
         Person pTarget2 = helper.generatePersonWithName("bla KEY bla bceofeia");
