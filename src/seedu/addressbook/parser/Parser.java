@@ -26,7 +26,7 @@ public class Parser {
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
 
-    public static final Pattern SORT_FIELD_FORMAT = Pattern.compile("(?<field>name|address|phone)");
+    public static final Pattern SORT_FIELD_FORMAT = Pattern.compile("(?<field>name|address|phone|email)");
     /**
      * Signals that the user input could not be parsed.
      */
@@ -107,6 +107,9 @@ public class Parser {
                 break;
             case "phone":
                 sortBy = SortCommand.SORT_BY_PHONE;
+                break;
+            case "email":
+                sortBy = SortCommand.SORT_BY_EMAIL;
                 break;
             default:
                 return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));

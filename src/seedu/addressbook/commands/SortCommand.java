@@ -1,6 +1,5 @@
 package seedu.addressbook.commands;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -23,61 +22,84 @@ public class SortCommand extends Command {
     public static final int SORT_BY_NAME = 0;
     public static final int SORT_BY_PHONE = 1;
     public static final int SORT_BY_ADDRESS = 2;
+    public static final int SORT_BY_EMAIL = 3; 
     
-    private final int sortBy;
     private final String sortFieldString;
 
-    private final Comparator<Person> sorter;
+    private final Comparator<Person> fieldComparator;
     
     public SortCommand(int sortBy){
-        this.sortBy = sortBy;
         switch(sortBy){
             case SORT_BY_ADDRESS:
-                sorter = new AddressComparator();
+                fieldComparator = new AddressComparator();
                 sortFieldString = "address";
                 break;
+                
             case SORT_BY_NAME:
-                sorter = new NameComparator();
+                fieldComparator = new NameComparator();
                 sortFieldString = "name";
                 break;
+                
             case SORT_BY_PHONE:
-                sorter = new PhoneComparator();
-                sortFieldString = "phone";
+                fieldComparator = new PhoneComparator();
+                sortFieldString = "phone number";
                 break;
-            default:
+                
+            case SORT_BY_EMAIL:
+                fieldComparator = new EmailComparator();
+                sortFieldString = "email";
+                break;
+                
+            default: //guaranteed not to fall to default. Not too sure what exception to throw.
                 sortFieldString = null;
-                sorter = null;
+                fieldComparator = null;
+                break;
         }
     }
     
     @Override
     public CommandResult execute() {
-        List<ReadOnlyPerson> sortedPersons = Collections.unmodifiableList(sortList(sorter, addressBook.getAllPersons().sortableList()));
-        //TODO change the feedback
+        List<ReadOnlyPerson> sortedPersons = addressBook.getAllPersons().sortedImmutableList(fieldComparator);
         return new CommandResult(getMessageForSortedPersonShownSummary(sortedPersons, sortFieldString), sortedPersons);
     }
     
-    public static List<Person> sortList(Comparator<Person> sorter, List<Person> allPersons){
-        Collections.sort(allPersons, sorter);
-        return allPersons;
-    }
-    
+    /**
+     * Compares two Person objects based on the lexicographical string values of Address field. 
+     *
+     */
     public class AddressComparator implements Comparator<Person>{
         public int compare(Person first, Person second){
             return first.getAddress().toString().compareTo(second.getAddress().toString());
         }
     }
     
+    /**
+     * Compares two Person objects based on the lexicographical string values of Name field.
+     *
+     */
     public class NameComparator implements Comparator<Person>{
         public int compare(Person first, Person second){
             return first.getName().toString().compareTo(second.getName().toString());
         }
     }
     
+    /**
+     * Compares two Person objects based on the lexicographical string values of Phone field.
+     *
+     */
     public class PhoneComparator implements Comparator<Person>{
         public int compare(Person first, Person second){
             return first.getPhone().toString().compareTo(second.getPhone().toString());
         }
     }
     
+    /**
+     * Compares two Person objects based on the lexicographical string values of Email field.
+     *
+     */
+    public class EmailComparator implements Comparator<Person>{
+        public int compare(Person first, Person second){
+            return first.getEmail().toString().compareTo(second.getEmail().toString());
+        }
+    }
 }
