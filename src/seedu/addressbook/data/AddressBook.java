@@ -1,11 +1,10 @@
 package seedu.addressbook.data;
 
+import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.*;
 import seedu.addressbook.data.person.UniquePersonList.*;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
-import seedu.addressbook.data.tag.UniqueTagList.*;
-
 import java.util.*;
 
 /**
@@ -133,4 +132,13 @@ public class AddressBook {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(allPersons, allTags);
     }
+
+    /**
+     * Edits name of the person of the given index in address book
+     * @throws IllegalValueException 
+     */
+	public void editPersonName(int targetIndex, String newName) throws PersonNotFoundException, IllegalValueException {
+		allPersons.editName(targetIndex, newName);
+		
+	}
 }
