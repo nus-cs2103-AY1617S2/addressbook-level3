@@ -64,6 +64,9 @@ public class Parser {
 
             case DeleteCommand.COMMAND_WORD:
                 return prepareDelete(arguments);
+                
+            case EditNameCommand.COMMAND_WORD:
+            	return prepareEditName(arguments);
 
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
@@ -100,7 +103,21 @@ public class Parser {
     		return arguments.trim().split(" ");
     	}
     }
- 
+    
+    /**
+     * Parses arguments in the context of the edit name command.
+     * @param arguments
+     * @return
+     */
+    private Command prepareEditName(String arguments) {
+    	try {
+    		int index = parseArgsAsDisplayedIndex(splitBySpace(arguments)[0]);
+    		String newName = splitBySpace(arguments)[1];
+    		return new EditNameCommand(index, newName);
+    	} catch (ParseException | NumberFormatException e) {
+    		return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNameCommand.MESSAGE_USAGE));
+    	}
+	}
 
 	/**
      * Parses arguments in the context of the add person command.
