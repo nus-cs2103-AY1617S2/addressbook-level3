@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import seedu.addressbook.data.person.Person;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
 /**
@@ -24,7 +25,7 @@ public class SortCommand extends Command {
     public static final int SORT_BY_ADDRESS = 2;
     
     public final int sortBy;
-    private final Comparator<ReadOnlyPerson> sorter;
+    private final Comparator<Person> sorter;
     
     public SortCommand(int sortBy){
         this.sortBy = sortBy;
@@ -45,29 +46,30 @@ public class SortCommand extends Command {
     
     @Override
     public CommandResult execute() {
-        List<ReadOnlyPerson> sortedPersons = sortList(sorter, addressBook.getAllPersons().immutableListView());
+        List<ReadOnlyPerson> sortedPersons = Collections.unmodifiableList(sortList(sorter, addressBook.getAllPersons().sortableList()));
+        //TODO change the feedback
         return new CommandResult(getMessageForPersonListShownSummary(sortedPersons), sortedPersons);
     }
     
-    public static List<ReadOnlyPerson> sortList(Comparator<ReadOnlyPerson> sorter, List<ReadOnlyPerson> allPersons){
+    public static List<Person> sortList(Comparator<Person> sorter, List<Person> allPersons){
         Collections.sort(allPersons, sorter);
         return allPersons;
     }
     
-    public class AddressComparator implements Comparator<ReadOnlyPerson>{
-        public int compare(ReadOnlyPerson first, ReadOnlyPerson second){
+    public class AddressComparator implements Comparator<Person>{
+        public int compare(Person first, Person second){
             return first.getAddress().toString().compareTo(second.getAddress().toString());
         }
     }
     
-    public class NameComparator implements Comparator<ReadOnlyPerson>{
-        public int compare(ReadOnlyPerson first, ReadOnlyPerson second){
+    public class NameComparator implements Comparator<Person>{
+        public int compare(Person first, Person second){
             return first.getName().toString().compareTo(second.getName().toString());
         }
     }
     
-    public class PhoneComparator implements Comparator<ReadOnlyPerson>{
-        public int compare(ReadOnlyPerson first, ReadOnlyPerson second){
+    public class PhoneComparator implements Comparator<Person>{
+        public int compare(Person first, Person second){
             return first.getPhone().toString().compareTo(second.getPhone().toString());
         }
     }
