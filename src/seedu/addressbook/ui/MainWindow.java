@@ -3,15 +3,37 @@ package seedu.addressbook.ui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.scene.Scene;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.input.InputEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.DirectoryChooser;
+
 import seedu.addressbook.commands.ExitCommand;
+import seedu.addressbook.commands.FindCommand;
 import seedu.addressbook.logic.Logic;
+import seedu.addressbook.Main;
 import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
+import java.util.ArrayList;
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
+
+import org.controlsfx.control.textfield.AutoCompletionBinding;
+import org.controlsfx.control.textfield.TextFields;
 
 import static seedu.addressbook.common.Messages.*;
 
@@ -22,8 +44,32 @@ public class MainWindow {
 
     private Logic logic;
     private Stoppable mainApp;
+    private SuggestionWindow suggestionWindow;
+    private Stage suggestionStage;
+    private Scene scene;
 
     public MainWindow(){
+        initializeSuggestionWindow();
+    }
+
+    private void initializeSuggestionWindow() {
+        try{
+            suggestionStage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            
+            /* Note: When calling getResource(), use '/', instead of File.separator or '\\'
+             * More info: http://docs.oracle.com/javase/8/docs/technotes/guides/lang/resources.html#res_name_context
+             */
+            loader.setLocation(Main.class.getResource("ui/suggestionwindow.fxml"));
+    
+            suggestionStage.setTitle("Suggestions");
+            suggestionStage.setScene(new Scene(loader.load(), 500, 200));
+            
+            suggestionWindow = loader.getController();
+        } catch (Exception e) {
+            display(e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     public void setLogic(Logic logic){
@@ -34,13 +80,32 @@ public class MainWindow {
         this.mainApp = mainApp;
     }
 
+    public void setScene(Scene scene){
+        this.scene = scene;
+    }
+
+    @FXML
+    private MenuBar menuBar;
+
     @FXML
     private TextArea outputConsole;
 
     @FXML
     private TextField commandInput;
 
-
+	/**
+	 * This method is automatically called after mainwindow.fxml has been loaded.
+	 * AutoComplete functionality is added for user commands. 
+	 */
+    @FXML
+    private void initialize() {
+		String[] possibleCommands = { "add ", "clear", "delete ", "exit", "find ", "help", "list", 
+				"view ", "viewall " };
+		AutoCompletionBinding<String> binding = TextFields.bindAutoCompletion(commandInput, possibleCommands);
+		binding.setMaxWidth(70);
+		binding.setDelay(10);
+    }
+    
     @FXML
     void onCommand(ActionEvent event) {
         try {
@@ -55,6 +120,59 @@ public class MainWindow {
         } catch (Exception e) {
             display(e.getMessage());
             throw new RuntimeException(e);
+        }
+    }
+    
+    @FXML
+    void OnTextChanged(KeyEvent event) {
+        try {
+            String userCommandText = commandInput.getText();
+            if(userCommandText.length() > 4 && userCommandText.startsWith(FindCommand.COMMAND_WORD)){
+                CommandResult result = logic.execute(userCommandText);
+                final Optional<List<? extends ReadOnlyPerson>> resultPersons = result.getRelevantPersons();
+                if(resultPersons.isPresent() && resultPersons.get().size() > 0) {
+                    if(!suggestionStage.isShowing()){
+                        suggestionStage.show();
+                    }
+                    suggestionWindow.setMenuList(new Formatter().format(resultPersons.get()));
+                    suggestionWindow.display();
+                }else{
+                    suggestionStage.hide();
+                }
+                
+            }
+        } catch (Exception e) {
+            display(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Handle hot key action (ALT + S) to launch directory chooser
+     */
+    @FXML
+    void handleKeyInput(InputEvent event){
+       if (event instanceof KeyEvent){
+          final KeyEvent keyEvent = (KeyEvent) event;
+          if (keyEvent.isAltDown() && keyEvent.getCode() == KeyCode.S){
+              loadDirectoryChooser();
+          }
+       }
+    }
+
+    @FXML
+    void handleSaveLocation(ActionEvent event){
+        loadDirectoryChooser();
+    }
+
+    private void loadDirectoryChooser(){
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File selectedDirectory = directoryChooser.showDialog(scene.getWindow());
+        if(selectedDirectory!=null){
+            String newStorageFilePath = selectedDirectory.getAbsolutePath()+"\\addressbook.txt";
+            logic.setStorageFilePath(newStorageFilePath);
+            String storageFileInfo = String.format(MESSAGE_CHANGED_STORAGE_FILE_LOCATION, newStorageFilePath);
+            display(storageFileInfo);
         }
     }
 
