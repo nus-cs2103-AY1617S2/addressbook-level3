@@ -8,6 +8,7 @@ import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
 import seedu.addressbook.data.person.*;
 
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -253,9 +254,10 @@ public class ParserTest {
                 new Phone(Phone.EXAMPLE, true),
                 new Email(Email.EXAMPLE, false),
                 new Address(Address.EXAMPLE, true),
+                new Birthday(Birthday.EXAMPLE, true),
                 new UniqueTagList(new Tag("tag1"), new Tag("tag2"), new Tag("tag3"))
             );
-        } catch (IllegalValueException ive) {
+        } catch (IllegalValueException | ParseException ive) {
             throw new RuntimeException("test person data should be valid by definition");
         }
     }
@@ -265,7 +267,9 @@ public class ParserTest {
                 + person.getName().fullName
                 + (person.getPhone().isPrivate() ? " pp/" : " p/") + person.getPhone().value
                 + (person.getEmail().isPrivate() ? " pe/" : " e/") + person.getEmail().value
-                + (person.getAddress().isPrivate() ? " pa/" : " a/") + person.getAddress().value;
+                + (person.getAddress().isPrivate() ? " pa/" : " a/") + person.getAddress().value
+        		+(person.getBirthday().isPrivate() ? " pb/" : " b/") + person.getBirthday().value;
+
         for (Tag tag : person.getTags()) {
             addCommand += " t/" + tag.tagName;
         }
@@ -294,7 +298,13 @@ public class ParserTest {
      * @return the parsed command object
      */
     private <T extends Command> T parseAndAssertCommandType(String input, Class<T> expectedCommandClass) {
-        final Command result = parser.parseCommand(input);
+        Command result = null;
+		try {
+			result = parser.parseCommand(input);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         assertTrue(result.getClass().isAssignableFrom(expectedCommandClass));
         return (T) result;
     }

@@ -73,6 +73,13 @@ public class UniquePersonList implements Iterable<Person> {
     public List<ReadOnlyPerson> immutableListView() {
         return Collections.unmodifiableList(internalList);
     }
+    
+    /**
+     * Returns internalList as an unsorted list
+     */
+    public List<Person> unsortedListView() {
+    	return internalList;
+    }
 
 
     /**

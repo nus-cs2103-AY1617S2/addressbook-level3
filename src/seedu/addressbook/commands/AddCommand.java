@@ -5,6 +5,7 @@ import seedu.addressbook.data.person.*;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
 
+import java.text.ParseException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,9 +18,9 @@ public class AddCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Adds a person to the address book. "
             + "Contact details can be marked private by prepending 'p' to the prefix.\n\t"
-            + "Parameters: NAME [p]p/PHONE [p]e/EMAIL [p]a/ADDRESS  [t/TAG]...\n\t"
+            + "Parameters: NAME [p]p/PHONE [p]e/EMAIL [p]a/ADDRESS [p]b/BIRTHDAY  [t/TAG]...\n\t"
             + "Example: " + COMMAND_WORD
-            + " John Doe p/98765432 e/johnd@gmail.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney";
+            + " John Doe p/98765432 e/johnd@gmail.com a/311, Clementi Ave 2, #02-25 b/01-01-1990 t/friends t/owesMoney";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
@@ -30,12 +31,14 @@ public class AddCommand extends Command {
      * Convenience constructor using raw values.
      *
      * @throws IllegalValueException if any of the raw values are invalid
+     * @throws ParseException 
      */
     public AddCommand(String name,
                       String phone, boolean isPhonePrivate,
                       String email, boolean isEmailPrivate,
                       String address, boolean isAddressPrivate,
-                      Set<String> tags) throws IllegalValueException {
+                      String birthday,
+                      Set<String> tags) throws IllegalValueException, ParseException {
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
             tagSet.add(new Tag(tagName));
@@ -45,6 +48,7 @@ public class AddCommand extends Command {
                 new Phone(phone, isPhonePrivate),
                 new Email(email, isEmailPrivate),
                 new Address(address, isAddressPrivate),
+                new Birthday(birthday,isPhonePrivate),
                 new UniqueTagList(tagSet)
         );
     }
