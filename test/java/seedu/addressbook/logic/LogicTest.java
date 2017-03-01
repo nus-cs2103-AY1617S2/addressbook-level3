@@ -177,7 +177,7 @@ public class LogicTest {
         // execute command and verify result
         assertCommandBehavior(
                 helper.generateAddCommand(toBeAdded),
-                Messages.MESSAGE_DUPLICATE_PERSON,
+                MESSAGE_DUPLICATE_PERSON,
                 expectedAB,
                 false,
                 Collections.emptyList());

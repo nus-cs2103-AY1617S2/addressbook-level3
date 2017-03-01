@@ -4,7 +4,6 @@ import seedu.addressbook.common.Utils;
 import seedu.addressbook.data.exception.DuplicateDataException;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * A list of tags. Does not allow nulls or duplicates.
