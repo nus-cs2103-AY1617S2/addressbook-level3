@@ -174,6 +174,41 @@ public class ParserTest {
                 parseAndAssertCommandType(input, FindCommand.class);
         assertEquals(keySet, result.getKeywords());
     }
+    
+    @Test
+    public void findTagCommand_invalidArgs() {
+        // no keywords
+        final String[] inputs = {
+                "findtag",
+                "findtag "
+        };
+        final String resultMessage =
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindTagCommand.MESSAGE_USAGE);
+        parseAndAssertIncorrectWithMessage(resultMessage, inputs);
+    }
+    
+    @Test
+    public void findTagCommand_validArgs_parsedCorrectly() {
+        final String[] keywords = { "key1", "key2", "key3" };
+        final Set<String> keySet = new HashSet<>(Arrays.asList(keywords));
+
+        final String input = "findtag " + String.join(" ", keySet);
+        final FindTagCommand result =
+                parseAndAssertCommandType(input, FindTagCommand.class);
+        assertEquals(keySet, result.getKeywords());
+    }
+    
+    @Test
+    public void findTagCommand_duplicateKeys_parsedCorrectly() {
+        final String[] keywords = { "key1", "key2", "key3" };
+        final Set<String> keySet = new HashSet<>(Arrays.asList(keywords));
+
+        // duplicate every keyword
+        final String input = "findtag " + String.join(" ", keySet) + " " + String.join(" ", keySet);
+        final FindTagCommand result =
+                parseAndAssertCommandType(input, FindTagCommand.class);
+        assertEquals(keySet, result.getKeywords());
+    }
 
     /**
      * Test add person command
