@@ -1,5 +1,6 @@
 package seedu.addressbook.commands;
 
+import seedu.addressbook.commands.exception.*;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
 import java.util.List;
@@ -21,5 +22,23 @@ public class ListCommand extends Command {
     public CommandResult execute() {
         List<ReadOnlyPerson> allPersons = addressBook.getAllPersons().immutableListView();
         return new CommandResult(getMessageForPersonListShownSummary(allPersons), allPersons);
+    }
+
+
+    @Override
+    public boolean isMutating() {
+        return false;
+    }
+
+
+    @Override
+    public boolean isUndoable() {
+        return false;
+    }
+
+
+    @Override
+    public String undo() throws UndoFailedException {
+        throw new IllegalUndoOperationException(COMMAND_WORD);
     }
 }

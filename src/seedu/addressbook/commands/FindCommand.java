@@ -1,6 +1,8 @@
 package seedu.addressbook.commands;
 
+import seedu.addressbook.commands.exception.*;
 import seedu.addressbook.data.person.ReadOnlyPerson;
+import seedu.addressbook.data.tag.Tag;
 
 import java.util.*;
 
@@ -44,13 +46,82 @@ public class FindCommand extends Command {
      */
     private List<ReadOnlyPerson> getPersonsWithNameContainingAnyKeyword(Set<String> keywords) {
         final List<ReadOnlyPerson> matchedPersons = new ArrayList<>();
+        Set<String> lowerCaseKeywords = new HashSet<String>();
+        for(String k : keywords){
+            lowerCaseKeywords.add(k.toLowerCase());
+        }
         for (ReadOnlyPerson person : addressBook.getAllPersons()) {
-            final Set<String> wordsInName = new HashSet<>(person.getName().getWordsInName());
-            if (!Collections.disjoint(wordsInName, keywords)) {
-                matchedPersons.add(person);
+            final Set<String> wordsToSearch = new HashSet<String>();
+            for(String w : person.getName().getWordsInName()) {
+                wordsToSearch.add(w.toLowerCase());
             }
+            for(String w : person.getAddress().getWordsInAddress()) {
+                wordsToSearch.add(w.toLowerCase());
+            }
+            for(Tag t : person.getTags().toSet()) {
+                wordsToSearch.add(t.tagName.toLowerCase());
+            }
+            wordsToSearch.add(person.getPhone().toString());
+            wordsToSearch.add(person.getEmail().toString());
+            
+            /* Exact Match */
+            if (!Collections.disjoint(wordsToSearch, lowerCaseKeywords)) {
+                matchedPersons.add(person);
+                continue;
+            }
+            /* Partial Match
+             * Near Match (Error Margin Allowed: 2)*/
+            for(String k: lowerCaseKeywords) {
+                for(String w : wordsToSearch) {
+                    if(w.contains(k)) {
+                        matchedPersons.add(person);
+                        break;
+                    }else if(computeLevenshteinDistance(w,k) <= 2) {
+                        matchedPersons.add(person);
+                        break;
+                    }
+                }
+            }
+            
         }
         return matchedPersons;
     }
 
+    @Override
+    public boolean isMutating() {
+        return false;
+    }
+
+    @Override
+    public boolean isUndoable() {
+        return false;
+    }
+
+    @Override
+    public String undo() throws UndoFailedException {
+        throw new IllegalUndoOperationException(COMMAND_WORD);
+    }
+
+    private int computeLevenshteinDistance(CharSequence str1, CharSequence str2 ) {
+        int[][] distance = new int[str1.length() + 1][str2.length() + 1];
+    
+        for (int i = 0; i <= str1.length(); i++)
+           distance[i][0] = i;
+        for (int j = 1; j <= str2.length(); j++)
+           distance[0][j] = j;
+    
+        for (int i = 1; i <= str1.length(); i++)
+           for (int j = 1; j <= str2.length(); j++)
+              distance[i][j] =
+                 minimum(
+                    distance[i - 1][j] + 1,
+                    distance[i][j - 1] + 1,
+                    distance[i - 1][j - 1] +
+                        ((str1.charAt(i - 1) == str2.charAt(j - 1)) ? 0 : 1));
+    
+        return distance[str1.length()][str2.length()];
+    }
+    private int minimum(int a, int b, int c) {
+        return Math.min(Math.min(a, b), c);
+    }
 }

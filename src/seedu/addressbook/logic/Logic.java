@@ -7,6 +7,7 @@ import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.parser.Parser;
 import seedu.addressbook.storage.StorageFile;
 
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -53,6 +54,10 @@ public class Logic {
         return storage.getPath();
     }
 
+    public void setStorageFilePath(String filePath){
+        storage.path = Paths.get(filePath);
+    }
+
     /**
      * Unmodifiable view of the current last shown list.
      */
@@ -85,7 +90,9 @@ public class Logic {
     private CommandResult execute(Command command) throws Exception {
         command.setData(addressBook, lastShownList);
         CommandResult result = command.execute();
-        storage.save(addressBook);
+        if (command.isMutating()) {
+            storage.save(addressBook);
+        }
         return result;
     }
 
