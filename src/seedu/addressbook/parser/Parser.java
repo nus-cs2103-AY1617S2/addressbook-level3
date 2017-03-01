@@ -2,7 +2,8 @@ package seedu.addressbook.parser;
 
 import seedu.addressbook.commands.*;
 import seedu.addressbook.data.exception.IllegalValueException;
-
+import seedu.addressbook.data.tag.Tag;
+import seedu.addressbook.data.tag.UniqueTagList;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,6 +27,7 @@ public class Parser {
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
 
+    private static final String DELIMITER_SPACE = " ";
 
     /**
      * Signals that the user input could not be parsed.
@@ -46,6 +48,7 @@ public class Parser {
      *
      * @param userInput full user input string
      * @return the command based on the user input
+     * @throws IllegalValueException 
      */
     public Command parseCommand(String userInput) {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
@@ -62,6 +65,9 @@ public class Parser {
 
             case DeleteCommand.COMMAND_WORD:
                 return prepareDelete(arguments);
+                
+            case EditNameCommand.COMMAND_WORD:
+            	return prepareEditName(arguments);
 
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
@@ -71,6 +77,9 @@ public class Parser {
 
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
+                
+            case ListTagCommand.COMMAND_WORD:
+                return prepareListTag(arguments);
 
             case ViewCommand.COMMAND_WORD:
                 return prepareView(arguments);
@@ -87,7 +96,31 @@ public class Parser {
         }
     }
 
+    private String[] splitBySpace(String arguments) throws ParseException {
+    	int numParameter = arguments.trim().split(DELIMITER_SPACE).length;
+    	if (numParameter <= 1) {
+    		throw new ParseException(arguments);
+    	} else {
+    		return arguments.trim().split(DELIMITER_SPACE);
+    	}
+    }
+    
     /**
+     * Parses arguments in the context of the edit name command.
+     * @param arguments
+     * @return
+     */
+    private Command prepareEditName(String arguments) {
+    	try {
+    		int index = parseArgsAsDisplayedIndex(splitBySpace(arguments)[0]);
+    		String newName = splitBySpace(arguments)[1];
+    		return new EditNameCommand(index, newName);
+    	} catch (ParseException | NumberFormatException e) {
+    		return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditNameCommand.MESSAGE_USAGE));
+    	}
+	}
+
+	/**
      * Parses arguments in the context of the add person command.
      *
      * @param args full command args string
@@ -170,6 +203,28 @@ public class Parser {
         } catch (ParseException | NumberFormatException e) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ViewCommand.MESSAGE_USAGE));
+        }
+    }
+    
+    /**
+     * Parses arguments in the context of the listTag command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     * @throws IllegalValueException 
+     */
+    private Command prepareListTag(String args) {
+
+        try {  	
+        	final Tag tag = new Tag(args);
+            final UniqueTagList tags = new UniqueTagList(tag);
+            return new ListTagCommand(tags.toSet());
+        } catch (NumberFormatException e) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ListTagCommand.MESSAGE_USAGE));
+        } catch (IllegalValueException e) {
+			e.printStackTrace();
+			return null;
         }
     }
 
