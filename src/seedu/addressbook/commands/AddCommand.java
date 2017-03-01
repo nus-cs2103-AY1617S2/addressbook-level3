@@ -1,7 +1,9 @@
 package seedu.addressbook.commands;
 
+import seedu.addressbook.commands.exception.*;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.*;
+import seedu.addressbook.data.person.UniquePersonList.PersonNotFoundException;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
 
@@ -23,8 +25,10 @@ public class AddCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_PERSON_NOT_FOUND = "%1$s no longer exists in the address book";
 
     private final Person toAdd;
+    private boolean commandSuccess;
 
     /**
      * Convenience constructor using raw values.
@@ -47,6 +51,7 @@ public class AddCommand extends Command {
                 new Address(address, isAddressPrivate),
                 new UniqueTagList(tagSet)
         );
+        commandSuccess = false;
     }
 
     public AddCommand(Person toAdd) {
@@ -61,10 +66,38 @@ public class AddCommand extends Command {
     public CommandResult execute() {
         try {
             addressBook.addPerson(toAdd);
+            commandSuccess = true;
+            commandHistory.push(this);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (UniquePersonList.DuplicatePersonException dpe) {
             return new CommandResult(MESSAGE_DUPLICATE_PERSON);
         }
+    }
+
+    @Override
+    public boolean isMutating() {
+        return true;
+    }
+
+    @Override
+    public boolean isUndoable() {
+        return commandSuccess;
+    }
+
+    @Override
+    public String undo() throws UndoFailedException {
+        final ReadOnlyPerson target = getPerson();
+        if (!isUndoable()) {
+            throw new IllegalUndoOperationException(COMMAND_WORD + target);
+        } else {
+            try {
+                addressBook.removePerson(target);
+                return String.format(MESSAGE_SUCCESS, target);
+            } catch (PersonNotFoundException e) {
+                throw new UndoFailedException(String.format(MESSAGE_PERSON_NOT_FOUND, target));
+            }
+        }
+        
     }
 
 }

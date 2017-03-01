@@ -1,5 +1,6 @@
 package seedu.addressbook.commands;
 
+import seedu.addressbook.commands.exception.*;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.data.tag.Tag;
 
@@ -85,6 +86,22 @@ public class FindCommand extends Command {
         }
         return matchedPersons;
     }
+
+    @Override
+    public boolean isMutating() {
+        return false;
+    }
+
+    @Override
+    public boolean isUndoable() {
+        return false;
+    }
+
+    @Override
+    public String undo() throws UndoFailedException {
+        throw new IllegalUndoOperationException(COMMAND_WORD);
+    }
+
     private int computeLevenshteinDistance(CharSequence str1, CharSequence str2 ) {
         int[][] distance = new int[str1.length() + 1][str2.length() + 1];
     

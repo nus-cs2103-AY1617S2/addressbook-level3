@@ -1,5 +1,6 @@
 package seedu.addressbook.commands;
 
+import seedu.addressbook.commands.exception.*;
 
 /**
  * Shows help instructions.
@@ -13,6 +14,7 @@ public class HelpCommand extends Command {
 
     public static final String MESSAGE_ALL_USAGES = AddCommand.MESSAGE_USAGE
             + "\n" + DeleteCommand.MESSAGE_USAGE
+            + "\n" + UndoCommand.MESSAGE_USAGE
             + "\n" + ClearCommand.MESSAGE_USAGE
             + "\n" + FindCommand.MESSAGE_USAGE
             + "\n" + ListCommand.MESSAGE_USAGE
@@ -24,5 +26,20 @@ public class HelpCommand extends Command {
     @Override
     public CommandResult execute() {
         return new CommandResult(MESSAGE_ALL_USAGES);
+    }
+
+    @Override
+    public boolean isMutating() {
+        return false;
+    }
+
+    @Override
+    public boolean isUndoable() {
+        return false;
+    }
+
+    @Override
+    public String undo() throws UndoFailedException {
+        throw new IllegalUndoOperationException(COMMAND_WORD);
     }
 }

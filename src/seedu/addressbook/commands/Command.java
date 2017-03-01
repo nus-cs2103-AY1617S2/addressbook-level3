@@ -1,10 +1,12 @@
 package seedu.addressbook.commands;
 
+import seedu.addressbook.commands.exception.*;
 import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
 import java.util.List;
+import java.util.Stack;
 
 import static seedu.addressbook.ui.Gui.DISPLAYED_INDEX_OFFSET;
 
@@ -14,6 +16,7 @@ import static seedu.addressbook.ui.Gui.DISPLAYED_INDEX_OFFSET;
 public abstract class Command {
     protected AddressBook addressBook;
     protected List<? extends ReadOnlyPerson> relevantPersons;
+    protected static Stack<Command> commandHistory = new Stack<Command>();
     private int targetIndex = -1;
 
     /**
@@ -64,5 +67,30 @@ public abstract class Command {
 
     public void setTargetIndex(int targetIndex) {
         this.targetIndex = targetIndex;
+    }
+    
+    /**
+     * Returns true if the command will mutate the data.
+     */
+    public abstract boolean isMutating();
+    
+    /**
+     * Returns true if the command can be undone.
+     */
+    public abstract boolean isUndoable();
+    
+    /**
+     * Attempts to undo the command.
+     * Returns the CommandResult feedback string of the original command if successful
+     * @throws UndoFailedException if the undo operation fails
+     * @throws IllegalUndoOperationException if called on an Command that cannot be undone
+     */
+    public abstract String undo() throws UndoFailedException;
+    
+    /**
+     * Clears the command history
+     */
+    protected static void clearCommandHistory(){
+        commandHistory = new Stack<Command>();
     }
 }

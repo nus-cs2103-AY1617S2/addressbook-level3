@@ -1,5 +1,7 @@
 package seedu.addressbook.commands;
 
+import seedu.addressbook.commands.exception.*;
+
 /**
  * Terminates the program.
  */
@@ -14,6 +16,21 @@ public class ExitCommand extends Command {
     @Override
     public CommandResult execute() {
         return new CommandResult(MESSAGE_EXIT_ACKNOWEDGEMENT);
+    }
+
+    @Override
+    public boolean isMutating() {
+        return false;
+    }
+
+    @Override
+    public boolean isUndoable() {
+        return false;
+    }
+
+    @Override
+    public String undo() throws UndoFailedException {
+        throw new IllegalUndoOperationException(COMMAND_WORD);
     }
 
 }
