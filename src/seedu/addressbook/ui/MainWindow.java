@@ -100,7 +100,7 @@ public class MainWindow {
     @FXML
     private void initialize() {
 		String[] possibleCommands = { "add ", "clear", "delete ", "exit", "find ", "help", "list", 
-				"view ", "viewall " };
+				"view ", "viewall ", "undo"};
 		AutoCompletionBinding<String> binding = TextFields.bindAutoCompletion(commandInput, possibleCommands);
 		binding.setMaxWidth(70);
 		binding.setDelay(10);
