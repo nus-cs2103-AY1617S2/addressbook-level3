@@ -58,7 +58,7 @@ public class Parser {
         switch (commandWord) {
 
             case AddCommand.COMMAND_WORD:
-                return prepareAdd(arguments);
+                return new PrepareManager().prepareAdd(arguments);
 
             case DeleteCommand.COMMAND_WORD:
                 return prepareDelete(arguments);
