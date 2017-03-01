@@ -26,6 +26,7 @@ public class Main extends Application implements Stoppable{
 
     @Override
     public void stop() throws Exception {
+        gui.stop();
         super.stop();
         Platform.exit();
         System.exit(0);
