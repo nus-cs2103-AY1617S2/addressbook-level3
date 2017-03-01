@@ -58,7 +58,7 @@ public class Parser {
         switch (commandWord) {
 
             case AddCommand.COMMAND_WORD:
-                return prepareAdd(arguments);
+                return new PrepareManager().prepareAdd(arguments);
 
             case DeleteCommand.COMMAND_WORD:
                 return prepareDelete(arguments);
@@ -80,6 +80,9 @@ public class Parser {
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
+                
+            case PrintCommand.COMMAND_WORD:
+                return new PrintCommand();
 
             case HelpCommand.COMMAND_WORD: // Fallthrough
             default:
