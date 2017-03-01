@@ -52,12 +52,12 @@ public class Priority {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Priority // instanceof handles nulls
-                && this.priority.equals((((Priority) other).priority))); // state check
+                && this.priority.toString().equals((((Priority) other).priority.toString()))); // state check
     }
 
     @Override
     public int hashCode() {
-        return priority.hashCode();
+        return priority.toString().hashCode();
     }
 
 }
