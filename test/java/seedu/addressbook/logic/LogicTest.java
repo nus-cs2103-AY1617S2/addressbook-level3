@@ -91,7 +91,6 @@ public class LogicTest {
         //Confirm the state of data is as expected
         assertEquals(expectedAddressBook, addressBook);
         assertEquals(lastShownList, logic.getLastShownList());
-        //assertEquals(addressBook, saveFile.load());
     }
 
 
