@@ -1,15 +1,18 @@
 package seedu.addressbook.logic;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.Stack;
+
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandResult;
+import seedu.addressbook.commands.RedoableCommand;
+import seedu.addressbook.commands.UndoableCommand;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.parser.Parser;
 import seedu.addressbook.storage.StorageFile;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * Represents the main Logic of the AddressBook.
@@ -19,6 +22,9 @@ public class Logic {
 
     private StorageFile storage;
     private AddressBook addressBook;
+    
+    private Stack<UndoableCommand> undoStack;
+    private Stack<UndoableCommand> redoStack;
 
     /** The list of person shown to the user most recently.  */
     private List<? extends ReadOnlyPerson> lastShownList = Collections.emptyList();
@@ -26,11 +32,17 @@ public class Logic {
     public Logic() throws Exception{
         setStorage(initializeStorage());
         setAddressBook(storage.load());
+        
+        undoStack = new Stack<UndoableCommand>();
+        redoStack = new Stack<UndoableCommand>();
     }
 
     Logic(StorageFile storageFile, AddressBook addressBook){
         setStorage(storageFile);
         setAddressBook(addressBook);
+        
+        undoStack = new Stack<UndoableCommand>();
+        redoStack = new Stack<UndoableCommand>();
     }
 
     void setStorage(StorageFile storage){
@@ -71,6 +83,12 @@ public class Logic {
     public CommandResult execute(String userCommandText) throws Exception {
         Command command = new Parser().parseCommand(userCommandText);
         CommandResult result = execute(command);
+        
+        if(command instanceof UndoableCommand){
+            //TODO: Avoid downcasting?
+            undoStack.push((UndoableCommand)command);
+        }
+        
         recordResult(result);
         return result;
     }
@@ -85,9 +103,42 @@ public class Logic {
     private CommandResult execute(Command command) throws Exception {
         command.setData(addressBook, lastShownList);
         CommandResult result = command.execute();
+        
+        if(command instanceof UndoableCommand){
+            //TODO: Avoid downcasting?
+            undoStack.push((UndoableCommand)command);
+        }
+        
         storage.save(addressBook);
         return result;
     }
+    
+    public boolean undo() throws Exception{
+        if(!undoStack.isEmpty()){
+            UndoableCommand cmd = undoStack.pop();           
+            cmd.undo();  
+           
+            redoStack.push(cmd); //Code Smells!!!
+            return true;
+        }
+        
+        return false;
+    }
+    
+    public boolean redo() throws Exception{
+        if(!redoStack.isEmpty()){
+            //Code Smells!!!
+            RedoableCommand cmd = (RedoableCommand)redoStack.pop();           
+            cmd.redo();  
+            return true;
+        }
+        
+        return false;
+    }
+    
+    
+    
+    
 
     /** Updates the {@link #lastShownList} if the result contains a list of Persons. */
     private void recordResult(CommandResult result) {

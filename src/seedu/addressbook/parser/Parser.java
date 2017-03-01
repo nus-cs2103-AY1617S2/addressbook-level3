@@ -1,5 +1,6 @@
 package seedu.addressbook.parser;
 
+import seedu.addressbook.parser.EditCommandParser;
 import seedu.addressbook.commands.*;
 import seedu.addressbook.data.exception.IllegalValueException;
 
@@ -68,10 +69,19 @@ public class Parser {
 
             case FindCommand.COMMAND_WORD:
                 return prepareFind(arguments);
+                
+            case FindByTagCommand.COMMAND_WORD:
+                return prepareFindByTag(arguments);
 
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
 
+            case ListTagCommand.COMMAND_WORD:
+                return new ListTagCommand();
+                
+            case EditCommand.COMMAND_WORD:
+                return new EditCommandParser().parse(arguments);
+                
             case ViewCommand.COMMAND_WORD:
                 return prepareView(arguments);
 
@@ -224,6 +234,19 @@ public class Parser {
         final String[] keywords = matcher.group("keywords").split("\\s+");
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
         return new FindCommand(keywordSet);
+    }
+    
+    private Command prepareFindByTag(String args) {
+        final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    FindCommand.MESSAGE_USAGE));
+        }
+
+        // keywords delimited by whitespace
+        final String[] keywords = matcher.group("keywords").split("\\s+");
+        final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
+        return new FindByTagCommand(keywordSet);
     }
 
 

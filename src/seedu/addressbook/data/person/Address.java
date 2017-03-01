@@ -29,6 +29,18 @@ public class Address {
     }
 
     /**
+     * Validates given address.
+     *
+     * @throws IllegalValueException if given address string is invalid.
+     */
+    public Address(String address) throws IllegalValueException {
+        if (!isValidAddress(address)) {
+            throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
+        }
+        this.value = address;
+    }
+
+    /**
      * Returns true if a given string is a valid person email.
      */
     public static boolean isValidAddress(String test) {

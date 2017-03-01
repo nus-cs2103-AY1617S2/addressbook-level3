@@ -30,6 +30,19 @@ public class Phone {
     }
 
     /**
+     * Validates given phone number.
+     *
+     * @throws IllegalValueException if given phone string is invalid.
+     */
+    public Phone(String phone) throws IllegalValueException {
+        phone = phone.trim();
+        if (!isValidPhone(phone)) {
+            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+        }
+        this.value = phone;
+    }
+
+    /**
      * Checks if a given string is a valid person phone number.
      */
     public static boolean isValidPhone(String test) {
