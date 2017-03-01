@@ -2,6 +2,9 @@ package seedu.addressbook.parser;
 
 import seedu.addressbook.commands.*;
 import seedu.addressbook.data.exception.IllegalValueException;
+import seedu.addressbook.data.tag.Tag;
+import seedu.addressbook.data.tag.UniqueTagList;
+import seedu.addressbook.data.tag.UniqueTagList.DuplicateTagException;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -46,6 +49,7 @@ public class Parser {
      *
      * @param userInput full user input string
      * @return the command based on the user input
+     * @throws IllegalValueException 
      */
     public Command parseCommand(String userInput) {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
@@ -71,6 +75,9 @@ public class Parser {
 
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
+                
+            case ListTagCommand.COMMAND_WORD:
+                return prepareListTag(arguments);
 
             case ViewCommand.COMMAND_WORD:
                 return prepareView(arguments);
@@ -170,6 +177,28 @@ public class Parser {
         } catch (ParseException | NumberFormatException e) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ViewCommand.MESSAGE_USAGE));
+        }
+    }
+    
+    /**
+     * Parses arguments in the context of the listTag command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     * @throws IllegalValueException 
+     */
+    private Command prepareListTag(String args) {
+
+        try {  	
+        	final Tag tag = new Tag(args);
+            final UniqueTagList tags = new UniqueTagList(tag);
+            return new ListTagCommand(tags.toSet());
+        } catch (NumberFormatException e) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ListTagCommand.MESSAGE_USAGE));
+        } catch (IllegalValueException e) {
+			e.printStackTrace();
+			return null;
         }
     }
 
