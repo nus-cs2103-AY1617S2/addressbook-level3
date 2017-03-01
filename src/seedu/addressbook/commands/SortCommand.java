@@ -57,8 +57,7 @@ public class SortCommand extends Command {
     public class ReadOnlyPersonPriorityComparator implements Comparator<ReadOnlyPerson> {
 
         @Override
-        public int compare(ReadOnlyPerson o1, ReadOnlyPerson o2)
-        {
+        public int compare(ReadOnlyPerson o1, ReadOnlyPerson o2) {
             // Highest priority to lowest priority
             PriorityLevel o1Priority = o1.getPriority().getPriorityLevel();
             PriorityLevel o2Priority = o2.getPriority().getPriorityLevel();
