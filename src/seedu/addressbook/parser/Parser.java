@@ -1,13 +1,32 @@
 package seedu.addressbook.parser;
 
-import seedu.addressbook.commands.*;
-import seedu.addressbook.data.exception.IllegalValueException;
+import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import seedu.addressbook.commands.AddCommand;
+import seedu.addressbook.commands.ClearCommand;
+import seedu.addressbook.commands.Command;
+import seedu.addressbook.commands.DeleteCommand;
+import seedu.addressbook.commands.ExitCommand;
+import seedu.addressbook.commands.FindCommand;
+import seedu.addressbook.commands.HelpCommand;
+import seedu.addressbook.commands.IncorrectCommand;
+import seedu.addressbook.commands.ListByTagCommand;
+import seedu.addressbook.commands.ListCommand;
+import seedu.addressbook.commands.ListTagsCommand;
+import seedu.addressbook.commands.SortCommand;
+import seedu.addressbook.commands.ViewAllCommand;
+import seedu.addressbook.commands.ViewCommand;
+import seedu.addressbook.data.exception.IllegalValueException;
+import seedu.addressbook.data.person.Priority;
+import seedu.addressbook.data.tag.Tag;
 
 /**
  * Parses user input.
@@ -24,6 +43,7 @@ public class Parser {
                     + " (?<isPhonePrivate>p?)p/(?<phone>[^/]+)"
                     + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
+                    + "(priority/(?<priority>[^/]+))?" // optional priority
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
 
 
@@ -71,6 +91,12 @@ public class Parser {
 
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
+                
+            case ListByTagCommand.COMMAND_WORD:
+            	return prepareListByTag(arguments);
+            	
+            case SortCommand.COMMAND_WORD:
+                return prepareSort(arguments);
 
             case ViewCommand.COMMAND_WORD:
                 return prepareView(arguments);
@@ -80,6 +106,9 @@ public class Parser {
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
+                
+            case ListTagsCommand.COMMAND_WORD:
+            	return new ListTagsCommand();
 
             case HelpCommand.COMMAND_WORD: // Fallthrough
             default:
@@ -100,6 +129,11 @@ public class Parser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
         try {
+            
+            String priority = Priority.PriorityLevel.LOW.toString();
+            if (matcher.group("priority") != null) {
+                priority = matcher.group("priority");
+            }
             return new AddCommand(
                     matcher.group("name"),
 
@@ -111,6 +145,8 @@ public class Parser {
 
                     matcher.group("address"),
                     isPrivatePrefixPresent(matcher.group("isAddressPrivate")),
+                    
+                    priority,
 
                     getTagsFromArgs(matcher.group("tagArguments"))
             );
@@ -156,6 +192,33 @@ public class Parser {
         }
     }
 
+    /**
+     * Parses arguments in the context of the list_by_tag command.
+     */
+    private Command prepareListByTag(String args) {
+    	try {
+    		final Tag tag = new Tag(args);
+    		return new ListByTagCommand(tag);
+    	} catch (NumberFormatException | IllegalValueException exception) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ViewCommand.MESSAGE_USAGE));
+        }
+    }
+    
+    /**
+     * Parses arguments in the context of the sort command.
+     */
+    private Command prepareSort(String args) {
+        try {
+            args = args.replaceAll(" ", "");
+            SortCommand.SortType sortType = SortCommand.SortType.valueOf(args.toUpperCase());
+            return new SortCommand(sortType);
+        } catch (IllegalArgumentException | IllegalValueException exception) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    SortCommand.MESSAGE_USAGE));
+        }
+    }
+    
     /**
      * Parses arguments in the context of the view command.
      *

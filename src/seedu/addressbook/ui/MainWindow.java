@@ -1,12 +1,13 @@
 package seedu.addressbook.ui;
 
-
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import seedu.addressbook.commands.ExitCommand;
 import seedu.addressbook.logic.Logic;
+import seedu.addressbook.commands.CommandHistory;
 import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 
@@ -40,24 +41,43 @@ public class MainWindow {
     @FXML
     private TextField commandInput;
 
-
     @FXML
-    void onCommand(ActionEvent event) {
-        try {
-            String userCommandText = commandInput.getText();
-            CommandResult result = logic.execute(userCommandText);
-            if(isExitCommand(result)){
-                exitApp();
-                return;
-            }
-            displayResult(result);
-            clearCommandInput();
-        } catch (Exception e) {
-            display(e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
-
+    public void handleKeyPressed(KeyEvent event){
+	    if (event.getCode() == KeyCode.ENTER) {
+	    	try {
+	            String userCommandText = commandInput.getText();
+	            CommandHistory.restore();
+	            if(!CommandHistory.addCommandHistory(userCommandText)) {
+	            	throw new ArrayIndexOutOfBoundsException();
+	            }
+	            CommandResult result = logic.execute(userCommandText);
+	            if(isExitCommand(result)) {
+	                exitApp();
+	                return;
+	            }
+	            displayResult(result);
+	            clearCommandInput();
+	        } catch (Exception e) {
+	            display(e.getMessage());
+	            throw new RuntimeException(e);
+	        }
+	    }else if(event.getCode() == KeyCode.UP) {
+	    	String userCommandText = CommandHistory.getPreviousCommand();
+	    	if(userCommandText == null) {
+	    		setCommandInput("");
+	    	}else {
+	    		setCommandInput(userCommandText);
+	    	}
+	    }else if(event.getCode() == KeyCode.DOWN) {
+	    	String userCommandText = CommandHistory.getNextCommand();
+	    	if(userCommandText == null) {
+	    		setCommandInput("");
+	    	}else {
+	    		setCommandInput(userCommandText);
+	    	}
+	    }	
+	}
+    
     private void exitApp() throws Exception {
         mainApp.stop();
     }
@@ -65,6 +85,11 @@ public class MainWindow {
     /** Returns true of the result given is the result of an exit command */
     private boolean isExitCommand(CommandResult result) {
         return result.feedbackToUser.equals(ExitCommand.MESSAGE_EXIT_ACKNOWEDGEMENT);
+    }
+    
+    /** Sets the command input box 'input' as the given parameter */
+    public void setCommandInput(String result) {
+        commandInput.setText(result);
     }
 
     /** Clears the command input box */

@@ -1,12 +1,12 @@
 package seedu.addressbook.commands;
 
-import seedu.addressbook.common.Messages;
-import seedu.addressbook.data.AddressBook;
-import seedu.addressbook.data.person.ReadOnlyPerson;
+import static seedu.addressbook.ui.Gui.DISPLAYED_INDEX_OFFSET;
 
 import java.util.List;
 
-import static seedu.addressbook.ui.Gui.DISPLAYED_INDEX_OFFSET;
+import seedu.addressbook.common.Messages;
+import seedu.addressbook.data.AddressBook;
+import seedu.addressbook.data.person.ReadOnlyPerson;
 
 /**
  * Represents an executable command.
@@ -34,6 +34,16 @@ public abstract class Command {
      */
     public static String getMessageForPersonListShownSummary(List<? extends ReadOnlyPerson> personsDisplayed) {
         return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, personsDisplayed.size());
+    }
+    
+    /**
+     * Constructs a feedback message to summarise an operation that displayed a listing of persons that was sorted.
+     *
+     * @param sortType used to generate summary
+     * @return summary message for persons sorted
+     */
+    public static String getMessageForPersonListSortedSummary(SortCommand.SortType sortType) {
+        return String.format(Messages.MESSAGE_PERSONS_SORTED_OVERVIEW, sortType.toString());
     }
 
     /**

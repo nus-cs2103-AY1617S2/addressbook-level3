@@ -1,8 +1,8 @@
 package seedu.addressbook.data.person;
 
-import seedu.addressbook.data.tag.UniqueTagList;
-
 import java.util.Objects;
+
+import seedu.addressbook.data.tag.UniqueTagList;
 
 /**
  * Represents a Person in the address book.
@@ -14,16 +14,18 @@ public class Person implements ReadOnlyPerson {
     private Phone phone;
     private Email email;
     private Address address;
+    private Priority priority;
 
     private final UniqueTagList tags;
     /**
      * Assumption: Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, UniqueTagList tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Priority priority, UniqueTagList tags) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.priority = priority;
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
 
@@ -31,7 +33,8 @@ public class Person implements ReadOnlyPerson {
      * Copy constructor.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getTags());
+        this(source.getName(), source.getPhone(), source.getEmail(), 
+                source.getAddress(), source.getPriority(), source.getTags());
     }
 
     @Override
@@ -58,6 +61,11 @@ public class Person implements ReadOnlyPerson {
     public UniqueTagList getTags() {
         return new UniqueTagList(tags);
     }
+    
+    @Override
+    public Priority getPriority() {
+        return priority;
+    }
 
     /**
      * Replaces this person's tags with the tags in the argument tag list.
@@ -76,7 +84,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, priority, tags);
     }
 
     @Override
