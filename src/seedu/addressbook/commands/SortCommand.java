@@ -23,8 +23,8 @@ public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Sorts previously listed people." + "\n"
-            + "Can sort by priority for now." + "\n"
-            + "Parameters: SORTTYPE " + "\n"
+            + "Can sort by priority for now. \n\t"
+            + "Parameters: SORTTYPE " + "\n\t"
             + "Example: " + COMMAND_WORD
             + " priority";
     
@@ -40,9 +40,12 @@ public class SortCommand extends Command {
     }
     @Override
     public CommandResult execute() {
-        
-        List<? extends ReadOnlyPerson> sortedPersons = sortByPriority(relevantPersons);
-        return new CommandResult(getMessageForPersonListSortedSummary(sortType), sortedPersons);
+        switch(sortType) {
+            case PRIORITY:
+                List<? extends ReadOnlyPerson> sortedPersons = sortByPriority(relevantPersons);
+                return new CommandResult(getMessageForPersonListSortedSummary(sortType), sortedPersons);
+        }
+        return null;
     }
     
     private List<? extends ReadOnlyPerson> sortByPriority(List<? extends ReadOnlyPerson> persons) {

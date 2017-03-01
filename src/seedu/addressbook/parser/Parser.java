@@ -211,7 +211,6 @@ public class Parser {
     private Command prepareSort(String args) {
         try {
             args = args.replaceAll(" ", "");
-            System.out.println(args);
             SortCommand.SortType sortType = SortCommand.SortType.valueOf(args.toUpperCase());
             return new SortCommand(sortType);
         } catch (IllegalArgumentException | IllegalValueException exception) {
