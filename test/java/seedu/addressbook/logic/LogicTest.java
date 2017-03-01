@@ -177,7 +177,7 @@ public class LogicTest {
         // execute command and verify result
         assertCommandBehavior(
                 helper.generateAddCommand(toBeAdded),
-                AddCommand.MESSAGE_DUPLICATE_PERSON,
+                MESSAGE_DUPLICATE_PERSON,
                 expectedAB,
                 false,
                 Collections.emptyList());
@@ -427,7 +427,7 @@ public class LogicTest {
 
         List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
         AddressBook expectedAB = helper.generateAddressBook(fourPersons);
-        List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
+        List<Person> expectedList = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
         helper.addToAddressBook(addressBook, fourPersons);
 
         assertCommandBehavior("find KEY",
@@ -447,7 +447,7 @@ public class LogicTest {
 
         List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
         AddressBook expectedAB = helper.generateAddressBook(fourPersons);
-        List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
+        List<Person> expectedList = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
         helper.addToAddressBook(addressBook, fourPersons);
 
         assertCommandBehavior("find KEY rAnDoM",

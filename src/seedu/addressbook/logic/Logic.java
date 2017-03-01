@@ -2,6 +2,7 @@ package seedu.addressbook.logic;
 
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandResult;
+import seedu.addressbook.commands.ReadOnlyCommand;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.parser.Parser;
@@ -22,7 +23,9 @@ public class Logic {
 
     /** The list of person shown to the user most recently.  */
     private List<? extends ReadOnlyPerson> lastShownList = Collections.emptyList();
-
+    
+    private ReadOnlyCommand previousCommand;
+    
     public Logic() throws Exception{
         setStorage(initializeStorage());
         setAddressBook(storage.load());
@@ -70,8 +73,9 @@ public class Logic {
      */
     public CommandResult execute(String userCommandText) throws Exception {
         Command command = new Parser().parseCommand(userCommandText);
-        CommandResult result = execute(command);
+        CommandResult result = execute(command,previousCommand);
         recordResult(result);
+        previousCommand = new ReadOnlyCommand(command.getCommandWord(),lastShownList);
         return result;
     }
 
@@ -82,9 +86,9 @@ public class Logic {
      * @return result of the command
      * @throws Exception if there was any problem during command execution.
      */
-    private CommandResult execute(Command command) throws Exception {
+    private CommandResult execute(Command command, ReadOnlyCommand previousCommand) throws Exception {
         command.setData(addressBook, lastShownList);
-        CommandResult result = command.execute();
+        CommandResult result = command.execute(previousCommand);
         storage.save(addressBook);
         return result;
     }

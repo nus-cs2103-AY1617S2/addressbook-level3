@@ -30,6 +30,10 @@ public class UniqueTagList implements Iterable<Tag> {
 
     private final List<Tag> internalList = new ArrayList<>();
 
+    public boolean isEmpty() {
+    	return internalList.isEmpty();
+    }
+
     /**
      * Constructs an empty TagList.
      */
@@ -155,7 +159,7 @@ public class UniqueTagList implements Iterable<Tag> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof UniqueTagList // instanceof handles nulls
+        		|| (other instanceof UniqueTagList // instanceof handles nulls
                 && this.internalList.equals(
                         ((UniqueTagList) other).internalList));
     }
@@ -164,4 +168,17 @@ public class UniqueTagList implements Iterable<Tag> {
     public int hashCode() {
         return internalList.hashCode();
     }
+
+    @Override    
+    public String toString() {
+    	List<String> tagStringList = new ArrayList<String>();
+    	for (Tag t : internalList) {
+    		tagStringList.add(t.toString());
+    	}
+    	if (!tagStringList.isEmpty()) {
+    		return String.join(", ", tagStringList);
+    	}
+    	return "";
+    }
+    
 }
