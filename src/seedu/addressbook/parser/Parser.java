@@ -19,14 +19,20 @@ public class Parser {
     public static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
 
+    public static final Pattern KEYWORD_ARGS_FORMAT =
+            Pattern.compile("^(?<keyword>\\S+)$"); // exactly one keyword
+
     public static final Pattern PERSON_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
             Pattern.compile("(?<name>[^/]+)"
                     + " (?<isPhonePrivate>p?)p/(?<phone>[^/]+)"
                     + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
-
-
+    
+    public static final Pattern EDIT_PERSON_DATA_ARGS_FORMAT = 
+            Pattern.compile("(?<targetIndex>.+)" 
+                    + " (?<editField>[^/]+)"
+                    + "/(?<newInfo>[^/]+)");
     /**
      * Signals that the user input could not be parsed.
      */
@@ -56,6 +62,9 @@ public class Parser {
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
         switch (commandWord) {
+        
+            case FavoriteCommand.COMMAND_WORD:
+                return prepareFavorite(arguments);
 
             case AddCommand.COMMAND_WORD:
                 return prepareAdd(arguments);
@@ -69,6 +78,9 @@ public class Parser {
             case FindCommand.COMMAND_WORD:
                 return prepareFind(arguments);
 
+            case FindTagCommand.COMMAND_WORD:
+                return prepareFindTag(arguments);
+
             case ListCommand.COMMAND_WORD:
                 return new ListCommand();
 
@@ -80,6 +92,12 @@ public class Parser {
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
+                
+            case SortCommand.COMMAND_WORD:
+                return prepareSort(arguments);
+
+            case EditCommand.COMMAND_WORD:
+                return prepareEdit(arguments);
 
             case HelpCommand.COMMAND_WORD: // Fallthrough
             default:
@@ -155,6 +173,15 @@ public class Parser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
     }
+    
+    private Command prepareFavorite(String args) {
+        try {
+            final int targetIndex = parseArgsAsDisplayedIndex(args);
+            return new FavoriteCommand(targetIndex);
+        } catch (ParseException | NumberFormatException e) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        }
+    }
 
     /**
      * Parses arguments in the context of the view command.
@@ -226,5 +253,66 @@ public class Parser {
         return new FindCommand(keywordSet);
     }
 
+    private Command prepareFindTag(String args) {
+        final Matcher matcher = KEYWORD_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    FindTagCommand.MESSAGE_USAGE));
+        }
+
+        // keywords delimited by whitespace
+        final String keyword = matcher.group("keyword");
+        return new FindTagCommand(keyword);
+    }
+  
+    /**
+     * Parses arguments in the context of the sort person command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+
+    private Command prepareSort(String args) {
+        final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    SortCommand.MESSAGE_USAGE));
+        }
+
+        // keywords delimited by whitespace and changed to uppercase
+        final String[] keywords = matcher.group("keywords").toUpperCase().split("\\s+");
+        final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
+        return new SortCommand(keywordSet);
+    }
+
+    /**
+     * Parses arguments in the context of the edit person command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareEdit(String args) {
+        final Matcher matcher = EDIT_PERSON_DATA_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    EditCommand.MESSAGE_USAGE));
+        }
+        try {
+            final int targetIndex = Integer.parseInt(matcher.group("targetIndex"));
+            final String editField = matcher.group("editField");
+            final String newInfo = matcher.group("newInfo");
+            if (!isValidField(editField)) {
+                return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+            }
+            return new EditCommand(targetIndex, editField, newInfo);
+        } catch (NumberFormatException e) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+        
+    }
+    
+    private static boolean isValidField(String editField) {
+        return editField.equals("n") || editField.equals("e") || editField.equals("p") || editField.equals("a");
+    }
 
 }

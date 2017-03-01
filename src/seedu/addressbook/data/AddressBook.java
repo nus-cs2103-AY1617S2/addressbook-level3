@@ -17,6 +17,7 @@ import java.util.*;
  */
 public class AddressBook {
 
+    private final ArrayList<ReadOnlyPerson> allFavorites;
     private final UniquePersonList allPersons;
     private final UniqueTagList allTags; // can contain tags not attached to any person
 
@@ -30,6 +31,7 @@ public class AddressBook {
     public AddressBook() {
         allPersons = new UniquePersonList();
         allTags = new UniqueTagList();
+        allFavorites = new ArrayList<ReadOnlyPerson>();
     }
 
     /**
@@ -42,6 +44,7 @@ public class AddressBook {
     public AddressBook(UniquePersonList persons, UniqueTagList tags) {
         this.allPersons = new UniquePersonList(persons);
         this.allTags = new UniqueTagList(tags);
+        this.allFavorites = new ArrayList<ReadOnlyPerson>();
         for (Person p : allPersons) {
             syncTagsWithMasterList(p);
         }
@@ -87,6 +90,10 @@ public class AddressBook {
      */
     public boolean containsPerson(ReadOnlyPerson key) {
         return allPersons.contains(key);
+    }
+    
+    public void addFavorite(ReadOnlyPerson newFavorite) {
+        allFavorites.add(newFavorite);
     }
 
     /**

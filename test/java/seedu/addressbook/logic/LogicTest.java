@@ -132,6 +132,19 @@ public class LogicTest {
         assertCommandBehavior(
                 "add Valid Name p/12345 e/valid@email.butNoAddressPrefix valid, address", expectedMessage);
     }
+    
+    @Test
+    public void execute_edit_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
+        assertCommandBehavior(
+                "edit wrong args wrong args", expectedMessage);
+        assertCommandBehavior(
+                "edit 1", expectedMessage);
+        assertCommandBehavior(
+                "edit 1 no_edit_field", expectedMessage);
+        assertCommandBehavior(
+                "edit 1 p/12345 e/twofields@gmail.com", expectedMessage);
+    }
 
     @Test
     public void execute_add_invalidPersonData() throws Exception {
@@ -457,6 +470,35 @@ public class LogicTest {
                                 expectedList);
     }
 
+    @Test
+    public void execute_findtag_matchesIfTagPresent() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Person p1 = helper.generatePersonWithTags("1", "girl");
+        Person p2 = helper.generatePersonWithTags("2", "boy");
+
+        List<Person> twoPersons = helper.generatePersonList(p1, p2);
+        AddressBook expectedAB = helper.generateAddressBook(twoPersons);
+        helper.addToAddressBook(addressBook, twoPersons);
+
+        List<Person> expectedList = helper.generatePersonList(p1);
+
+        assertCommandBehavior("findtag girl",
+                Command.getMessageForPersonListShownSummary(expectedList),
+                expectedAB,
+                true,
+                expectedList);
+
+        expectedList = helper.generatePersonList(p2);
+
+        assertCommandBehavior("findtag boy",
+                Command.getMessageForPersonListShownSummary(expectedList),
+                expectedAB,
+                true,
+                expectedList);
+
+
+    }
+
     /**
      * A utility class to generate test data.
      */
@@ -584,6 +626,21 @@ public class LogicTest {
                     new Email("1@email", false),
                     new Address("House of 1", false),
                     new UniqueTagList(new Tag("tag"))
+            );
+        }
+
+
+        /**
+         * Generates a Person object with given tags. Other fields will have some dummy values.
+         * @param seed used to generate the person data field values
+         */
+        Person generatePersonWithTags(String seed, String tagName) throws Exception {
+            return new Person(
+                    new Name("test" + seed),
+                    new Phone("1", false),
+                    new Email("1@email", false),
+                    new Address("House of 1", false),
+                    new UniqueTagList(new Tag(tagName))
             );
         }
     }
