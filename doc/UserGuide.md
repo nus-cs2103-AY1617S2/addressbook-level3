@@ -50,6 +50,16 @@ Examples:
 * `find Betsy Tim John`<br>
   Returns Any person having names `Betsy`, `Tim`, or `John`
 
+## Finding all persons with a tag: `findtag`
+Finds persons who are tagged with the given tag.<br>
+Format: `findtag KEYWORD`
+
+> The search is case sensitive, and all persons matching with the tag will be returned.
+
+Examples: 
+* `findtag classmate`<br>
+  Returns all persons with tag [classmate]
+  
 ## Deleting a person : `delete`
 Deletes the specified person from the address book. Irreversible.<br>
 Format: `delete INDEX`
@@ -98,6 +108,21 @@ Examples:
 ## Clearing all entries : `clear`
 Clears all entries from the address book.<br>
 Format: `clear`  
+
+
+## Editing an entry : `edit`
+Edits the specified person from the address book. <br>
+Format: `edit INDEX <EDIT_FIELD>/<desired new information>`
+
+> Edits the person at the specified `INDEX`. 
+  The index refers to the index number shown in the most recent listing.
+  Edit fields are: p/ n/ e/ a/
+  NOTE! Can only edit 1 field at a time.
+
+Examples: 
+* `list`<br>
+  `edit 2 p/1234`<br>
+  Edits the 2nd person in the address book to have an updated phone number of 1234.
 
 ## Exiting the program : `exit`
 Exits the program.<br>
