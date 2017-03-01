@@ -16,8 +16,8 @@ import java.util.*;
  *  - The tags in each person point to tag objects in the master list. (== equality)
  */
 public class AddressBook {
-	
-	private final ArrayList<ReadOnlyPerson> allFavorites;
+
+    private final ArrayList<ReadOnlyPerson> allFavorites;
     private final UniquePersonList allPersons;
     private final UniqueTagList allTags; // can contain tags not attached to any person
 
@@ -93,7 +93,7 @@ public class AddressBook {
     }
     
     public void addFavorite(ReadOnlyPerson newFavorite) {
-    	allFavorites.add(newFavorite);
+        allFavorites.add(newFavorite);
     }
 
     /**

@@ -64,7 +64,7 @@ public class Parser {
         switch (commandWord) {
         
             case FavoriteCommand.COMMAND_WORD:
-            	return prepareFavorite(arguments);
+                return prepareFavorite(arguments);
 
             case AddCommand.COMMAND_WORD:
                 return prepareAdd(arguments);

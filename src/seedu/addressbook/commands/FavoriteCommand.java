@@ -25,13 +25,13 @@ public class FavoriteCommand extends Command {
     }
     
     public ReadOnlyPerson replicate(ReadOnlyPerson source) {
-    	ReadOnlyPerson newPerson = new Person(source.getName(),
-    										  source.getPhone(),
-    										  source.getEmail(),
-    										  source.getAddress(),
-    										  source.getTags());
-    	return newPerson;
-    	
+        ReadOnlyPerson newPerson = new Person(source.getName(),
+                                              source.getPhone(),
+                                              source.getEmail(),
+                                              source.getAddress(),
+                                              source.getTags());
+        return newPerson;
+
     }
 
 
