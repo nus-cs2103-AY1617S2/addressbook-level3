@@ -111,6 +111,7 @@ public class Parser {
             default:
                 return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
+        
         return new SortCommand(sortBy);
     }
 

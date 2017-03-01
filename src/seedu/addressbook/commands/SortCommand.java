@@ -24,7 +24,9 @@ public class SortCommand extends Command {
     public static final int SORT_BY_PHONE = 1;
     public static final int SORT_BY_ADDRESS = 2;
     
-    public final int sortBy;
+    private final int sortBy;
+    private final String sortFieldString;
+
     private final Comparator<Person> sorter;
     
     public SortCommand(int sortBy){
@@ -32,14 +34,18 @@ public class SortCommand extends Command {
         switch(sortBy){
             case SORT_BY_ADDRESS:
                 sorter = new AddressComparator();
+                sortFieldString = "address";
                 break;
             case SORT_BY_NAME:
                 sorter = new NameComparator();
+                sortFieldString = "name";
                 break;
             case SORT_BY_PHONE:
                 sorter = new PhoneComparator();
+                sortFieldString = "phone";
                 break;
             default:
+                sortFieldString = null;
                 sorter = null;
         }
     }
@@ -48,7 +54,7 @@ public class SortCommand extends Command {
     public CommandResult execute() {
         List<ReadOnlyPerson> sortedPersons = Collections.unmodifiableList(sortList(sorter, addressBook.getAllPersons().sortableList()));
         //TODO change the feedback
-        return new CommandResult(getMessageForPersonListShownSummary(sortedPersons), sortedPersons);
+        return new CommandResult(getMessageForSortedPersonShownSummary(sortedPersons, sortFieldString), sortedPersons);
     }
     
     public static List<Person> sortList(Comparator<Person> sorter, List<Person> allPersons){

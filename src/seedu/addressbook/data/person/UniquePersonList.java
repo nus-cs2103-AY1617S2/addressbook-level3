@@ -75,7 +75,7 @@ public class UniquePersonList implements Iterable<Person> {
     }
     
     /**
-     * solely for sorting perpose only
+     * solely for sorting purpose only
      */
     public List<Person> sortableList(){
         return internalList;
