@@ -4,8 +4,6 @@ import seedu.addressbook.commands.*;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
-import seedu.addressbook.data.tag.UniqueTagList.DuplicateTagException;
-
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -94,7 +92,17 @@ public class Parser {
         }
     }
 
-    /**
+    private String[] splitBySpace(String arguments) throws ParseException {
+    	int numParameter = arguments.trim().split(" ").length;
+    	if (numParameter <= 1) {
+    		throw new ParseException(arguments);
+    	} else {
+    		return arguments.trim().split(" ");
+    	}
+    }
+ 
+
+	/**
      * Parses arguments in the context of the add person command.
      *
      * @param args full command args string
