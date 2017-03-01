@@ -13,6 +13,7 @@ import seedu.addressbook.data.person.*;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
 import seedu.addressbook.storage.StorageFile;
+import seedu.addressbook.storage.StorageFile.StorageOperationException;
 
 import java.util.*;
 
@@ -27,14 +28,28 @@ public class LogicTest {
      */
     @Rule
     public TemporaryFolder saveFolder = new TemporaryFolder();
-
-    private StorageFile saveFile;
+    private StorageStub saveFile;
     private AddressBook addressBook;
     private Logic logic;
-
+    
+    private class StorageStub extends StorageFile {
+    	public StorageStub(String filePath) throws InvalidStorageFilePathException {
+    		super(filePath);
+    	}
+    	
+    	public StorageStub() throws InvalidStorageFilePathException {
+    		super();
+    	}
+    	
+    	@Override
+    	public void save(AddressBook addressBook) throws StorageOperationException {
+    		// do nothing as per requirements
+    	}
+    }
+    
     @Before
     public void setup() throws Exception {
-        saveFile = new StorageFile(saveFolder.newFile("testSaveFile.txt").getPath());
+        saveFile = new StorageStub(saveFolder.newFile("testSaveFile.txt").getPath());
         addressBook = new AddressBook();
         saveFile.save(addressBook);
         logic = new Logic(saveFile, addressBook);
@@ -90,7 +105,8 @@ public class LogicTest {
         //Confirm the state of data is as expected
         assertEquals(expectedAddressBook, addressBook);
         assertEquals(lastShownList, logic.getLastShownList());
-        assertEquals(addressBook, saveFile.load());
+        // commenting out because we aren't saving anything
+        // assertEquals(addressBook, saveFile.load());
     }
 
 
