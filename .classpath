@@ -8,6 +8,7 @@
 		</accessrules>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="src/seedu/addressbook/ui/controlsfx-8.40.12.jar"/>
 	<classpathentry kind="lib" path="lib/jkeymaster-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/jna-4.3.0.jar"/>
 	<classpathentry kind="lib" path="lib/jna-platform-4.3.0.jar"/>

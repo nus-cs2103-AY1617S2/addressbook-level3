@@ -32,6 +32,9 @@ import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
+import org.controlsfx.control.textfield.AutoCompletionBinding;
+import org.controlsfx.control.textfield.TextFields;
+
 import static seedu.addressbook.common.Messages.*;
 
 /**
@@ -90,6 +93,19 @@ public class MainWindow {
     @FXML
     private TextField commandInput;
 
+	/**
+	 * This method is automatically called after mainwindow.fxml has been loaded.
+	 * AutoComplete functionality is added for user commands. 
+	 */
+    @FXML
+    private void initialize() {
+		String[] possibleCommands = { "add ", "clear", "delete ", "exit", "find ", "help", "list", 
+				"view ", "viewall " };
+		AutoCompletionBinding<String> binding = TextFields.bindAutoCompletion(commandInput, possibleCommands);
+		binding.setMaxWidth(70);
+		binding.setDelay(10);
+    }
+    
     @FXML
     void onCommand(ActionEvent event) {
         try {
