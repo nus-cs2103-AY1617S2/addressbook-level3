@@ -27,6 +27,7 @@ public class Parser {
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
 
+    private static final String DELIMITER_SPACE = " ";
 
     /**
      * Signals that the user input could not be parsed.
@@ -96,11 +97,11 @@ public class Parser {
     }
 
     private String[] splitBySpace(String arguments) throws ParseException {
-    	int numParameter = arguments.trim().split(" ").length;
+    	int numParameter = arguments.trim().split(DELIMITER_SPACE).length;
     	if (numParameter <= 1) {
     		throw new ParseException(arguments);
     	} else {
-    		return arguments.trim().split(" ");
+    		return arguments.trim().split(DELIMITER_SPACE);
     	}
     }
     
