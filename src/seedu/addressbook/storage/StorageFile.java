@@ -153,14 +153,15 @@ public class StorageFile {
     public AddressBook load() throws StorageOperationException {
         try (final Reader fileReader =
                      new BufferedReader(new FileReader(path.toFile()))) {
-
             final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             final AdaptedAddressBook loaded = (AdaptedAddressBook) unmarshaller.unmarshal(fileReader);
             // manual check for missing elements
             if (loaded.isAnyRequiredFieldMissing()) {
                 throw new StorageOperationException("File data missing some elements");
             }
-            return loaded.toModelType();
+            AddressBook addressBook = loaded.toModelType();
+            save(addressBook);
+            return addressBook;
 
         /* Note: Here, we are using an exception to create the file if it is missing. However, we should minimize
          * using exceptions to facilitate normal paths of execution. If we consider the missing file as a 'normal'
