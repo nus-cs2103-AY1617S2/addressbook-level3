@@ -30,6 +30,10 @@ public class Priority {
         this.priority = PriorityLevel.valueOf(priority);
     }
 
+    public PriorityLevel getPriorityLevel() {
+        return priority;
+    }
+
     /**
      * Returns true if a given integer is a valid priority string
      */

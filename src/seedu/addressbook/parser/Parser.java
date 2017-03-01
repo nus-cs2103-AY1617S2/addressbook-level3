@@ -1,9 +1,6 @@
 package seedu.addressbook.parser;
 
 import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import seedu.addressbook.commands.*;
-import seedu.addressbook.data.exception.IllegalValueException;
-import seedu.addressbook.data.tag.Tag;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -21,11 +18,15 @@ import seedu.addressbook.commands.ExitCommand;
 import seedu.addressbook.commands.FindCommand;
 import seedu.addressbook.commands.HelpCommand;
 import seedu.addressbook.commands.IncorrectCommand;
+import seedu.addressbook.commands.ListByTagCommand;
 import seedu.addressbook.commands.ListCommand;
+import seedu.addressbook.commands.ListTagsCommand;
+import seedu.addressbook.commands.SortCommand;
 import seedu.addressbook.commands.ViewAllCommand;
 import seedu.addressbook.commands.ViewCommand;
 import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.person.Priority;
+import seedu.addressbook.data.tag.Tag;
 
 /**
  * Parses user input.
@@ -93,6 +94,9 @@ public class Parser {
                 
             case ListByTagCommand.COMMAND_WORD:
             	return prepareListByTag(arguments);
+            	
+            case SortCommand.COMMAND_WORD:
+                return prepareSort(arguments);
 
             case ViewCommand.COMMAND_WORD:
                 return prepareView(arguments);
@@ -125,6 +129,7 @@ public class Parser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
         try {
+            
             String priority = Priority.PriorityLevel.LOW.toString();
             if (matcher.group("priority") != null) {
                 priority = matcher.group("priority");
@@ -197,6 +202,21 @@ public class Parser {
     	} catch (NumberFormatException | IllegalValueException exception) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ViewCommand.MESSAGE_USAGE));
+        }
+    }
+    
+    /**
+     * Parses arguments in the context of the sort command.
+     */
+    private Command prepareSort(String args) {
+        try {
+            args = args.replaceAll(" ", "");
+            System.out.println(args);
+            SortCommand.SortType sortType = SortCommand.SortType.valueOf(args.toUpperCase());
+            return new SortCommand(sortType);
+        } catch (IllegalArgumentException | IllegalValueException exception) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    SortCommand.MESSAGE_USAGE));
         }
     }
     
