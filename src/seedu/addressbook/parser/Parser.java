@@ -80,6 +80,9 @@ public class Parser {
 
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
+                
+            case PrintCommand.COMMAND_WORD:
+                return new PrintCommand();
 
             case HelpCommand.COMMAND_WORD: // Fallthrough
             default:
