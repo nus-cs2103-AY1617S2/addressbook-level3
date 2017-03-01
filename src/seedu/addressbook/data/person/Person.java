@@ -43,7 +43,7 @@ public class Person implements ReadOnlyPerson {
     public Phone getPhone() {
         return phone;
     }
-
+    
     @Override
     public Email getEmail() {
         return email;

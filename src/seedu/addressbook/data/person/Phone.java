@@ -12,7 +12,7 @@ public class Phone {
     public static final String MESSAGE_PHONE_CONSTRAINTS = "Person phone numbers should only contain numbers";
     public static final String PHONE_VALIDATION_REGEX = "\\d+";
 
-    public final String value;
+    public String value;
     private boolean isPrivate;
 
     /**
@@ -40,7 +40,11 @@ public class Phone {
     public String toString() {
         return value;
     }
-
+    
+    public void setPhone(String phoneNo) {
+        this.value = phoneNo;
+    }
+    
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

@@ -88,7 +88,15 @@ public class AddressBook {
     public boolean containsPerson(ReadOnlyPerson key) {
         return allPersons.contains(key);
     }
-
+    /**
+     * Edit the equivalent person's phone number from the address book.
+     *
+     * @throws PersonNotFoundException if no such Person could be found.
+     */
+    public void editPerson(ReadOnlyPerson toEdit,int targetID,String phoneNo) throws PersonNotFoundException {
+        allPersons.edit(toEdit,targetID,phoneNo);
+    }
+    
     /**
      * Removes the equivalent person from the address book.
      *
@@ -97,7 +105,7 @@ public class AddressBook {
     public void removePerson(ReadOnlyPerson toRemove) throws PersonNotFoundException {
         allPersons.remove(toRemove);
     }
-
+    
     /**
      * Clears all persons and tags from the address book.
      */
