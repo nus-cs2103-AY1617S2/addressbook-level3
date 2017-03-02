@@ -6,7 +6,6 @@ import javafx.stage.Stage;
 import seedu.addressbook.logic.Logic;
 import seedu.addressbook.Main;
 
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -31,7 +30,7 @@ public class Gui {
 
     public void start(Stage stage, Stoppable mainApp) throws IOException {
         mainWindow = createMainWindow(stage, mainApp);
-        mainWindow.displayWelcomeMessage(version, logic.getStorageFilePath());
+        mainWindow.displayWelcomeMessage(version, logic.getStorageFile());
     }
 
     private MainWindow createMainWindow(Stage stage, Stoppable mainApp) throws IOException{
