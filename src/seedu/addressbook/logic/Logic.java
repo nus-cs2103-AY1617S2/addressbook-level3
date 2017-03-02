@@ -47,7 +47,7 @@ public class Logic {
      * @throws StorageFile.InvalidStorageFilePathException if the target file path is incorrect.
      */
     private Storage initializeStorage() throws StorageFile.InvalidStorageFilePathException {
-        return new StorageFile();
+        return new Storage();
     }
 
     public String getStorageFilePath() {
