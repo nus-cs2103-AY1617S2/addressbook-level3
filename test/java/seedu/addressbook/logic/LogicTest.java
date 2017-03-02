@@ -28,7 +28,6 @@ public class LogicTest {
      */
     @Rule
     public TemporaryFolder saveFolder = new TemporaryFolder();
-    private StorageStub saveFile;
     private AddressBook addressBook;
     private Logic logic;
     
@@ -49,6 +48,7 @@ public class LogicTest {
     
     @Before
     public void setup() throws Exception {
+    	StorageStub saveFile;
         saveFile = new StorageStub(saveFolder.newFile("testSaveFile.txt").getPath());
         addressBook = new AddressBook();
         saveFile.save(addressBook);
