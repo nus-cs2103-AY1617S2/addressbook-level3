@@ -5,6 +5,8 @@ import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.parser.Parser;
+import seedu.addressbook.storage.Storage;
+import seedu.addressbook.storage.StorageException;
 import seedu.addressbook.storage.StorageFile;
 
 import java.util.Collections;
@@ -17,7 +19,7 @@ import java.util.Optional;
 public class Logic {
 
 
-    private StorageFile storage;
+    private Storage storage;
     private AddressBook addressBook;
 
     /** The list of person shown to the user most recently.  */
@@ -28,12 +30,12 @@ public class Logic {
         setAddressBook(storage.load());
     }
 
-    Logic(StorageFile storageFile, AddressBook addressBook){
+    Logic(Storage storageFile, AddressBook addressBook){
         setStorage(storageFile);
         setAddressBook(addressBook);
     }
 
-    void setStorage(StorageFile storage){
+    void setStorage(Storage storage){
         this.storage = storage;
     }
 
@@ -43,9 +45,9 @@ public class Logic {
 
     /**
      * Creates the StorageFile object based on the user specified path (if any) or the default storage path.
-     * @throws StorageFile.InvalidStorageFilePathException if the target file path is incorrect.
+     * @throws Storage.InvalidStorageFilePathException if the target file path is incorrect.
      */
-    private StorageFile initializeStorage() throws StorageFile.InvalidStorageFilePathException {
+    private Storage initializeStorage() throws StorageException {
         return new StorageFile();
     }
 
@@ -85,7 +87,13 @@ public class Logic {
     private CommandResult execute(Command command) throws Exception {
         command.setData(addressBook, lastShownList);
         CommandResult result = command.execute();
-        storage.save(addressBook);
+        if (command.isUndo()) {
+            storage.restore(addressBook);
+            setAddressBook(storage.load());
+        } else if (command.isMutating()) {
+            storage.backup(addressBook);
+            storage.save(addressBook);
+        }
         return result;
     }
 

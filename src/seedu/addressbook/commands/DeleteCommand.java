@@ -39,4 +39,13 @@ public class DeleteCommand extends Command {
         }
     }
 
+    @Override
+    public boolean isMutating() {
+        return true;
+    }
+    
+    @Override
+    public boolean isUndo() {
+        return false;
+    }
 }
