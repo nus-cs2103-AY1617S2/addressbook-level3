@@ -1,6 +1,5 @@
 package seedu.addressbook.logic;
 
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -184,6 +183,83 @@ public class LogicTest {
 
     }
 
+    @Test
+    public void execute_modify_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyCommand.MESSAGE_USAGE);
+        assertCommandBehavior(
+                "add wrong args wrong args", expectedMessage);
+        assertCommandBehavior(
+                "add Valid Name 12345 e/valid@email.butNoPhonePrefix a/valid, address", expectedMessage);
+        assertCommandBehavior(
+                "add Valid Name p/12345 valid@email.butNoPrefix a/valid, address", expectedMessage);
+        assertCommandBehavior(
+                "add Valid Name p/12345 e/valid@email.butNoAddressPrefix valid, address", expectedMessage);
+    }
+
+    @Test
+    public void execute_modify_invalidPersonData() throws Exception {       
+        TestDataHelper helper = new TestDataHelper();
+        Person p1 = helper.generatePerson(1, false);
+        Person p2 = helper.generatePerson(2, true);
+        Person p3 = helper.generatePerson(3, true);
+
+        List<Person> threePersons = helper.generatePersonList(p1, p2, p3);
+
+        AddressBook expectedAB = helper.generateAddressBook(threePersons);
+        expectedAB.modifiesPerson(2, p2, threePersons.get(2));;
+
+        helper.addToAddressBook(addressBook, threePersons);
+        logic.setLastShownList(threePersons);
+
+        assertCommandBehavior("modify 2",
+                                String.format(ModifyCommand.MESSAGE_SUCCESS, p2),
+                                expectedAB,
+                                false,
+                                threePersons);
+    }
+
+    @Test
+    public void execute_modify_successful() throws Exception {    
+        TestDataHelper helper = new TestDataHelper();
+        Person p1 = helper.generatePerson(1, false);
+        Person p2 = helper.generatePerson(2, true);
+        Person p3 = helper.generatePerson(3, true);
+
+        List<Person> threePersons = helper.generatePersonList(p1, p2, p3);
+
+        Person p2Modified = helper.generatePerson(2, true);
+        
+        AddressBook expectedAB = helper.generateAddressBook(threePersons);
+        expectedAB.modifiesPerson(2, p2, p2Modified);
+
+        assertCommandBehavior(helper.generateModifyCommand(p2Modified),
+                String.format(ModifyCommand.MESSAGE_SUCCESS, p2Modified),
+                expectedAB,
+                false,
+                Collections.emptyList());
+    }
+
+    @Test
+    public void execute_Modify_InvalidIndex() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Person p1 = helper.generatePerson(1, false);
+        Person p2 = helper.generatePerson(2, true);
+        Person p3 = helper.generatePerson(3, true);
+       
+        Person p2Modified = helper.generatePerson(2, true);
+
+        List<Person> threePersons = helper.generatePersonList(p1, p2, p3);
+
+        AddressBook expectedAB = helper.generateAddressBook(threePersons);
+        expectedAB.modifiesPerson(2, p2, p2Modified);
+
+        assertCommandBehavior("modify 4",
+                                Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK,
+                                expectedAB,
+                                false,
+                                threePersons);
+    }
+    
     @Test
     public void execute_list_showsAllPersons() throws Exception {
         // prepare expectations
@@ -510,6 +586,25 @@ public class LogicTest {
             return cmd.toString();
         }
 
+        /** Generates the correct add command based on the person given */
+        String generateModifyCommand(Person p) {
+            StringJoiner cmd = new StringJoiner(" ");
+
+            cmd.add("modify");
+
+            cmd.add(p.getName().toString());
+            cmd.add((p.getPhone().isPrivate() ? "pp/" : "p/") + p.getPhone());
+            cmd.add((p.getEmail().isPrivate() ? "pe/" : "e/") + p.getEmail());
+            cmd.add((p.getAddress().isPrivate() ? "pa/" : "a/") + p.getAddress());
+
+            UniqueTagList tags = p.getTags();
+            for(Tag t: tags){
+                cmd.add("t/" + t.tagName);
+            }
+
+            return cmd.toString();
+        }
+        
         /**
          * Generates an AddressBook with auto-generated persons.
          * @param isPrivateStatuses flags to indicate if all contact details of respective persons should be set to

@@ -95,6 +95,18 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Modifies a person in the list.
+     *
+     * @throws DuplicatePersonException if the person to add is a duplicate of an existing person in the list.
+     */
+    public void modify(int key, ReadOnlyPerson toModifyKey, Person toModify) throws PersonNotFoundException {
+        if (!contains(toModifyKey)) {
+            throw new PersonNotFoundException();
+        }
+        internalList.set(key, toModify);
+    }
+    
+    /**
      * Removes the equivalent person from the list.
      *
      * @throws PersonNotFoundException if no such person could be found in the list.
