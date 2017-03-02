@@ -1,7 +1,6 @@
 package seedu.addressbook.storage;
 
 import seedu.addressbook.data.AddressBook;
-import seedu.addressbook.storage.Storage.StorageOperationException;
 
 public abstract class Storage {
 
@@ -29,4 +28,5 @@ public abstract class Storage {
      */
     public abstract void save(AddressBook addressBook) throws StorageOperationException;
 
+    public abstract String getPath();
 }
