@@ -64,7 +64,7 @@ public class Gui {
      * @return a VBox
      * @throws IOException
      */
-    VBox addMenuToVBox(FXMLLoader loader) throws IOException {
+    private VBox addMenuToVBox(FXMLLoader loader) throws IOException {
         String darkTheme = Main.class.getResource("ui/DarkTheme.css").toExternalForm();
         String brightTheme = Main.class.getResource("ui/BrightTheme.css").toExternalForm();
         
