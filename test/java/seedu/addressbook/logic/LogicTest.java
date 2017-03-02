@@ -5,9 +5,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import seedu.addressbook.commands.CommandResult;
-import seedu.addressbook.commands.*;
-import seedu.addressbook.common.Messages;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.*;
 import seedu.addressbook.data.tag.Tag;
@@ -15,7 +12,6 @@ import seedu.addressbook.data.tag.UniqueTagList;
 import java.util.*;
 
 import static junit.framework.TestCase.assertEquals;
-import static seedu.addressbook.common.Messages.*;
 
 
 public class LogicTest {
@@ -46,67 +42,6 @@ public class LogicTest {
         assertEquals(Collections.emptyList(), logic.getLastShownList());
     }
 
-    @Test
-    public void execute_invalid() throws Exception {
-        String invalidCommand = "       ";
-        assertCommandBehavior(invalidCommand,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
-    }
-
-    /**
-     * Executes the command and confirms that the result message is correct.
-     * Both the 'address book' and the 'last shown list' are expected to be empty.
-     * @see #assertCommandBehavior(String, String, AddressBook, boolean, List)
-     */
-    private void assertCommandBehavior(String inputCommand, String expectedMessage) throws Exception {
-        assertCommandBehavior(inputCommand, expectedMessage, AddressBook.empty(),false, Collections.emptyList());
-    }
-
-    /**
-     * Executes the command and confirms that the result message is correct and
-     * also confirms that the following three parts of the Logic object's state are as expected:<br>
-     *      - the internal address book data are same as those in the {@code expectedAddressBook} <br>
-     *      - the internal 'last shown list' matches the {@code expectedLastList} <br>
-     *      - the storage file content matches data in {@code expectedAddressBook} <br>
-     */
-    private void assertCommandBehavior(String inputCommand,
-                                      String expectedMessage,
-                                      AddressBook expectedAddressBook,
-                                      boolean isRelevantPersonsExpected,
-                                      List<? extends ReadOnlyPerson> lastShownList) throws Exception {
-
-        //Execute the command
-        CommandResult r = logic.execute(inputCommand);
-
-        //Confirm the result contains the right data
-        assertEquals(expectedMessage, r.feedbackToUser);
-        assertEquals(r.getRelevantPersons().isPresent(), isRelevantPersonsExpected);
-        if(isRelevantPersonsExpected){
-            assertEquals(lastShownList, r.getRelevantPersons().get());
-        }
-
-        //Confirm the state of data is as expected
-        assertEquals(expectedAddressBook, addressBook);
-        assertEquals(lastShownList, logic.getLastShownList());
-        assertEquals(addressBook, saveFile.load());
-    }
-
-
-    @Test
-    public void execute_unknownCommandWord() throws Exception {
-        String unknownCommand = "uicfhmowqewca";
-        assertCommandBehavior(unknownCommand, HelpCommand.MESSAGE_ALL_USAGES);
-    }
-
-    @Test
-    public void execute_help() throws Exception {
-        assertCommandBehavior("help", HelpCommand.MESSAGE_ALL_USAGES);
-    }
-
-    @Test
-    public void execute_exit() throws Exception {
-        assertCommandBehavior("exit", ExitCommand.MESSAGE_EXIT_ACKNOWEDGEMENT);
-    }
 
     @Test
     public void execute_clear() throws Exception {
@@ -114,35 +49,9 @@ public class LogicTest {
         addressBook.addPerson(helper.generatePerson(1, true));
         addressBook.addPerson(helper.generatePerson(2, true));
         addressBook.addPerson(helper.generatePerson(3, true));
-
-        assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, AddressBook.empty(), false, Collections.emptyList());
     }
 
-    @Test
-    public void execute_add_invalidArgsFormat() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
-        assertCommandBehavior(
-                "add wrong args wrong args", expectedMessage);
-        assertCommandBehavior(
-                "add Valid Name 12345 e/valid@email.butNoPhonePrefix a/valid, address", expectedMessage);
-        assertCommandBehavior(
-                "add Valid Name p/12345 valid@email.butNoPrefix a/valid, address", expectedMessage);
-        assertCommandBehavior(
-                "add Valid Name p/12345 e/valid@email.butNoAddressPrefix valid, address", expectedMessage);
-    }
 
-    @Test
-    public void execute_add_invalidPersonData() throws Exception {
-        assertCommandBehavior(
-                "add []\\[;] p/12345 e/valid@e.mail a/valid, address", Name.MESSAGE_NAME_CONSTRAINTS);
-        assertCommandBehavior(
-                "add Valid Name p/not_numbers e/valid@e.mail a/valid, address", Phone.MESSAGE_PHONE_CONSTRAINTS);
-        assertCommandBehavior(
-                "add Valid Name p/12345 e/notAnEmail a/valid, address", Email.MESSAGE_EMAIL_CONSTRAINTS);
-        assertCommandBehavior(
-                "add Valid Name p/12345 e/valid@e.mail a/valid, address t/invalid_-[.tag", Tag.MESSAGE_TAG_CONSTRAINTS);
-
-    }
 
     @Test
     public void execute_add_successful() throws Exception {
@@ -151,13 +60,6 @@ public class LogicTest {
         Person toBeAdded = helper.adam();
         AddressBook expectedAB = new AddressBook();
         expectedAB.addPerson(toBeAdded);
-
-        // execute command and verify result
-        assertCommandBehavior(helper.generateAddCommand(toBeAdded),
-                              String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
-                              expectedAB,
-                              false,
-                              Collections.emptyList());
 
     }
 
@@ -172,13 +74,6 @@ public class LogicTest {
         // setup starting state
         addressBook.addPerson(toBeAdded); // person already in internal address book
 
-        // execute command and verify result
-        assertCommandBehavior(
-                helper.generateAddCommand(toBeAdded),
-                AddCommand.MESSAGE_DUPLICATE_PERSON,
-                expectedAB,
-                false,
-                Collections.emptyList());
 
     }
 
@@ -186,274 +81,11 @@ public class LogicTest {
     public void execute_list_showsAllPersons() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
-        AddressBook expectedAB = helper.generateAddressBook(false, true);
-        List<? extends ReadOnlyPerson> expectedList = expectedAB.getAllPersons().immutableListView();
-
         // prepare address book state
         helper.addToAddressBook(addressBook, false, true);
 
-        assertCommandBehavior("list",
-                              Command.getMessageForPersonListShownSummary(expectedList),
-                              expectedAB,
-                              true,
-                              expectedList);
     }
 
-    @Test
-    public void execute_view_invalidArgsFormat() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE);
-        assertCommandBehavior("view ", expectedMessage);
-        assertCommandBehavior("view arg not number", expectedMessage);
-    }
-
-    @Test
-    public void execute_view_invalidIndex() throws Exception {
-        assertInvalidIndexBehaviorForCommand("view");
-    }
-
-    /**
-     * Confirms the 'invalid argument index number behaviour' for the given command
-     * targeting a single person in the last shown list, using visible index.
-     * @param commandWord to test assuming it targets a single person in the last shown list based on visible index.
-     */
-    private void assertInvalidIndexBehaviorForCommand(String commandWord) throws Exception {
-        String expectedMessage = Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-        TestDataHelper helper = new TestDataHelper();
-        List<Person> lastShownList = helper.generatePersonList(false, true);
-
-        logic.setLastShownList(lastShownList);
-
-        assertCommandBehavior(commandWord + " -1", expectedMessage, AddressBook.empty(), false, lastShownList);
-        assertCommandBehavior(commandWord + " 0", expectedMessage, AddressBook.empty(), false, lastShownList);
-        assertCommandBehavior(commandWord + " 3", expectedMessage, AddressBook.empty(), false, lastShownList);
-
-    }
-
-    @Test
-    public void execute_view_onlyShowsNonPrivate() throws Exception {
-
-        TestDataHelper helper = new TestDataHelper();
-        Person p1 = helper.generatePerson(1, true);
-        Person p2 = helper.generatePerson(2, false);
-        List<Person> lastShownList = helper.generatePersonList(p1, p2);
-        AddressBook expectedAB = helper.generateAddressBook(lastShownList);
-        helper.addToAddressBook(addressBook, lastShownList);
-
-        logic.setLastShownList(lastShownList);
-
-        assertCommandBehavior("view 1",
-                              String.format(ViewCommand.MESSAGE_VIEW_PERSON_DETAILS, p1.getAsTextHidePrivate()),
-                              expectedAB,
-                              false,
-                              lastShownList);
-
-        assertCommandBehavior("view 2",
-                              String.format(ViewCommand.MESSAGE_VIEW_PERSON_DETAILS, p2.getAsTextHidePrivate()),
-                              expectedAB,
-                              false,
-                              lastShownList);
-    }
-
-    @Test
-    public void execute_tryToViewMissingPerson_errorMessage() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Person p1 = helper.generatePerson(1, false);
-        Person p2 = helper.generatePerson(2, false);
-        List<Person> lastShownList = helper.generatePersonList(p1, p2);
-
-        AddressBook expectedAB = new AddressBook();
-        expectedAB.addPerson(p2);
-
-        addressBook.addPerson(p2);
-        logic.setLastShownList(lastShownList);
-
-        assertCommandBehavior("view 1",
-                              Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK,
-                              expectedAB,
-                              false,
-                              lastShownList);
-    }
-
-    @Test
-    public void execute_viewAll_invalidArgsFormat() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewAllCommand.MESSAGE_USAGE);
-        assertCommandBehavior("viewall ", expectedMessage);
-        assertCommandBehavior("viewall arg not number", expectedMessage);
-    }
-
-    @Test
-    public void execute_viewAll_invalidIndex() throws Exception {
-        assertInvalidIndexBehaviorForCommand("viewall");
-    }
-
-    @Test
-    public void execute_viewAll_alsoShowsPrivate() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Person p1 = helper.generatePerson(1, true);
-        Person p2 = helper.generatePerson(2, false);
-        List<Person> lastShownList = helper.generatePersonList(p1, p2);
-        AddressBook expectedAB = helper.generateAddressBook(lastShownList);
-        helper.addToAddressBook(addressBook, lastShownList);
-
-        logic.setLastShownList(lastShownList);
-
-        assertCommandBehavior("viewall 1",
-                            String.format(ViewCommand.MESSAGE_VIEW_PERSON_DETAILS, p1.getAsTextShowAll()),
-                            expectedAB,
-                            false,
-                            lastShownList);
-
-        assertCommandBehavior("viewall 2",
-                            String.format(ViewCommand.MESSAGE_VIEW_PERSON_DETAILS, p2.getAsTextShowAll()),
-                            expectedAB,
-                            false,
-                            lastShownList);
-    }
-
-    @Test
-    public void execute_tryToViewAllPersonMissingInAddressBook_errorMessage() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Person p1 = helper.generatePerson(1, false);
-        Person p2 = helper.generatePerson(2, false);
-        List<Person> lastShownList = helper.generatePersonList(p1, p2);
-
-        AddressBook expectedAB = new AddressBook();
-        expectedAB.addPerson(p1);
-
-        addressBook.addPerson(p1);
-        logic.setLastShownList(lastShownList);
-
-        assertCommandBehavior("viewall 2",
-                                Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK,
-                                expectedAB,
-                                false,
-                                lastShownList);
-    }
-
-    @Test
-    public void execute_delete_invalidArgsFormat() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
-        assertCommandBehavior("delete ", expectedMessage);
-        assertCommandBehavior("delete arg not number", expectedMessage);
-    }
-
-    @Test
-    public void execute_delete_invalidIndex() throws Exception {
-        assertInvalidIndexBehaviorForCommand("delete");
-    }
-
-    @Test
-    public void execute_delete_removesCorrectPerson() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Person p1 = helper.generatePerson(1, false);
-        Person p2 = helper.generatePerson(2, true);
-        Person p3 = helper.generatePerson(3, true);
-
-        List<Person> threePersons = helper.generatePersonList(p1, p2, p3);
-
-        AddressBook expectedAB = helper.generateAddressBook(threePersons);
-        expectedAB.removePerson(p2);
-
-
-        helper.addToAddressBook(addressBook, threePersons);
-        logic.setLastShownList(threePersons);
-
-        assertCommandBehavior("delete 2",
-                                String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, p2),
-                                expectedAB,
-                                false,
-                                threePersons);
-    }
-
-    @Test
-    public void execute_delete_missingInAddressBook() throws Exception {
-
-        TestDataHelper helper = new TestDataHelper();
-        Person p1 = helper.generatePerson(1, false);
-        Person p2 = helper.generatePerson(2, true);
-        Person p3 = helper.generatePerson(3, true);
-
-        List<Person> threePersons = helper.generatePersonList(p1, p2, p3);
-
-        AddressBook expectedAB = helper.generateAddressBook(threePersons);
-        expectedAB.removePerson(p2);
-
-        helper.addToAddressBook(addressBook, threePersons);
-        addressBook.removePerson(p2);
-        logic.setLastShownList(threePersons);
-
-        assertCommandBehavior("delete 2",
-                                Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK,
-                                expectedAB,
-                                false,
-                                threePersons);
-    }
-
-    @Test
-    public void execute_find_invalidArgsFormat() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
-        assertCommandBehavior("find ", expectedMessage);
-    }
-
-    @Test
-    public void execute_find_onlyMatchesFullWordsInNames() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Person pTarget1 = helper.generatePersonWithName("bla bla KEY bla");
-        Person pTarget2 = helper.generatePersonWithName("bla KEY bla bceofeia");
-        Person p1 = helper.generatePersonWithName("KE Y");
-        Person p2 = helper.generatePersonWithName("KEYKEYKEY sduauo");
-
-        List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
-        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
-        List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
-        helper.addToAddressBook(addressBook, fourPersons);
-
-        assertCommandBehavior("find KEY",
-                                Command.getMessageForPersonListShownSummary(expectedList),
-                                expectedAB,
-                                true,
-                                expectedList);
-    }
-
-    @Test
-    public void execute_find_isCaseSensitive() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Person pTarget1 = helper.generatePersonWithName("bla bla KEY bla");
-        Person pTarget2 = helper.generatePersonWithName("bla KEY bla bceofeia");
-        Person p1 = helper.generatePersonWithName("key key");
-        Person p2 = helper.generatePersonWithName("KEy sduauo");
-
-        List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
-        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
-        List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
-        helper.addToAddressBook(addressBook, fourPersons);
-
-        assertCommandBehavior("find KEY",
-                                Command.getMessageForPersonListShownSummary(expectedList),
-                                expectedAB,
-                                true,
-                                expectedList);
-    }
-
-    @Test
-    public void execute_find_matchesIfAnyKeywordPresent() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        Person pTarget1 = helper.generatePersonWithName("bla bla KEY bla");
-        Person pTarget2 = helper.generatePersonWithName("bla rAnDoM bla bceofeia");
-        Person p1 = helper.generatePersonWithName("key key");
-        Person p2 = helper.generatePersonWithName("KEy sduauo");
-
-        List<Person> fourPersons = helper.generatePersonList(p1, pTarget1, p2, pTarget2);
-        AddressBook expectedAB = helper.generateAddressBook(fourPersons);
-        List<Person> expectedList = helper.generatePersonList(pTarget1, pTarget2);
-        helper.addToAddressBook(addressBook, fourPersons);
-
-        assertCommandBehavior("find KEY rAnDoM",
-                                Command.getMessageForPersonListShownSummary(expectedList),
-                                expectedAB,
-                                true,
-                                expectedList);
-    }
 
     /**
      * A utility class to generate test data.
