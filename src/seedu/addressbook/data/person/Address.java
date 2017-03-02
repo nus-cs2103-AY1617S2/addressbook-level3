@@ -12,7 +12,7 @@ public class Address {
     public static final String MESSAGE_ADDRESS_CONSTRAINTS = "Person addresses can be in any format";
     public static final String ADDRESS_VALIDATION_REGEX = ".+";
 
-    public final String value;
+    public String value;
     private boolean isPrivate;
 
     /**
@@ -29,10 +29,19 @@ public class Address {
     }
 
     /**
-     * Returns true if a given string is a valid person email.
+     * Returns true if a given string is a valid person address.
      */
     public static boolean isValidAddress(String test) {
         return test.matches(ADDRESS_VALIDATION_REGEX);
+    }
+    
+    /**
+     * Reset the address to a newValue
+     * @throws IllegalValueException 
+     */
+    public void setValue(String newValue) throws IllegalValueException {
+        if (isValidAddress(newValue)) this.value = newValue;
+        else throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
     }
 
     @Override

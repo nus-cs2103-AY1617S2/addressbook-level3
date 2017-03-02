@@ -18,6 +18,11 @@ public class Parser {
 
     public static final Pattern KEYWORDS_ARGS_FORMAT =
             Pattern.compile("(?<keywords>\\S+(?:\\s+\\S+)*)"); // one or more keywords separated by whitespace
+    
+    public static final Pattern PERSON_EDIT_ARGS_FORMAT = 
+            Pattern.compile("(?<index>.+)"
+                    + " (?<field>.+)"
+                    + " (?<value>.+)"); 
 
     public static final Pattern PERSON_DATA_ARGS_FORMAT = // '/' forward slashes are reserved for delimiter prefixes
             Pattern.compile("(?<name>[^/]+)"
@@ -65,6 +70,9 @@ public class Parser {
 
             case ClearCommand.COMMAND_WORD:
                 return new ClearCommand();
+                
+            case EditCommand.COMMAND_WORD:
+                return prepareEdit(arguments);
 
             case FindCommand.COMMAND_WORD:
                 return prepareFind(arguments);
@@ -247,6 +255,25 @@ public class Parser {
         final String[] keywords = matcher.group("keywords").split("\\s+");
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
         return new FindTagCommand(keywordSet);
+    }
+    
+    /**
+     * Parses arguments in the context of the edit command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareEdit(String args) {
+        final Matcher matcher = PERSON_EDIT_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    EditCommand.MESSAGE_USAGE));
+        }
+
+        final int index = Integer.parseInt(matcher.group("index"));
+        
+        
+        return new EditCommand(index, matcher.group("field"), matcher.group("value"));
     }
 
 }
