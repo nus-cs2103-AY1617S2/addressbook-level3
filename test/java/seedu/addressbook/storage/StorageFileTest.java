@@ -17,7 +17,7 @@ import seedu.addressbook.data.person.Person;
 import seedu.addressbook.data.person.Phone;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
-import seedu.addressbook.storage.StorageFile.StorageOperationException;
+import seedu.addressbook.storage.Storage.StorageOperationException;
 import static seedu.addressbook.util.TestUtil.assertTextFilesEqual;
 
 public class StorageFileTest {
@@ -45,7 +45,7 @@ public class StorageFileTest {
     public void load_invalidFormat_exceptionThrown() throws Exception {
         // The file contains valid xml data, but does not match the AddressBook class
         StorageFile storage = getStorage("InvalidData.txt");
-        thrown.expect(StorageOperationException.class);
+        thrown.expect(StorageException.class);
         storage.load();
     }
 
