@@ -59,7 +59,10 @@ public class Parser {
 
             case AddCommand.COMMAND_WORD:
                 return prepareAdd(arguments);
-
+                
+            case FavoriteCommand.COMMAND_WORD:
+                return prepareAdd(arguments);
+                
             case DeleteCommand.COMMAND_WORD:
                 return prepareDelete(arguments);
 
@@ -206,7 +209,26 @@ public class Parser {
         return Integer.parseInt(matcher.group("targetIndex"));
     }
 
+    /**
+     * Parses arguments in the context of the favorite person command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareFavorite(String args) {
+        final Matcher matcher = KEYWORDS_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                   FavoriteCommand.MESSAGE_USAGE));
+        }
 
+        // keywords delimited by whitespace
+        final String[] keywords = matcher.group("keywords").split("\\s+");
+        final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
+        return new FindCommand(keywordSet);
+    }
+    
+    
     /**
      * Parses arguments in the context of the find person command.
      *
