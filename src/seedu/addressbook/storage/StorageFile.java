@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 /**
  * Represents the file used to store address book data.
  */
-public class StorageFile implements Storage {
+public class StorageFile extends Storage {
 
     
 

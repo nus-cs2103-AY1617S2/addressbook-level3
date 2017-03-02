@@ -6,7 +6,7 @@ import seedu.addressbook.storage.StorageFile.StorageOperationException;
 /**
  * Represents the file used to store address book data.
  */
-public class StorageStub implements Storage {
+public class StorageStub extends Storage {
 
 	public StorageStub(String path) {
 	}
