@@ -83,6 +83,15 @@ public class AddressBook {
     }
 
     /**
+     * Modifies a person in the address book.
+     *
+     * @throws PersonNotFoundException if no such Person could be found. 
+     */
+    public void modifiesPerson(int key, ReadOnlyPerson person, Person toModify) throws PersonNotFoundException {
+        allPersons.modify(key, person, toModify);
+    }
+    
+    /**
      * Checks if an equivalent person exists in the address book.
      */
     public boolean containsPerson(ReadOnlyPerson key) {

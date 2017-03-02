@@ -186,7 +186,10 @@ public class LogicTest {
 
     @Test
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 5d43f5a... Modify Person
     public void execute_modify_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ModifyCommand.MESSAGE_USAGE);
         assertCommandBehavior(
@@ -201,6 +204,7 @@ public class LogicTest {
 
     @Test
     public void execute_modify_invalidPersonData() throws Exception {       
+<<<<<<< HEAD
         TestDataHelper helper = new TestDataHelper();
         Person p1 = helper.generatePerson(1, false);
         Person p2 = helper.generatePerson(2, true);
@@ -244,16 +248,52 @@ public class LogicTest {
 
     @Test
     public void execute_Modify_InvalidIndex() throws Exception {
+=======
+        assertCommandBehavior(
+                "modify 1 []\\[;] p/12345 e/valid@e.mail a/valid, address", Name.MESSAGE_NAME_CONSTRAINTS);
+        assertCommandBehavior(
+                "modify 1 Valid Name p/not_numbers e/valid@e.mail a/valid, address", Phone.MESSAGE_PHONE_CONSTRAINTS);
+        assertCommandBehavior(
+                "modify 1 Valid Name p/12345 e/notAnEmail a/valid, address", Email.MESSAGE_EMAIL_CONSTRAINTS);
+        assertCommandBehavior(
+                "modify 1 Valid Name p/12345 e/valid@e.mail a/valid, address t/invalid_-[.tag", Tag.MESSAGE_TAG_CONSTRAINTS);
+
+    }
+
+    @Test
+    public void execute_modify_successful() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Person toBeModified = helper.adam();
+        AddressBook expectedAB = new AddressBook();
+        expectedAB.modifiesPerson(1, toBeModified, toBeModified);
+
+        // execute command and verify result
+        assertCommandBehavior(helper.generateModifyCommand(toBeModified),
+                              String.format(ModifyCommand.MESSAGE_SUCCESS, toBeModified),
+                              expectedAB,
+                              false,
+                              Collections.emptyList());
+
+    }
+
+    @Test
+    public void execute_Modify_invalidIndex() throws Exception {
+>>>>>>> 5d43f5a... Modify Person
         TestDataHelper helper = new TestDataHelper();
         Person p1 = helper.generatePerson(1, false);
         Person p2 = helper.generatePerson(2, true);
         Person p3 = helper.generatePerson(3, true);
+<<<<<<< HEAD
        
         Person p2Modified = helper.generatePerson(2, true);
+=======
+>>>>>>> 5d43f5a... Modify Person
 
         List<Person> threePersons = helper.generatePersonList(p1, p2, p3);
 
         AddressBook expectedAB = helper.generateAddressBook(threePersons);
+<<<<<<< HEAD
         expectedAB.modifiesPerson(2, p2, p2Modified);
 
         assertCommandBehavior("modify 4",
@@ -265,6 +305,22 @@ public class LogicTest {
     
     @Test
 >>>>>>> 83bfe63... Edited JUnit Test
+=======
+        expectedAB.removePerson(p2);
+
+        helper.addToAddressBook(addressBook, threePersons);
+        addressBook.removePerson(p2);
+        logic.setLastShownList(threePersons);
+
+        assertCommandBehavior("delete 2",
+                                Messages.MESSAGE_PERSON_NOT_IN_ADDRESSBOOK,
+                                expectedAB,
+                                false,
+                                threePersons);        
+    }
+    
+    @Test
+>>>>>>> 5d43f5a... Modify Person
     public void execute_list_showsAllPersons() throws Exception {
         // prepare expectations
         TestDataHelper helper = new TestDataHelper();
@@ -591,12 +647,19 @@ public class LogicTest {
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 5d43f5a... Modify Person
         /** Generates the correct add command based on the person given */
         String generateModifyCommand(Person p) {
             StringJoiner cmd = new StringJoiner(" ");
 
+<<<<<<< HEAD
             cmd.add("modify");
+=======
+            cmd.add("add");
+>>>>>>> 5d43f5a... Modify Person
 
             cmd.add(p.getName().toString());
             cmd.add((p.getPhone().isPrivate() ? "pp/" : "p/") + p.getPhone());
@@ -611,7 +674,10 @@ public class LogicTest {
             return cmd.toString();
         }
         
+<<<<<<< HEAD
 >>>>>>> 83bfe63... Edited JUnit Test
+=======
+>>>>>>> 5d43f5a... Modify Person
         /**
          * Generates an AddressBook with auto-generated persons.
          * @param isPrivateStatuses flags to indicate if all contact details of respective persons should be set to

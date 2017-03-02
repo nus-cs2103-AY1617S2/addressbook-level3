@@ -24,7 +24,11 @@ import seedu.addressbook.data.tag.UniqueTagList;
  */
 public class ModifyCommand extends Command {
     
+<<<<<<< HEAD
     public static final String COMMAND_WORD = "modify";
+=======
+    public static final String COMMAND_WORD = "Modify";
+>>>>>>> 5d43f5a... Modify Person
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ":\n" + "Modifies a person in the address book. "
             + "Contact details can be marked private by prepending 'p' to the prefix.\n\t"
