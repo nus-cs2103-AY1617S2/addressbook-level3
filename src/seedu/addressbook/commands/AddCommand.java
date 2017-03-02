@@ -56,9 +56,13 @@ public class AddCommand extends Command {
     public ReadOnlyPerson getPerson() {
         return toAdd;
     }
+    
+    public boolean isMutating() {
+       return true;
+    }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws Exception{
         try {
             addressBook.addPerson(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
