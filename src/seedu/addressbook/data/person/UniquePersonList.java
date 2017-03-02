@@ -73,6 +73,16 @@ public class UniquePersonList implements Iterable<Person> {
     public List<ReadOnlyPerson> immutableListView() {
         return Collections.unmodifiableList(internalList);
     }
+    
+    /**
+     * Sorts the internalList according to the comparator given. 
+     * solely for the sorting purpose. Do NOT call this method on the original UniquePersonList, but only on a copy,
+     * as this would modify the original structure of the list.
+     */
+    public List<ReadOnlyPerson> sortedImmutableList(Comparator<Person> personComparator){
+        Collections.sort(internalList, personComparator);
+        return Collections.unmodifiableList(internalList);
+    }
 
 
     /**
