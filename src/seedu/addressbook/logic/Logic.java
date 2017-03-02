@@ -28,16 +28,16 @@ public class Logic {
         setAddressBook(storage.load());
     }
 
-    Logic(Storage storageFile, AddressBook addressBook){
+    public Logic(Storage storageFile, AddressBook addressBook){
         setStorage(storageFile);
         setAddressBook(addressBook);
     }
 
-    void setStorage(Storage storage){
+    public void setStorage(Storage storage){
         this.storage = storage;
     }
 
-    void setAddressBook(AddressBook addressBook){
+    public void setAddressBook(AddressBook addressBook){
         this.addressBook = addressBook;
     }
 

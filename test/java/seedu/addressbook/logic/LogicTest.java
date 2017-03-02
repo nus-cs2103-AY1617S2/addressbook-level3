@@ -31,13 +31,12 @@ public class LogicTest {
     @Rule
     public TemporaryFolder saveFolder = new TemporaryFolder();
 
-    private StorageStub saveFile;
     private AddressBook addressBook;
     private Logic logic;
 
     @Before
     public void setup() throws Exception {
-        saveFile = new StorageStub(saveFolder.newFile("testSaveFile.txt").getPath());
+        StorageStub saveFile = new StorageStub(saveFolder.newFile("testSaveFile.txt").getPath());
         addressBook = new AddressBook();
         saveFile.save(addressBook);
         logic = new Logic(saveFile, addressBook);
@@ -571,7 +570,7 @@ public class LogicTest {
         /**
          * Generates a Person object with given name. Other fields will have some dummy values.
          */
-        Person generatePersonWithName(String name) throws Exception {
+        public Person generatePersonWithName(String name) throws Exception {
             return new Person(
                               new Name(name),
                               new Phone("1", false),
