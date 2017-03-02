@@ -12,7 +12,7 @@ public class Phone {
     public static final String MESSAGE_PHONE_CONSTRAINTS = "Person phone numbers should only contain numbers";
     public static final String PHONE_VALIDATION_REGEX = "\\d+";
 
-    public final String value;
+    public String value;
     private boolean isPrivate;
 
     /**
@@ -34,6 +34,15 @@ public class Phone {
      */
     public static boolean isValidPhone(String test) {
         return test.matches(PHONE_VALIDATION_REGEX);
+    }
+    
+    /**
+     * Reset the phone number to a newValue
+     * @throws IllegalValueException 
+     */
+    public void setValue(String newValue) throws IllegalValueException {
+        if (isValidPhone(newValue)) this.value = newValue;
+        else throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
     }
 
     @Override

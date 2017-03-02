@@ -15,7 +15,7 @@ public class Name {
     public static final String MESSAGE_NAME_CONSTRAINTS = "Person names should be spaces or alphanumeric characters";
     public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum} ]+";
 
-    public final String fullName;
+    public String fullName;
 
     /**
      * Validates given name.
@@ -42,6 +42,15 @@ public class Name {
      */
     public List<String> getWordsInName() {
         return Arrays.asList(fullName.split("\\s+"));
+    }
+    
+    /**
+     * Reset the name to a newValue
+     * @throws IllegalValueException 
+     */
+    public void setFullName(String newValue) throws IllegalValueException {
+        if (isValidName(newValue)) this.fullName = newValue;
+        else throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
     }
 
     @Override
