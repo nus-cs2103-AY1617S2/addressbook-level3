@@ -2,6 +2,7 @@ package seedu.addressbook.data.tag;
 
 import seedu.addressbook.common.Utils;
 import seedu.addressbook.data.exception.DuplicateDataException;
+import seedu.addressbook.data.person.Person;
 
 import java.util.*;
 
@@ -29,6 +30,7 @@ public class UniqueTagList implements Iterable<Tag> {
     public static class TagNotFoundException extends Exception {}
 
     private final List<Tag> internalList = new ArrayList<>();
+    private final List<Tag> internalBackupList= new ArrayList<>();
 
     /**
      * Constructs an empty TagList.
@@ -138,6 +140,26 @@ public class UniqueTagList implements Iterable<Tag> {
     public void clear() {
         internalList.clear();
     }
+    
+    
+    /**
+     * Backs up all tags in list.
+     */
+    public void backup(){
+    	internalBackupList.clear();
+    	for (Tag tag : internalList)
+    		internalBackupList.add(tag);
+    }
+    
+    /**
+     * Undoes the latest changes to the tag list.
+     */
+    public void undo(){
+    	internalList.clear();
+    	for (Tag tag : internalBackupList)
+    		internalList.add(tag);
+    }
+
 
     /**
      * Replaces the Tags in this list with those in the argument tag list.
