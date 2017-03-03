@@ -29,11 +29,14 @@ public class UniquePersonList implements Iterable<Person> {
     public static class PersonNotFoundException extends Exception {}
 
     private final List<Person> internalList = new ArrayList<>();
+    private final List<Person> internalBackupList;
 
     /**
      * Constructs empty person list.
      */
-    public UniquePersonList() {}
+    public UniquePersonList() {        
+    	internalBackupList = new ArrayList<>(internalList);
+    	}
 
     /**
      * Constructs a person list with the given persons.
@@ -44,6 +47,7 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
         internalList.addAll(initialTags);
+        internalBackupList = new ArrayList<>(internalList);
     }
 
     /**
@@ -56,6 +60,8 @@ public class UniquePersonList implements Iterable<Person> {
             throw new DuplicatePersonException();
         }
         internalList.addAll(persons);
+        internalBackupList = new ArrayList<>(internalList);
+
     }
 
     /**
@@ -63,6 +69,8 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public UniquePersonList(UniquePersonList source) {
         internalList.addAll(source.internalList);
+        internalBackupList = new ArrayList<>(internalList);
+
     }
 
     /**
@@ -112,6 +120,27 @@ public class UniquePersonList implements Iterable<Person> {
     public void clear() {
         internalList.clear();
     }
+    
+    /**
+     * Backs up all persons in list.
+     */
+    public void backup(){
+    	internalBackupList.clear();
+    	for (Person person : internalList)
+    		internalBackupList.add(person);
+    }
+    
+    /**
+     * Undoes the latest changes to the person list.
+     */
+    public void undo(){
+    	internalList.clear();
+    	for (Person person : internalBackupList)
+    		internalList.add(person);
+    }
+    
+
+    
 
     @Override
     public Iterator<Person> iterator() {
