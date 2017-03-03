@@ -35,7 +35,6 @@ import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.data.tag.Tag;
 import seedu.addressbook.data.tag.UniqueTagList;
 import seedu.addressbook.storage.Storage;
-import seedu.addressbook.storage.StorageStub;
 
 
 public class LogicTest {
