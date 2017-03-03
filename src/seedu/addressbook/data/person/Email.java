@@ -1,5 +1,8 @@
 package seedu.addressbook.data.person;
 
+import java.util.Arrays;
+import java.util.List;
+
 import seedu.addressbook.data.exception.IllegalValueException;
 
 /**
@@ -35,6 +38,13 @@ public class Email {
      */
     public static boolean isValidEmail(String test) {
         return test.matches(EMAIL_VALIDATION_REGEX);
+    }
+    
+    /**
+     * Retrieves a listing of the breakdown of the email address, in order.
+     */
+    public List<String> getBreakDownOfEmailAddress() {
+        return Arrays.asList(value.split("@"));
     }
 
     @Override

@@ -1,5 +1,8 @@
 package seedu.addressbook.data.person;
 
+import java.util.Arrays;
+import java.util.List;
+
 import seedu.addressbook.data.exception.IllegalValueException;
 
 /**
@@ -34,6 +37,13 @@ public class Phone {
      */
     public static boolean isValidPhone(String test) {
         return test.matches(PHONE_VALIDATION_REGEX);
+    }
+    
+    /**
+     * Retrieves a listing of the breakdown of the phone number.
+     */
+    public List<String> getBreakDownOfPhone() {
+        return Arrays.asList(value);
     }
 
     @Override

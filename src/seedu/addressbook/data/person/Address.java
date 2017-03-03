@@ -1,5 +1,8 @@
 package seedu.addressbook.data.person;
 
+import java.util.Arrays;
+import java.util.List;
+
 import seedu.addressbook.data.exception.IllegalValueException;
 
 /**
@@ -33,6 +36,13 @@ public class Address {
      */
     public static boolean isValidAddress(String test) {
         return test.matches(ADDRESS_VALIDATION_REGEX);
+    }
+    
+    /**
+     * Retrieves a listing of the breakdown of the address, in order.
+     */
+    public List<String> getBreakDownOfAddress() {
+        return Arrays.asList(value.toLowerCase().replaceAll(",", "").split("\\s+"));
     }
 
     @Override

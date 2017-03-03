@@ -45,6 +45,11 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | user | add a new person |
 `* * *` | user | delete a person | remove entries that I no longer need
 `* * *` | user | find a person by name | locate details of persons without having to go through the entire list
+`* * *` | user | find a persons by tag | locate details of persons of similar group without having to go through the entire list
+`* * *` | user | view a list of people in my address book in a sorted manner | view the overall list of people by alphabetical order
+`* * ` | user | find a person by phone | locate details of person without having to eyeball the entire list
+`* * ` | user | find a person by address | locate details of persons staying in the same district
+`* * ` | user | find a person by email | locate details of person without having to go through the entire list
 `* *` | user | hide [private contact details](#private-contact-detail) by default | minimize chance of someone else seeing them by accident
 `*` | user with many persons in the address book | sort persons by name | locate a person easily
 

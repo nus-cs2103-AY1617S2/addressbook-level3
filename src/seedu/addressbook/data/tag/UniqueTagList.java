@@ -164,4 +164,22 @@ public class UniqueTagList implements Iterable<Tag> {
     public int hashCode() {
         return internalList.hashCode();
     }
+    
+    /**
+     * Retrieves a listing of tag assigned to person, in order.
+     */
+    public List<String> getPersonTag() {
+        return getPersonTagString(internalList);
+    }
+    
+    /**
+     * Converts a listing of tag assigned to person into the data type string.
+     */
+    public List<String> getPersonTagString(List<Tag> internalList) {
+        List<String> strTagList = new ArrayList<String>();
+        for (Tag tag : internalList) {
+            strTagList.add(tag.toString().toLowerCase().replaceAll("[\\[\\]]", ""));
+        }
+        return strTagList;
+    }
 }
