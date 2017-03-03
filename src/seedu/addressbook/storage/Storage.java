@@ -8,7 +8,7 @@ import seedu.addressbook.data.exception.IllegalValueException;
  * @author yanzh
  *
  */
-public interface Storage {
+public abstract class Storage {
         
     public abstract void save(AddressBook addressBook) throws StorageOperationException;
     public abstract AddressBook load() throws StorageOperationException;

@@ -7,7 +7,7 @@ import seedu.addressbook.data.AddressBook;
  * @author yanzh
  *
  */
-public class StorageStub implements Storage {
+public class StorageStub extends Storage {
 
     @Override
     public void save(AddressBook addressBook) throws StorageOperationException {
