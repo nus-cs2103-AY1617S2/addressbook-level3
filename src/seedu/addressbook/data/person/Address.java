@@ -35,6 +35,16 @@ public class Address {
         return test.matches(ADDRESS_VALIDATION_REGEX);
     }
 
+    /**
+     * Creates a deep copy of Address
+     * @throws IllegalValueException 
+     */
+    public Address copy() throws IllegalValueException {
+        Address copy = new Address(this.value, this.isPrivate);
+        return copy;
+    }
+
+    
     @Override
     public String toString() {
         return value;
