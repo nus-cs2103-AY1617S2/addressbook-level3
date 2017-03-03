@@ -25,6 +25,8 @@ public interface Storage {
     public String getPath();
     public void save(AddressBook addressBook)throws StorageOperationException;
     public AddressBook load() throws StorageOperationException ;
-    public Storage newStorage() throws InvalidStorageFilePathException;
+    public  Storage newStorage() throws InvalidStorageFilePathException;
+    public  Storage newStorage(String path) throws InvalidStorageFilePathException;
+
 
 }
