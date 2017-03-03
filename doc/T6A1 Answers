@@ -10,3 +10,17 @@ Both higher level and lower level class should depend on an abstract class or in
 [x] Where else in the code do you notice the application of DIP?
 The Logic class depends on the Command abstract class instead of directly on actual commands, 
 so that if the implementation of a command e.g. AddCommand changes, Logic doesn't need to be changed
+
+Dependency injection
+
+[x] What is dependency injection and how does it help?
+You want to test the functionality of some class A, but class A may rely on other classes in order to function 
+(i.e. possess dependencies on other classes). This makes it difficult to test A alone as errors in the other classes it depends on 
+will affect results, which makes it hard to identify whether A really works or whether the errors are due to other classes. 
+In order to test A in isolation, we replace the classes it depends on with stubs that have hardcoded return values 
+for the components that A relies on. Thus, when we test A, we can be assured that since A's dependencies work correctly, 
+any errors are effectively errors in A.
+
+DI stubs also help when different developers write code that is codependent on each other-- 
+instead of having to provide or wait for full implementations of components that his/her components rely on, 
+a developer can write a stub and proceed to develop his/her own code.
