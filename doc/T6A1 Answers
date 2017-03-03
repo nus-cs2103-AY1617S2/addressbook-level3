@@ -24,3 +24,24 @@ any errors are effectively errors in A.
 DI stubs also help when different developers write code that is codependent on each other-- 
 instead of having to provide or wait for full implementations of components that his/her components rely on, 
 a developer can write a stub and proceed to develop his/her own code.
+
+Open-closed principle
+
+[x] What is open-closed principle and how does it help?
+"A module should be open for extension, but closed to modification." 
+We should be able to modify the behavior of a program and add features without changing preexisting source code, 
+so as to avoid code regression and messy code structure. To do this, we separate specification (in the form of interfaces) 
+from implementation (in the form of classes). Classes must depend on or implement interface functionalities.
+
+This allows us to add functionalities without having to modify existing code and potentially introducing regressions 
+or convoluting code structure.
+
+[x] Is it possible to make Parser more OCP-compliant in terms of extending it to handle more command types?
+Yes, instead of Parser handling all types of parsing, it can be made an interface and related parsing be collected into 
+appropriate subclasses, i.e. AddParser, etc. (this also increases cohesion)
+
+[x] In terms of how it saves data, does Logic become more OCP-compliant after applying DIP as given in LO-DIP?
+How can you improve Logic's OCP-compliance further so that it can not only work with different types of storages, 
+but different number of storages (e.g. save to both a text file and a database).
+Yes, as you can now use different types of Storage without modifying Logic. You can specifically do this by adding subclasses
+to Storage that represent different types of storage, e.g. text file and database.
