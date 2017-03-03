@@ -5,8 +5,9 @@ import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.parser.Parser;
-import seedu.addressbook.storage.StorageFile;
+import seedu.addressbook.storage.Storage;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -16,41 +17,32 @@ import java.util.Optional;
  */
 public class Logic {
 
-
-    private StorageFile storage;
+	private static ArrayList<Storage> storages = new ArrayList<Storage>();
     private AddressBook addressBook;
 
     /** The list of person shown to the user most recently.  */
     private List<? extends ReadOnlyPerson> lastShownList = Collections.emptyList();
 
     public Logic() throws Exception{
-        setStorage(initializeStorage());
-        setAddressBook(storage.load());
+        setStorage(Storage.initializeStorage());
+        setAddressBook(storages.get(0).load());
     }
 
-    Logic(StorageFile storageFile, AddressBook addressBook){
-        setStorage(storageFile);
+    Logic(Storage storage, AddressBook addressBook){
+        setStorage(storage);
         setAddressBook(addressBook);
     }
 
-    void setStorage(StorageFile storage){
-        this.storage = storage;
+    private void setStorage(Storage storage){
+        storages.add(storage);
     }
 
     void setAddressBook(AddressBook addressBook){
         this.addressBook = addressBook;
     }
-
-    /**
-     * Creates the StorageFile object based on the user specified path (if any) or the default storage path.
-     * @throws StorageFile.InvalidStorageFilePathException if the target file path is incorrect.
-     */
-    private StorageFile initializeStorage() throws StorageFile.InvalidStorageFilePathException {
-        return new StorageFile();
-    }
-
-    public String getStorageFilePath() {
-        return storage.getPath();
+    
+    public static ArrayList<Storage> getStorages() {
+    	return storages;
     }
 
     /**
@@ -59,7 +51,7 @@ public class Logic {
     public List<ReadOnlyPerson> getLastShownList() {
         return Collections.unmodifiableList(lastShownList);
     }
-
+    
     protected void setLastShownList(List<? extends ReadOnlyPerson> newList) {
         lastShownList = newList;
     }
@@ -85,7 +77,9 @@ public class Logic {
     private CommandResult execute(Command command) throws Exception {
         command.setData(addressBook, lastShownList);
         CommandResult result = command.execute();
-        storage.save(addressBook);
+        for (Storage s : storages) {
+        	s.save(addressBook);
+        }
         return result;
     }
 
