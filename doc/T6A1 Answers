@@ -45,3 +45,15 @@ How can you improve Logic's OCP-compliance further so that it can not only work 
 but different number of storages (e.g. save to both a text file and a database).
 Yes, as you can now use different types of Storage without modifying Logic. You can specifically do this by adding subclasses
 to Storage that represent different types of storage, e.g. text file and database.
+
+Coupling and cohesion
+
+[x] What are coupling and cohesion?
+Coupling: the degree to which components are dependent on each other
+Cohesion: how closely related components are
+
+[x] Where else in the design can coupling be reduced further, or cohesion can be increased further?
+In terms of decreasing coupling, you could add an Info interface such that a person is reliant on Info, 
+and you can add and modify different types of information beyond name, phone, address, email.
+In terms of increasing cohesion, instead of Parser handling all types of parsing, 
+it can be made an interface and related parsing be collected into appropriate subclasses, i.e. AddParser, etc.
