@@ -13,7 +13,15 @@ public class ClearCommand extends Command {
 
     @Override
     public CommandResult execute() {
+    	addressBook.backup();
         addressBook.clear();
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+    
+    private final boolean isMutating = true;
+    
+    @Override
+    public boolean isMutating(){
+    	return isMutating;
     }
 }
