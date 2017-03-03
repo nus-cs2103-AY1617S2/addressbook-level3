@@ -24,20 +24,16 @@ public abstract class Storage {
      * constraints.
      */
     public static class InvalidStorageFilePathException extends IllegalValueException {
-        private static final long serialVersionUID = 1L;
-
         public InvalidStorageFilePathException(String message) {
             super(message);
         }
     }
 
     /**
-     * Signals that some error has occured while trying to convert and
+     * Signals that some error has occurred while trying to convert and
      * read/write data between the application and the storage file.
      */
     public static class StorageOperationException extends Exception {
-        private static final long serialVersionUID = 1L;
-
         public StorageOperationException(String message) {
             super(message);
         }
