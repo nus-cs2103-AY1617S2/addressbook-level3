@@ -132,16 +132,6 @@ public class StorageFile implements Storage{
         return path.toString();
     }
 
-	@Override
-	public Storage newStorage() throws InvalidStorageFilePathException{
-		// TODO Auto-generated method stub
-		return new StorageFile();
-	}
 
-	@Override
-	public Storage newStorage(String path) throws InvalidStorageFilePathException {
-		// TODO Auto-generated method stub
-		return new StorageFile(path);
-	}
 
 }
