@@ -11,7 +11,6 @@ import seedu.addressbook.storage.Storage;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
 /**
  * Represents the main Logic of the AddressBook.
  */

@@ -30,8 +30,14 @@ public class StorageFile extends Storage{
      * Signals that the given file path does not fulfill the storage filepath constraints.
      */
     //used in logic class, need an abstruct func
-    //the static function have cpy to storage class
 
+
+    public static class InvalidStorageFilePathException extends IllegalValueException {
+        public InvalidStorageFilePathException(String message) {
+            super(message);
+        }
+    }
+	
     /**
      * Signals that some error has occured while trying to convert and read/write data between the application
      * and the storage file.
