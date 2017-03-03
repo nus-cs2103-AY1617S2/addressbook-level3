@@ -26,7 +26,7 @@ public class Parser {
                     + " (?<isAddressPrivate>p?)a/(?<address>[^/]+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
     public static final Pattern EDIT_DATA_ARGS_FORMAT = 
-            Pattern.compile("(?<targetIndex>.+)"
+            Pattern.compile("(?<targetIndex>[0-9]+)"
                     + "(?<name>[^/]+)" 
                     + " (?<isPhonePrivate>p?)p/(?<phone>[^/]+)"
                     + " (?<isEmailPrivate>p?)e/(?<email>[^/]+)"
