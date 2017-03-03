@@ -64,6 +64,7 @@ public class StorageStub extends Storage {
      * This method does nothing. 
      */
     public void save(AddressBook addressBook) {
+    	return;
     }
 
     /**
