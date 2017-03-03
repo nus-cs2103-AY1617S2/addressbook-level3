@@ -9,7 +9,7 @@ import seedu.addressbook.data.exception.IllegalValueException;
  *
  */
 
-public interface Storage {
+public abstract class Storage {
     /**
      * Signals that the given file path does not fulfill the storage filepath constraints.
      */
