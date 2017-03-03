@@ -1,0 +1,12 @@
+T6A1 Answers
+
+Dependency inversion principle
+
+[x] What is DIP/how does it help?
+"No high level class should be dependent on a lower level class." 
+Both higher level and lower level class should depend on an abstract class or interface so that changes in one class 
+(either high/low level) do not require changes in the other.
+
+[x] Where else in the code do you notice the application of DIP?
+The Logic class depends on the Command abstract class instead of directly on actual commands, 
+so that if the implementation of a command e.g. AddCommand changes, Logic doesn't need to be changed
