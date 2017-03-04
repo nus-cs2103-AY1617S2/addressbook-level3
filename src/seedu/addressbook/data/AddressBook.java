@@ -101,6 +101,10 @@ public class AddressBook {
     public void removePerson(ReadOnlyPerson toRemove) throws PersonNotFoundException {
         allPersons.remove(toRemove);
     }
+    
+    public void removePersonByIndex(int index) throws PersonNotFoundException {
+        allPersons.removeByIndex(index);
+    }
 
     /**
      * Clears all persons and tags from the address book.

@@ -93,7 +93,7 @@ public class Parser {
                 return prepareEdit(arguments);
                 
             case UndoCommand.COMMAND_WORD:
-                return prepareUndo();
+                return new UndoCommand();
 
             case HelpCommand.COMMAND_WORD: // Fallthrough
             default:
@@ -262,10 +262,6 @@ public class Parser {
         final String[] keywords = matcher.group("keywords").split("\\s+");
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
         return new FindCommand(keywordSet);
-    }
-    
-    private Command prepareUndo(){
-        return new UndoCommand();
     }
 
 

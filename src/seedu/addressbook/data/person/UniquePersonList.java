@@ -105,6 +105,11 @@ public class UniquePersonList implements Iterable<Person> {
             throw new PersonNotFoundException();
         }
     }
+    
+    public void removeByIndex(int index) throws PersonNotFoundException {
+        internalList.remove(index);
+        
+    }
 
     /**
      * Clears all persons in list.
