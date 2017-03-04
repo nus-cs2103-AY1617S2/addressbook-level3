@@ -17,7 +17,6 @@ import java.util.Optional;
  */
 public class Logic {
 
-
     private Storage storage;
     private AddressBook addressBook;
 
@@ -34,7 +33,7 @@ public class Logic {
         setAddressBook(addressBook);
     }
 
-    void setStorage(Storage storage){
+    private void setStorage(Storage storage){
         this.storage = storage;
     }
 
