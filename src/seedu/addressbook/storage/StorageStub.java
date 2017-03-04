@@ -17,7 +17,7 @@ public class StorageStub extends Storage {
 	
 	@Override
 	public void save(AddressBook addressBook) throws StorageOperationException {
-		// do nothing
+		this.addressBook = addressBook;
 	}
 
 	@Override
