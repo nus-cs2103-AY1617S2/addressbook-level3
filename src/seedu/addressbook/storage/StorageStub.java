@@ -3,8 +3,11 @@ package seedu.addressbook.storage;
 import seedu.addressbook.data.AddressBook;
 import seedu.addressbook.storage.StorageFile.StorageOperationException;
 
+/**
+ * A StorageStub class implemented to do JUnit testing on StorageFile.
+ */
 public class StorageStub extends Storage {
-
+	
 	private String path;
 	private AddressBook addressBook;
 	
@@ -24,7 +27,7 @@ public class StorageStub extends Storage {
 
 	@Override
 	public String getPath() {
-		return path;  
+		return this.path;
 	}
 	
 }
