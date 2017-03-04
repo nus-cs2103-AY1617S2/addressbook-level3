@@ -65,7 +65,7 @@ public class Person implements ReadOnlyPerson {
     public void setTags(UniqueTagList replacement) {
         tags.setTags(replacement);
     }
-
+    
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

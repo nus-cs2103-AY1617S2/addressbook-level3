@@ -271,7 +271,97 @@ public class ParserTest {
         }
         return addCommand;
     }
+    
+    /**
+     * Test edit person command
+     */
+    
+    @Test
+    public void editCommandWithInvalidArgs() {
+        final String[] inputs = {
+                "edit",
+                "edit ",
+                "edit wrong args format",
+                // no phone prefix
+                String.format("edit 1 $s $s e/$s a/$s", Name.EXAMPLE, Phone.EXAMPLE, Email.EXAMPLE, Address.EXAMPLE),
+                // no email prefix
+                String.format("edit 1 $s p/$s $s a/$s", Name.EXAMPLE, Phone.EXAMPLE, Email.EXAMPLE, Address.EXAMPLE),
+                // no address prefix
+                String.format("edit 1 $s p/$s e/$s $s", Name.EXAMPLE, Phone.EXAMPLE, Email.EXAMPLE, Address.EXAMPLE)
+        };
+        final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
+        
+        for (String input : inputs) {
+            final IncorrectCommand result = parseAndAssertCommandType(input, IncorrectCommand.class);
+            assertEquals(result.feedbackToUser, resultMessage);
+        }
+    }
+    
+    @Test
+    public void editCommandWithInvalidDataInArgs() {
+        final String invalidIndex = "not__numbers";
+        final int validIndex = 1; //here, out of bound error is not considered
+        final String invalidName = "[]\\[;]";
+        final String validName = Name.EXAMPLE;
+        final String invalidPhoneArg = "p/not__numbers";
+        final String validPhoneArg = "p/" + Phone.EXAMPLE;
+        final String invalidEmailArg = "e/notAnEmail123";
+        final String validEmailArg = "e/" + Email.EXAMPLE;
+        final String invalidTagArg = "t/invalid_-[.tag";
 
+        // address can be any string, so no invalid address
+        final String editCommandFormatStringWithInvalidIndex = "edit " + invalidIndex + " $s $s $s a/" + Address.EXAMPLE;
+        final String editCommandFormatStringWithValidIndex = "edit " + validIndex + " $s $s $s a/" + Address.EXAMPLE;
+
+        // test each incorrect person data field argument individually
+        final String[] inputs = {
+                // invalid index
+                String.format(editCommandFormatStringWithInvalidIndex, validName, validPhoneArg, validEmailArg),
+                // invalid name
+                String.format(editCommandFormatStringWithValidIndex, invalidName, validPhoneArg, validEmailArg),
+                // invalid phone
+                String.format(editCommandFormatStringWithValidIndex, validName, invalidPhoneArg, validEmailArg),
+                // invalid email
+                String.format(editCommandFormatStringWithValidIndex, validName, validPhoneArg, invalidEmailArg),
+                // invalid tag
+                String.format(editCommandFormatStringWithValidIndex, validName, validPhoneArg, validEmailArg) + " " + invalidTagArg
+        };
+        for (String input : inputs) {
+            Command result = parser.parseCommand(input);
+            assertTrue(result.getClass().isAssignableFrom(IncorrectCommand.class));
+        }
+    }
+    
+    @Test
+    public void editCommandWithvalidDataAndParsedCorrectly() {
+        final Person testPerson = generateTestPerson();
+        final String input = convertPersonToEditCommandString(testPerson);
+        final EditCommand result = parseAndAssertCommandType(input, EditCommand.class);
+        assertEquals(result.getPerson(), testPerson);
+        assertEquals(result.getTargetIndex(), 1);
+    }
+    
+    private static String convertPersonToEditCommandString(ReadOnlyPerson person) {
+        String editCommand = "edit 1 "
+                + person.getName().fullName
+                + getPDWithPrefix(person.getPhone().isPrivate(), "p/", person.getPhone().value)
+                + getPDWithPrefix(person.getEmail().isPrivate(), "e/", person.getEmail().value)
+                + getPDWithPrefix(person.getAddress().isPrivate(), "a/", person.getAddress().value);
+        
+        for (Tag tag : person.getTags()) {
+            editCommand += " t/" + tag.tagName;
+        }
+        return editCommand;
+    }
+    
+    private static String getPDWithPrefix(boolean isPrivate, String prefix, String persondata) {
+        if (isPrivate) {
+            return " p" + prefix + persondata;
+        } else {
+            return " " + prefix + persondata;
+        }
+    }
+    
     /**
      * Utility methods
      */
