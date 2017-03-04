@@ -121,7 +121,7 @@ public class LogicTest {
     }
     
     @Test
-    public void execute_edit_invalidArgsFormat() throws Exception {
+    public void executeEditWithInvalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
         assertCommandBehavior(
                 "edit args wrong args wrong args", expectedMessage);
@@ -134,7 +134,7 @@ public class LogicTest {
     }
     
     @Test
-    public void execute_edit_invalidData() throws Exception {
+    public void executeEditWithInvalidData() throws Exception {
         assertCommandBehavior(
                 "edit 1 []\\[;] p/12345 e/valid@e.mail a/valid, address", Name.MESSAGE_NAME_CONSTRAINTS);
         assertCommandBehavior(
@@ -150,7 +150,7 @@ public class LogicTest {
     }
     
     @Test
-    public void execute_edit_successful() throws Exception {
+    public void executeEditSuccessful() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Person p1 = helper.generatePerson(1, false);
         Person p2 = helper.generatePerson(2, true);
@@ -541,9 +541,9 @@ public class LogicTest {
             StringJoiner cmd = new StringJoiner(" ");
 
             cmd.add(adam.getName().toString());
-            cmd.add((adam.getPhone().isPrivate() ? "pp/" : "p/") + adam.getPhone());
-            cmd.add((adam.getEmail().isPrivate() ? "pe/" : "e/") + adam.getEmail());
-            cmd.add((adam.getAddress().isPrivate() ? "pa/" : "a/") + adam.getAddress());
+            cmd.add(getPDWithPrefix(adam.getPhone().isPrivate(), "p/", adam.getPhone().toString()));
+            cmd.add(getPDWithPrefix(adam.getEmail().isPrivate(), "e/", adam.getEmail().toString()));
+            cmd.add(getPDWithPrefix(adam.getAddress().isPrivate(), "a/", adam.getAddress().toString()));
 
             UniqueTagList tags = adam.getTags();
             for(Tag t: tags){
@@ -551,6 +551,14 @@ public class LogicTest {
             }
 
             return cmd.toString();
+        }
+        
+        public String getPDWithPrefix(boolean isPrivate, String prefix, String persondata) {
+            if (isPrivate) {
+                return "p" + prefix + persondata;
+            } else {
+                return prefix + persondata;
+            }
         }
         /**
          * Generates a valid person using the given seed.

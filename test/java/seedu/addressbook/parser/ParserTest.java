@@ -271,14 +271,13 @@ public class ParserTest {
         }
         return addCommand;
     }
-
     
     /**
      * Test edit person command
      */
     
     @Test
-    public void editCommand_invalidArgs() {
+    public void editCommandWithInvalidArgs() {
         final String[] inputs = {
                 "edit",
                 "edit ",
@@ -291,11 +290,15 @@ public class ParserTest {
                 String.format("edit 1 $s p/$s e/$s $s", Name.EXAMPLE, Phone.EXAMPLE, Email.EXAMPLE, Address.EXAMPLE)
         };
         final String resultMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
-        parseAndAssertIncorrectWithMessage(resultMessage, inputs);
+        
+        for (String input : inputs) {
+            final IncorrectCommand result = parseAndAssertCommandType(input, IncorrectCommand.class);
+            assertEquals(result.feedbackToUser, resultMessage);
+        }
     }
     
     @Test
-    public void editCommand_invalidDataInArgs() {
+    public void editCommandWithInvalidDataInArgs() {
         final String invalidIndex = "not__numbers";
         final int validIndex = 1; //here, out of bound error is not considered
         final String invalidName = "[]\\[;]";
@@ -324,12 +327,13 @@ public class ParserTest {
                 String.format(editCommandFormatStringWithValidIndex, validName, validPhoneArg, validEmailArg) + " " + invalidTagArg
         };
         for (String input : inputs) {
-            parseAndAssertCommandType(input, IncorrectCommand.class);
+            Command result = parser.parseCommand(input);
+            assertTrue(result.getClass().isAssignableFrom(IncorrectCommand.class));
         }
     }
     
     @Test
-    public void editCommand_validData_parsedCorrectly() {
+    public void editCommandWithvalidDataAndParsedCorrectly() {
         final Person testPerson = generateTestPerson();
         final String input = convertPersonToEditCommandString(testPerson);
         final EditCommand result = parseAndAssertCommandType(input, EditCommand.class);
@@ -340,14 +344,24 @@ public class ParserTest {
     private static String convertPersonToEditCommandString(ReadOnlyPerson person) {
         String editCommand = "edit 1 "
                 + person.getName().fullName
-                + (person.getPhone().isPrivate() ? " pp/" : " p/") + person.getPhone().value
-                + (person.getEmail().isPrivate() ? " pe/" : " e/") + person.getEmail().value
-                + (person.getAddress().isPrivate() ? " pa/" : " a/") + person.getAddress().value;
+                + getPDWithPrefix(person.getPhone().isPrivate(), "p/", person.getPhone().value)
+                + getPDWithPrefix(person.getEmail().isPrivate(), "e/", person.getEmail().value)
+                + getPDWithPrefix(person.getAddress().isPrivate(), "a/", person.getAddress().value);
+        
         for (Tag tag : person.getTags()) {
             editCommand += " t/" + tag.tagName;
         }
         return editCommand;
     }
+    
+    private static String getPDWithPrefix(boolean isPrivate, String prefix, String persondata) {
+        if (isPrivate) {
+            return " p" + prefix + persondata;
+        } else {
+            return " " + prefix + persondata;
+        }
+    }
+    
     /**
      * Utility methods
      */
