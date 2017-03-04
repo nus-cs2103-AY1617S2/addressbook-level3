@@ -69,6 +69,10 @@ public class AddressBook {
         }
         person.setTags(new UniqueTagList(commonTagReferences));
     }
+    
+    public int getSize(){
+        return allPersons.getSize();
+    }
 
     /**
      * Adds a person to the address book.
