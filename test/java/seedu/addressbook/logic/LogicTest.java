@@ -536,7 +536,7 @@ public class LogicTest {
             return new Person(name, privatePhone, email, privateAddress, tags);
         }
         
-        String generateAdamAsInput() throws Exception {
+        public String generateAdamAsInput() throws Exception {
             Person adam = adam();
             StringJoiner cmd = new StringJoiner(" ");
 
