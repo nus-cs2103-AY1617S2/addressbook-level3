@@ -119,6 +119,57 @@ public class LogicTest {
 
         assertCommandBehavior("clear", ClearCommand.MESSAGE_SUCCESS, AddressBook.empty(), false, Collections.emptyList());
     }
+    
+    @Test
+    public void execute_edit_invalidArgsFormat() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
+        assertCommandBehavior(
+                "edit args wrong args wrong args", expectedMessage);
+        assertCommandBehavior(
+                "edit 1 Valid Name 12345 e/valid@email.butNoPhonePrefix a/valid, address", expectedMessage);
+        assertCommandBehavior(
+                "edit 1 Valid Name p/12345 valid@email.butNoPrefix a/valid, address", expectedMessage);
+        assertCommandBehavior(
+                "edit 1 Valid Name p/12345 e/valid@email.butNoAddressPrefix valid, address", expectedMessage);
+    }
+    
+    @Test
+    public void execute_edit_invalidData() throws Exception {
+        assertCommandBehavior(
+                "edit 1 []\\[;] p/12345 e/valid@e.mail a/valid, address", Name.MESSAGE_NAME_CONSTRAINTS);
+        assertCommandBehavior(
+                "edit 1 Valid Name p/not_numbers e/valid@e.mail a/valid, address", Phone.MESSAGE_PHONE_CONSTRAINTS);
+        assertCommandBehavior(
+                "edit 1 Valid Name p/12345 e/notAnEmail a/valid, address", Email.MESSAGE_EMAIL_CONSTRAINTS);
+        assertCommandBehavior(
+                "edit 1 Valid Name p/12345 e/valid@e.mail a/valid, address t/invalid_-[.tag", Tag.MESSAGE_TAG_CONSTRAINTS);
+        //invalid index
+        String validData = "Valid Name p/12345 e/valid@e.mail a/valid, address";
+        assertInvalidIndexBehaviorForCommand("edit", validData);
+
+    }
+    
+    @Test
+    public void execute_edit_successful() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Person p1 = helper.generatePerson(1, false);
+        Person p2 = helper.generatePerson(2, true);
+        Person p3 = helper.generatePerson(3, true);
+        Person adam = helper.adam();
+
+        List<Person> threePersons = helper.generatePersonList(p1, p2, p3);
+        List<Person> editedThreePersons = helper.generatePersonList(p1, p3, adam);//order changed
+        AddressBook expectedAB = helper.generateAddressBook(editedThreePersons);
+
+        helper.addToAddressBook(addressBook, threePersons);
+        logic.setLastShownList(threePersons);
+
+        assertCommandBehavior("edit 2 " + helper.generateAdamAsInput(),
+                                String.format(EditCommand.MESSAGE_SUCCESS, adam),
+                                expectedAB,
+                                false,
+                                threePersons);
+    }
 
     @Test
     public void execute_add_invalidArgsFormat() throws Exception {
@@ -228,6 +279,18 @@ public class LogicTest {
         assertCommandBehavior(commandWord + " -1", expectedMessage, AddressBook.empty(), false, lastShownList);
         assertCommandBehavior(commandWord + " 0", expectedMessage, AddressBook.empty(), false, lastShownList);
         assertCommandBehavior(commandWord + " 3", expectedMessage, AddressBook.empty(), false, lastShownList);
+
+    }
+    
+    private void assertInvalidIndexBehaviorForCommand(String commandWord, String personData) throws Exception {
+        String expectedMessage = Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+        TestDataHelper helper = new TestDataHelper();
+        List<Person> lastShownList = helper.generatePersonList(false, true);
+
+        logic.setLastShownList(lastShownList);
+        assertCommandBehavior(commandWord + " 100 " + personData, expectedMessage, AddressBook.empty(), false, lastShownList);
+        assertCommandBehavior(commandWord + " 0 " + personData, expectedMessage, AddressBook.empty(), false, lastShownList);
+        assertCommandBehavior(commandWord + " 3 "+ personData, expectedMessage, AddressBook.empty(), false, lastShownList);
 
     }
 
@@ -472,7 +535,23 @@ public class LogicTest {
             UniqueTagList tags = new UniqueTagList(tag1, tag2);
             return new Person(name, privatePhone, email, privateAddress, tags);
         }
+        
+        String generateAdamAsInput() throws Exception {
+            Person adam = adam();
+            StringJoiner cmd = new StringJoiner(" ");
 
+            cmd.add(adam.getName().toString());
+            cmd.add((adam.getPhone().isPrivate() ? "pp/" : "p/") + adam.getPhone());
+            cmd.add((adam.getEmail().isPrivate() ? "pe/" : "e/") + adam.getEmail());
+            cmd.add((adam.getAddress().isPrivate() ? "pa/" : "a/") + adam.getAddress());
+
+            UniqueTagList tags = adam.getTags();
+            for(Tag t: tags){
+                cmd.add("t/" + t.tagName);
+            }
+
+            return cmd.toString();
+        }
         /**
          * Generates a valid person using the given seed.
          * Running this function with the same parameter values guarantees the returned person will have the same state.
