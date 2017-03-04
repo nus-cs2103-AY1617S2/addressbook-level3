@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.addressbook.data.MostRecentCommand;
+import seedu.addressbook.data.person.Person;
 import seedu.addressbook.parser.Parser;
 import seedu.addressbook.parser.Parser.ParseException;
 
@@ -30,6 +31,7 @@ public class UndoCommand extends Command {
         try {
             if (!trimmedRecent.equals("")) {
                 processCommand(trimmedRecent);
+                mostRecent.recordCommand("");
                 return new CommandResult(MESSAGE_SUCCESS);
             } else {
                 return new CommandResult(MESSAGE_NO_CHANGE);
@@ -46,8 +48,9 @@ public class UndoCommand extends Command {
             int index = addressBook.getSize();  
             addressBook.removePersonByIndex(index-1);
         }
+        else if(recentArray[0].equals("delete")){
+            Person toAdd = mostRecent.getPerson();
+            addressBook.addPerson(toAdd);
+        }
     }
-
-
-
 }

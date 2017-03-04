@@ -1,5 +1,6 @@
 package seedu.addressbook.data;
 
+import seedu.addressbook.data.person.Person;
 
 /**
  * Contains previously typed commands that makes changes to data in address book.
@@ -11,6 +12,7 @@ package seedu.addressbook.data;
 
 public class MostRecentCommand {
     private String command;
+    private Person editedPerson;
     
     /** 
      * Creates an empty string at the start of program
@@ -29,6 +31,10 @@ public class MostRecentCommand {
             this.command = command;
         }
     }
+    
+    public void addPerson(Person person){
+        editedPerson = person;
+    }
 
     /** 
      * Checks if command passed by user modifies data and can be undone
@@ -37,8 +43,7 @@ public class MostRecentCommand {
     private boolean modifiesData(String command){
         String trimmedCommand = command.trim();
         String[] commandArray = trimmedCommand.split(" ");
-        if(commandArray[0].equals("add") || commandArray[0].equals("edit") ||
-           commandArray[0].equals("delete")){
+        if(commandArray[0].equals("add") || commandArray[0].equals("delete")){
             return true;
         }
         return false;
@@ -46,6 +51,10 @@ public class MostRecentCommand {
 
     public String getMostRecent() {
         return this.command;
+    }
+    
+    public Person getPerson(){
+        return editedPerson;
     }
 
 }
