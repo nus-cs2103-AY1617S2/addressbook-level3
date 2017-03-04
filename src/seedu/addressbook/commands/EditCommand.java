@@ -29,7 +29,7 @@ public class EditCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Person edited: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
-    private final Person toAdd;
+    private final Person toEdit;
     
     public EditCommand(int index, String name,
             String phone, boolean isPhonePrivate,
@@ -42,7 +42,7 @@ public class EditCommand extends Command {
         for (String tagName : tags) {
             tagSet.add(new Tag(tagName));
         }
-        this.toAdd = new Person(
+        this.toEdit = new Person(
                 new Name(name),
                 new Phone(phone, isPhonePrivate),
                 new Email(email, isEmailPrivate),
@@ -57,8 +57,8 @@ public class EditCommand extends Command {
         try {
             final ReadOnlyPerson target = getTargetPerson();
             addressBook.removePerson(target);
-            addressBook.addPerson(toAdd);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+            addressBook.addPerson(toEdit);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toEdit));
         } catch (IndexOutOfBoundsException ie) {
             return new CommandResult(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         } catch (PersonNotFoundException pnfe) {
@@ -68,6 +68,8 @@ public class EditCommand extends Command {
         }
     }
     
+    public ReadOnlyPerson getPerson() {
+        return toEdit;
+    }
    
-
 }
