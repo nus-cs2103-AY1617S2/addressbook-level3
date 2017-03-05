@@ -24,7 +24,7 @@ public class Main extends Application implements Stoppable{
         gui = new Gui(new Logic(), VERSION);
         gui.start(primaryStage, this);
         
-        // Add an application icon.
+        // Add an application icon here.
         primaryStage.getIcons().add(new Image("file:resources/images/address_book_32.png"));
     }
 
