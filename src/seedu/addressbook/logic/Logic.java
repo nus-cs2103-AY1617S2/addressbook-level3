@@ -47,7 +47,7 @@ public class Logic {
      * @throws StorageFile.InvalidStorageFilePathException if the target file path is incorrect.
      */
     private Storage initializeStorage() throws StorageFile.InvalidStorageFilePathException {
-        return new StorageFile();
+        return new StorageFile();//I'm not sure how to get rid of this coupling
     }
 
     public String getStoragePath() {
