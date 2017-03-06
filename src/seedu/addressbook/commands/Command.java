@@ -38,8 +38,9 @@ public abstract class Command {
 
     /**
      * Executes the command and returns the result.
+     * @throws Exception 
      */
-    public abstract CommandResult execute();
+    public abstract CommandResult execute() throws Exception;
 
     /**
      * Supplies the data the command will operate on.
@@ -65,4 +66,11 @@ public abstract class Command {
     public void setTargetIndex(int targetIndex) {
         this.targetIndex = targetIndex;
     }
+    /**
+     * abstract class to be inherited and implemented in child 
+     * classes to check for mutating commands
+     * @return true or false 
+     */
+    
+    public abstract boolean isMutating();
 }
