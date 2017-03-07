@@ -70,6 +70,9 @@ public class AddressBook {
         person.setTags(new UniqueTagList(commonTagReferences));
     }
     
+    /*
+     * Returns size of current address book
+     */
     public int getSize(){
         return allPersons.getSize();
     }

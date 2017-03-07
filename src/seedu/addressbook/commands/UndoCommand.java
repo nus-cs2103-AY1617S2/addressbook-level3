@@ -1,15 +1,10 @@
 package seedu.addressbook.commands;
 
-import static seedu.addressbook.common.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import seedu.addressbook.data.MostRecentCommand;
 import seedu.addressbook.data.person.Person;
-import seedu.addressbook.parser.Parser;
-import seedu.addressbook.parser.Parser.ParseException;
 
+/* 
+ * Undo the previous command
+ */
 public class UndoCommand extends Command {
     public static final String COMMAND_WORD = "undo";
     
@@ -19,9 +14,12 @@ public class UndoCommand extends Command {
     public static final String MESSAGE_ERROR = "Cannot undo previous change";
     public static final String MESSAGE_NO_CHANGE = "No change to be undone";
     
+    /**
+     * Default empty constructor.
+     */
     public UndoCommand() {
     }
-    
+
     @Override
     public CommandResult execute() {
         String recentCommand = "";
@@ -41,6 +39,9 @@ public class UndoCommand extends Command {
         }
     }
     
+    /*
+     * Process undo command and make changes to address book
+     */
     private void processCommand(String command) throws Exception {
         String[] recentArray = command.split(" ");
         
