@@ -106,10 +106,6 @@ public class UniquePersonList implements Iterable<Person> {
         }
     }
     
-    public void removeByIndex(int index) throws PersonNotFoundException {
-        internalList.remove(index);
-        
-    }
 
     /**
      * Clears all persons in list.
@@ -136,8 +132,4 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.hashCode();
     }
     
-    public int getSize(){
-        return internalList.size();
-    }
-
 }

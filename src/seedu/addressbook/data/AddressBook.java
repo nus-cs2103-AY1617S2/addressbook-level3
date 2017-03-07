@@ -70,13 +70,6 @@ public class AddressBook {
         person.setTags(new UniqueTagList(commonTagReferences));
     }
     
-    /*
-     * Returns size of current address book
-     */
-    public int getSize(){
-        return allPersons.getSize();
-    }
-
     /**
      * Adds a person to the address book.
      * Also checks the new person's tags and updates {@link #allTags} with any new tags found,
@@ -105,9 +98,6 @@ public class AddressBook {
         allPersons.remove(toRemove);
     }
     
-    public void removePersonByIndex(int index) throws PersonNotFoundException {
-        allPersons.removeByIndex(index);
-    }
 
     /**
      * Clears all persons and tags from the address book.

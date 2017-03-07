@@ -27,15 +27,15 @@ public class UndoCommand extends Command {
         String trimmedRecent = recentCommand.trim();
 
         try {
-            if (!trimmedRecent.equals("")) {
+            if (!trimmedRecent.equals(" ")) {
                 processCommand(trimmedRecent);
-                mostRecent.recordCommand("");
+                mostRecent.recordCommand(" ");
                 return new CommandResult(MESSAGE_SUCCESS);
             } else {
                 return new CommandResult(MESSAGE_NO_CHANGE);
             }
         } catch (Exception e) {
-            return new CommandResult(trimmedRecent);
+            return new CommandResult(MESSAGE_ERROR);
         }
     }
     
@@ -46,8 +46,8 @@ public class UndoCommand extends Command {
         String[] recentArray = command.split(" ");
         
         if(recentArray[0].equals("add")){
-            int index = addressBook.getSize();  
-            addressBook.removePersonByIndex(index-1);
+            Person toRemove = mostRecent.getPerson();
+            addressBook.removePerson(toRemove);   
         }
         else if(recentArray[0].equals("delete")){
             Person toAdd = mostRecent.getPerson();
