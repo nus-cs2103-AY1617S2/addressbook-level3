@@ -105,6 +105,7 @@ public class UniquePersonList implements Iterable<Person> {
             throw new PersonNotFoundException();
         }
     }
+    
 
     /**
      * Clears all persons in list.
@@ -130,5 +131,5 @@ public class UniquePersonList implements Iterable<Person> {
     public int hashCode() {
         return internalList.hashCode();
     }
-
+    
 }

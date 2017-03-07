@@ -91,6 +91,9 @@ public class Parser {
                 
             case EditCommand.COMMAND_WORD:
                 return prepareEdit(arguments);
+                
+            case UndoCommand.COMMAND_WORD:
+                return new UndoCommand();
 
             case HelpCommand.COMMAND_WORD: // Fallthrough
             default:
