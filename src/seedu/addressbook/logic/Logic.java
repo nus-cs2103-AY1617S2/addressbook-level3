@@ -3,6 +3,8 @@ package seedu.addressbook.logic;
 import seedu.addressbook.commands.Command;
 import seedu.addressbook.commands.CommandResult;
 import seedu.addressbook.data.AddressBook;
+import seedu.addressbook.data.CommandHistory;
+import seedu.addressbook.data.MostRecentCommand;
 import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.parser.Parser;
 import seedu.addressbook.storage.StorageFile;
@@ -19,22 +21,36 @@ public class Logic {
 
     private StorageFile storage;
     private AddressBook addressBook;
-
+    private CommandHistory commandHistory;
+    private MostRecentCommand mostRecent;
+    
     /** The list of person shown to the user most recently.  */
     private List<? extends ReadOnlyPerson> lastShownList = Collections.emptyList();
 
     public Logic() throws Exception{
         setStorage(initializeStorage());
         setAddressBook(storage.load());
+        initCommandHistory();
+        initMostRecent();
     }
 
     Logic(StorageFile storageFile, AddressBook addressBook){
         setStorage(storageFile);
         setAddressBook(addressBook);
+        initCommandHistory();
+        initMostRecent();
     }
 
     void setStorage(StorageFile storage){
         this.storage = storage;
+    }
+
+    void initCommandHistory() {
+        this.commandHistory = new CommandHistory();
+    }
+    
+    void initMostRecent() {
+        this.mostRecent = new MostRecentCommand();
     }
 
     void setAddressBook(AddressBook addressBook){
@@ -70,6 +86,8 @@ public class Logic {
      */
     public CommandResult execute(String userCommandText) throws Exception {
         Command command = new Parser().parseCommand(userCommandText);
+        recordCommand(userCommandText);
+        mostRecent.recordCommand(userCommandText);
         CommandResult result = execute(command);
         recordResult(result);
         return result;
@@ -83,10 +101,15 @@ public class Logic {
      * @throws Exception if there was any problem during command execution.
      */
     private CommandResult execute(Command command) throws Exception {
-        command.setData(addressBook, lastShownList);
+        command.setData(addressBook, commandHistory, mostRecent, lastShownList);
         CommandResult result = command.execute();
         storage.save(addressBook);
         return result;
+    }
+
+    /** Record new user command in commandHistory */
+    private void recordCommand(String command) {
+        commandHistory.recordCommand(command);
     }
 
     /** Updates the {@link #lastShownList} if the result contains a list of Persons. */

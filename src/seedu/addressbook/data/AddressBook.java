@@ -69,7 +69,7 @@ public class AddressBook {
         }
         person.setTags(new UniqueTagList(commonTagReferences));
     }
-
+    
     /**
      * Adds a person to the address book.
      * Also checks the new person's tags and updates {@link #allTags} with any new tags found,
@@ -97,6 +97,7 @@ public class AddressBook {
     public void removePerson(ReadOnlyPerson toRemove) throws PersonNotFoundException {
         allPersons.remove(toRemove);
     }
+    
 
     /**
      * Clears all persons and tags from the address book.
