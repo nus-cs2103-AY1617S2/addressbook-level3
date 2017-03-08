@@ -51,6 +51,9 @@ public class UndoCommand extends Command {
     
     @Override
     public CommandResult execute() {
+        if (history.size() <= 0) {
+            return new CommandResult(String.format(MESSAGE_NO_PREVIOUS_COMMAND));
+        }
         CommandRecord commandRecord = history.pop();
         if (commandRecord.getAction() == CommandRecord.Action.DELETE) {
             return executeAdd(commandRecord.getPerson());
