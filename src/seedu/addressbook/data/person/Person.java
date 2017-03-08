@@ -1,5 +1,6 @@
 package seedu.addressbook.data.person;
 
+import seedu.addressbook.data.exception.IllegalValueException;
 import seedu.addressbook.data.tag.UniqueTagList;
 
 import java.util.Objects;
@@ -26,7 +27,7 @@ public class Person implements ReadOnlyPerson {
         this.address = address;
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
-
+    
     /**
      * Copy constructor.
      */
@@ -34,6 +35,15 @@ public class Person implements ReadOnlyPerson {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getTags());
     }
 
+    /**
+     * Creates a deep copy of a Person.
+     * @throws IllegalValueException 
+     */
+    public Person copy() throws IllegalValueException {
+        Person copy = new Person(this.name.copy(), this.phone.copy(), this.email.copy(), this.address.copy(), new UniqueTagList(this.tags));
+        return copy;
+    }
+    
     @Override
     public Name getName() {
         return name;

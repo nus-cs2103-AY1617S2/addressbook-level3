@@ -36,6 +36,16 @@ public class Email {
     public static boolean isValidEmail(String test) {
         return test.matches(EMAIL_VALIDATION_REGEX);
     }
+    
+    /**
+     * Creates a deep copy of Email
+     * @throws IllegalValueException 
+     */
+    public Email copy() throws IllegalValueException {
+        Email copy = new Email(this.value, this.isPrivate);
+        return copy;
+    }
+
 
     @Override
     public String toString() {

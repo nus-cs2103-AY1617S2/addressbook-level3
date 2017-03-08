@@ -36,6 +36,15 @@ public class Phone {
         return test.matches(PHONE_VALIDATION_REGEX);
     }
 
+    /**
+     * Creates a deep copy of Phone
+     * @throws IllegalValueException 
+     */
+    public Phone copy() throws IllegalValueException {
+        Phone copy = new Phone(this.value, this.isPrivate);
+        return copy;
+    }
+    
     @Override
     public String toString() {
         return value;

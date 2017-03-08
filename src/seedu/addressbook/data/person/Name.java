@@ -36,6 +36,15 @@ public class Name {
     public static boolean isValidName(String test) {
         return test.matches(NAME_VALIDATION_REGEX);
     }
+    
+    /**
+     * Creates a deep copy of Name
+     * @throws IllegalValueException 
+     */
+    public Name copy() throws IllegalValueException {
+        Name copy = new Name(this.fullName);
+        return copy;
+    }
 
     /**
      * Retrieves a listing of every word in the name, in order.

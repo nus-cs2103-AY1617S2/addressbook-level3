@@ -2,6 +2,7 @@ package seedu.addressbook.parser;
 
 import seedu.addressbook.commands.*;
 import seedu.addressbook.data.exception.IllegalValueException;
+import seedu.addressbook.storage.StorageFile.InvalidStorageFilePathException;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -78,14 +79,21 @@ public class Parser {
             case ViewAllCommand.COMMAND_WORD:
                 return prepareViewAll(arguments);
 
+            case SaveFileCommand.COMMAND_WORD:
+                return new SaveFileCommand(arguments);
+            
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
+            
+            case UndoCommand.COMMAND_WORD:
+                return new UndoCommand();
 
             case HelpCommand.COMMAND_WORD: // Fallthrough
             default:
                 return new HelpCommand();
         }
     }
+
 
     /**
      * Parses arguments in the context of the add person command.
