@@ -1,5 +1,6 @@
 package seedu.addressbook.data;
 
+import seedu.addressbook.data.group.Group;
 import seedu.addressbook.data.person.*;
 import seedu.addressbook.data.person.UniquePersonList.*;
 import seedu.addressbook.data.tag.Tag;
@@ -17,6 +18,7 @@ import java.util.*;
  */
 public class AddressBook {
 
+    private final ArrayList<Group> LIST_OF_GROUPS;
     private final UniquePersonList allPersons;
     private final UniqueTagList allTags; // can contain tags not attached to any person
 
@@ -30,6 +32,7 @@ public class AddressBook {
     public AddressBook() {
         allPersons = new UniquePersonList();
         allTags = new UniqueTagList();
+        LIST_OF_GROUPS = new ArrayList<Group>();
     }
 
     /**
@@ -45,6 +48,7 @@ public class AddressBook {
         for (Person p : allPersons) {
             syncTagsWithMasterList(p);
         }
+        LIST_OF_GROUPS = new ArrayList<Group>();
     }
 
     /**
@@ -87,6 +91,10 @@ public class AddressBook {
      */
     public boolean containsPerson(ReadOnlyPerson key) {
         return allPersons.contains(key);
+    }
+
+    public boolean containsPerson(String name){
+        return allPersons.contains(name);
     }
 
     /**
@@ -132,5 +140,20 @@ public class AddressBook {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(allPersons, allTags);
+    }
+
+    public void sortPerson(){
+        allPersons.sort();
+    }
+
+    public void addGroup(Group group){
+        LIST_OF_GROUPS.add(group);
+    }
+    public Person getPerson(String name) throws PersonNotFoundException {
+            return allPersons.getPerson(name);
+    }
+
+    public ArrayList<Group> getLIST_OF_GROUPS(){
+        return this.LIST_OF_GROUPS;
     }
 }

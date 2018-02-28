@@ -82,6 +82,15 @@ public class UniquePersonList implements Iterable<Person> {
         return internalList.contains(toCheck);
     }
 
+    public boolean contains(String name){
+        for(int i=0;i<internalList.size();i++){
+            if(internalList.get(i).getName().toString().equals(name)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Adds a person to the list.
      *
@@ -114,6 +123,7 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     @Override
+
     public Iterator<Person> iterator() {
         return internalList.iterator();
     }
@@ -130,5 +140,32 @@ public class UniquePersonList implements Iterable<Person> {
     public int hashCode() {
         return internalList.hashCode();
     }
+    /**
+       Sort the list according to alphabetical order
+     */
+    public void sort(){
+        internalList.sort(new Comparator<Person>() {
+            @Override
+            public int compare(Person otherPerson1, Person otherPerson2) {
+                return otherPerson1.getName().toString().compareTo(otherPerson2.getName().toString());
+            }
+        });
+    }
+
+    /**
+     * Get the person object from the list
+     */
+
+    public Person getPerson(String name) throws PersonNotFoundException{
+        if(contains(name)) {
+            for (int i = 0; i < internalList.size(); i++) {
+                if (internalList.get(i).getName().toString().equals(name)) {
+                    return internalList.get(i);
+                }
+            }
+        }
+        throw new PersonNotFoundException();
+    }
+
 
 }
